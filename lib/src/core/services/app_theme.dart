@@ -24,17 +24,22 @@ class AppTheme {
       onSurface: AppColors.textPrimary,
     ),
 
+    scaffoldBackgroundColor: AppColors.surface,
+
     // App bar theme
     appBarTheme: const AppBarTheme(
-      backgroundColor: AppColors.primary,
+      backgroundColor: AppColors.surface,
       foregroundColor: AppColors.textInverse,
       elevation: 0,
       centerTitle: true,
       titleTextStyle: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.w600,
-        color: AppColors.textInverse,
+        color: AppColors.primaryText,
         fontFamily: 'Poppins',
+      ),
+      iconTheme: IconThemeData(
+        color: AppColors.primaryText,
       ),
     ),
 
@@ -400,6 +405,26 @@ class AppTheme {
     iconTheme: const IconThemeData(
       color: Color(0xFFBDBDBD),
       size: 24,
+    ),
+
+    // Icon button theme
+    iconButtonTheme: IconButtonThemeData(
+      style: IconButton.styleFrom(
+        backgroundColor: AppColors.primary,
+        foregroundColor: AppColors.textInverse,
+        elevation: 2,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+    ),
+
+    actionIconTheme: ActionIconThemeData(
+      backButtonIconBuilder: (context) => const Icon(Icons.arrow_back),
+      closeButtonIconBuilder: (context) => const Icon(Icons.close),
+      drawerButtonIconBuilder: (context) => const Icon(Icons.more_vert),
+      endDrawerButtonIconBuilder: (context) => const Icon(Icons.more_vert),
     ),
 
     // Text theme

@@ -3,7 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../core/services/map_config_service.dart';
-// import 'booking_screen.dart';
+import '../../helper/constants/app_colors.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -166,7 +166,7 @@ class _HomePageState extends State<HomePage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Error getting location: ${e.toString()}'),
-          backgroundColor: Colors.red,
+          backgroundColor: AppColors.error,
         ),
       );
     } finally {
@@ -314,14 +314,14 @@ class _HomePageState extends State<HomePage> {
   Widget _buildDraggableContentPanel(ScrollController scrollController) {
     return Container(
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20),
           topRight: Radius.circular(20),
         ),
         boxShadow: [
           BoxShadow(
-            color: Color(0x1A000000),
+            color: AppColors.shadowLight,
             blurRadius: 10,
             offset: Offset(0, -2),
           ),
@@ -335,7 +335,7 @@ class _HomePageState extends State<HomePage> {
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: const Color(0xFFE0E0E0),
+              color: AppColors.borderLight,
               borderRadius: BorderRadius.circular(2),
             ),
           ),
@@ -356,7 +356,7 @@ class _HomePageState extends State<HomePage> {
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
-                          color: Color(0xFF242424),
+                          color: AppColors.primaryText,
                         ),
                       ),
                       const Spacer(),
@@ -367,7 +367,7 @@ class _HomePageState extends State<HomePage> {
                         child: const Text(
                           "MANAGE",
                           style: TextStyle(
-                            color: Color(0xFFF2994A),
+                            color: AppColors.primary,
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
                           ),
@@ -396,9 +396,9 @@ class _HomePageState extends State<HomePage> {
                             icon: Icons.location_on,
                             title: "Destination",
                             subtitle: "Enter Destination",
-                            backgroundColor: const Color(0xFFF2994A),
-                            textColor: Colors.white,
-                            iconColor: Colors.white,
+                            backgroundColor: AppColors.primary,
+                            textColor: AppColors.surface,
+                            iconColor: AppColors.surface,
                           ),
                         ),
                       ),
@@ -411,9 +411,9 @@ class _HomePageState extends State<HomePage> {
                           icon: Icons.business,
                           title: "Office",
                           subtitle: "35 Km Away",
-                          backgroundColor: Colors.white,
-                          textColor: const Color(0xFF242424),
-                          iconColor: const Color(0xFF242424),
+                          backgroundColor: AppColors.surface,
+                          textColor: AppColors.primaryText,
+                          iconColor: AppColors.primaryText,
                         ),
                       ),
                     ],
@@ -435,8 +435,8 @@ class _HomePageState extends State<HomePage> {
                         // );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFF2994A),
-                        foregroundColor: Colors.white,
+                        backgroundColor: AppColors.primary,
+                        foregroundColor: AppColors.textInverse,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
@@ -464,7 +464,7 @@ class _HomePageState extends State<HomePage> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -481,7 +481,7 @@ class _HomePageState extends State<HomePage> {
             width: 8,
             height: 8,
             decoration: const BoxDecoration(
-              color: Color(0xFFF2994A),
+              color: AppColors.primary,
               shape: BoxShape.circle,
             ),
           ),
@@ -491,7 +491,7 @@ class _HomePageState extends State<HomePage> {
           const Text(
             "Current Location",
             style: TextStyle(
-              color: Color(0xFF242424),
+              color: AppColors.primaryText,
               fontSize: 14,
               fontWeight: FontWeight.w500,
             ),
@@ -504,12 +504,12 @@ class _HomePageState extends State<HomePage> {
             width: 24,
             height: 24,
             decoration: BoxDecoration(
-              color: const Color(0xFFF2994A),
+              color: AppColors.primary,
               borderRadius: BorderRadius.circular(4),
             ),
             child: const Icon(
               Icons.keyboard_arrow_down,
-              color: Colors.white,
+              color: AppColors.surface,
               size: 16,
             ),
           ),
@@ -523,7 +523,7 @@ class _HomePageState extends State<HomePage> {
       width: 48,
       height: 48,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -541,12 +541,12 @@ class _HomePageState extends State<HomePage> {
                 height: 20,
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
-                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFF2994A)),
+                  valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
                 ),
               )
             : const Icon(
                 Icons.my_location,
-                color: Color(0xFFF2994A),
+                color: AppColors.primary,
                 size: 24,
               ),
       ),
@@ -568,8 +568,8 @@ class _HomePageState extends State<HomePage> {
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(12),
-        border: backgroundColor == Colors.white
-            ? Border.all(color: const Color(0xFFE0E0E0))
+        border: backgroundColor == AppColors.surface
+            ? Border.all(color: AppColors.borderLight)
             : null,
       ),
       child: Padding(

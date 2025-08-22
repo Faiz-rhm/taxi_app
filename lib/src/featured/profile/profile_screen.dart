@@ -5,6 +5,7 @@ import 'emergency_contact_screen.dart';
 import 'payment_methods_screen.dart';
 import 'logout_bottom_sheet.dart';
 import 'pre_booking_ride_screen.dart';
+import '../../helper/constants/app_colors.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -12,12 +13,12 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+
       appBar: AppBar(
-        backgroundColor: Colors.white,
+
         elevation: 0,
         centerTitle: true,
-        title: const Text('Profile', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF242424)),),
+        title: const Text('Profile', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.primaryText),),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -58,7 +59,7 @@ class ProfileScreen extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                   // Fallback if image doesn't exist
-                  color: const Color(0xFFE0E0E0),
+                  color: AppColors.borderLight,
                 ),
                 child: Container(
                   decoration: BoxDecoration(
@@ -67,7 +68,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   child: const Icon(
                     Icons.person,
-                    color: Color(0xFF9E9E9E),
+                    color: AppColors.hintText,
                     size: 60,
                   ),
                 ),
@@ -82,11 +83,11 @@ class ProfileScreen extends StatelessWidget {
                 width: 36,
                 height: 36,
                 decoration: const BoxDecoration(
-                  color: Color(0xFFF2994A), // Orange color
+                  color: AppColors.primary, // Orange color
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0x40000000),
+                      color: AppColors.shadowMedium,
                       blurRadius: 8,
                       offset: Offset(0, 2),
                     ),
@@ -94,7 +95,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 child: const Icon(
                   Icons.edit,
-                  color: Colors.white,
+                  color: AppColors.surface,
                   size: 20,
                 ),
               ),
@@ -110,7 +111,7 @@ class ProfileScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF242424),
+            color: AppColors.primaryText,
           ),
         ),
       ],
@@ -245,7 +246,7 @@ class ProfileScreen extends StatelessWidget {
       separatorBuilder: (context, index) => const Divider(
         height: 1,
         thickness: 1,
-        color: Color(0xFFF0F0F0),
+        color: AppColors.borderLight,
         indent: 70,
         endIndent: 20,
       ),
@@ -259,12 +260,12 @@ class ProfileScreen extends StatelessWidget {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: isLogout ? const Color(0xFFFFF3E0) : const Color(0xFFF5F5F5),
+              color: isLogout ? AppColors.warningLight.withOpacity(0.3) : AppColors.backgroundVariant,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Icon(
               item['icon'],
-              color: isLogout ? const Color(0xFFE65100) : const Color(0xFFF2994A),
+              color: isLogout ? AppColors.warning : AppColors.primary,
               size: 24,
             ),
           ),
@@ -273,12 +274,12 @@ class ProfileScreen extends StatelessWidget {
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,
-              color: isLogout ? const Color(0xFFE65100) : const Color(0xFF242424),
+              color: isLogout ? AppColors.warning : AppColors.primaryText,
             ),
           ),
           trailing: Icon(
             Icons.chevron_right,
-            color: isLogout ? const Color(0xFFE65100) : const Color(0xFFF2994A),
+            color: isLogout ? AppColors.warning : AppColors.primary,
             size: 24,
           ),
           onTap: item['onTap'],

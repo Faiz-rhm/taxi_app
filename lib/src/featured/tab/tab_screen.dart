@@ -4,6 +4,7 @@ import '../booking/bookings_screen.dart';
 import '../message/message_screen.dart';
 import '../profile/profile_screen.dart';
 import '../wallet/wallet_screen.dart';
+import '../../helper/constants/app_colors.dart';
 
 class TabScreen extends StatefulWidget {
   const TabScreen({super.key});
@@ -35,9 +36,9 @@ class _TabScreenState extends State<TabScreen> {
             _currentIndex = index;
           });
         },
-        selectedItemColor: const Color(0xFFF2994A), // Orange color
-        unselectedItemColor: const Color(0xFF9E9E9E),
-        backgroundColor: Colors.white,
+        selectedItemColor: AppColors.primary,
+        unselectedItemColor: AppColors.hintText,
+
         elevation: 8,
         items: const [
           BottomNavigationBarItem(

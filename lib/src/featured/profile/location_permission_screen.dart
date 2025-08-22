@@ -18,128 +18,128 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5), // Very light gray background
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Location Icon
-                _buildLocationIcon(),
+      body: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Spacer(),
 
-                const SizedBox(height: 24),
+            // Location Icon
+            _buildLocationIcon(),
 
-                // Heading
-                const Text(
-                  "Enable Location Access",
-                  style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF242424), // Dark gray/black
-                  ),
-                ),
+            const SizedBox(height: 24),
 
-                const SizedBox(height: 12),
-
-                // Description
-                const Text(
-                  "To ensure a seamless and efficient experience, allow us access to your location.",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 15,
-                    color: Color(0xFF9E9E9E), // Lighter gray
-                    height: 1.4,
-                  ),
-                ),
-
-                const SizedBox(height: 16),
-
-                // Status Message
-                if (_statusMessage.isNotEmpty)
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: _statusMessage.contains('granted')
-                          ? const Color(0xFFE8F5E8)
-                          : const Color(0xFFFFF3E0),
-                      borderRadius: BorderRadius.circular(8),
-                      border: Border.all(
-                        color: _statusMessage.contains('granted')
-                            ? const Color(0xFF4CAF50)
-                            : const Color(0xFFFF9800),
-                        width: 1,
-                      ),
-                    ),
-                    child: Text(
-                      _statusMessage,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: _statusMessage.contains('granted')
-                            ? const Color(0xFF2E7D32)
-                            : const Color(0xFFE65100),
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-
-                const SizedBox(height: 32),
-
-                // Primary Button
-                SizedBox(
-                  width: double.infinity,
-                  height: 52,
-                  child: ElevatedButton(
-                    onPressed: _isLoading ? null : _requestLocationPermission,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFF2994A), // Orange background
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      elevation: 0,
-                    ),
-                    child: _isLoading
-                        ? const SizedBox(
-                            width: 20,
-                            height: 20,
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                            ),
-                          )
-                        : const Text(
-                            "Allow Location Access",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                  ),
-                ),
-
-                const SizedBox(height: 16),
-
-                // Secondary Link
-                TextButton(
-                  onPressed: _isLoading ? null : _skipLocationPermission,
-                  child: const Text(
-                    "Maybe Later",
-                    style: TextStyle(
-                      color: Color(0xFFF2994A), // Orange color
-                      fontSize: 15,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              ],
+            // Heading
+            const Text(
+              "Enable Location Access",
+              style: TextStyle(
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF242424), // Dark gray/black
+              ),
+              textAlign: TextAlign.center,
             ),
-          ),
+
+            const SizedBox(height: 12),
+
+            // Description
+            const Text(
+              "To ensure a seamless and efficient experience, allow us access to your location.",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 15,
+                color: Color(0xFF9E9E9E), // Lighter gray
+                height: 1.4,
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            // Status Message
+            if (_statusMessage.isNotEmpty)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                decoration: BoxDecoration(
+                  color: _statusMessage.contains('granted')
+                      ? const Color(0xFFE8F5E8)
+                      : const Color(0xFFFFF3E0),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: _statusMessage.contains('granted')
+                        ? const Color(0xFF4CAF50)
+                        : const Color(0xFFFF9800),
+                    width: 1,
+                  ),
+                ),
+                child: Text(
+                  _statusMessage,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: _statusMessage.contains('granted')
+                        ? const Color(0xFF2E7D32)
+                        : const Color(0xFFE65100),
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+
+            const SizedBox(height: 32),
+
+            Spacer(),
+
+            // Primary Button
+            SizedBox(
+              width: double.infinity,
+              height: 52,
+              child: ElevatedButton(
+                onPressed: _isLoading ? null : _requestLocationPermission,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFFF2994A), // Orange background
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  elevation: 0,
+                ),
+                child: _isLoading
+                    ? const SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                        ),
+                      )
+                    : const Text(
+                        "Allow Location Access",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            // Secondary Link
+            TextButton(
+              onPressed: _isLoading ? null : _skipLocationPermission,
+              child: const Text(
+                "Maybe Later",
+                style: TextStyle(
+                  color: Color(0xFFF2994A), // Orange color
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+
+          ],
         ),
+      ),
     );
   }
 

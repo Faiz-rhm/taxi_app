@@ -36,139 +36,104 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5), // Very light gray background
-      body: Column(
-        children: [
-            // Top section with back button
-            _buildTopSection(),
+      appBar: AppBar(
 
-            // Main content area
-            Expanded(
-              child: _buildMainContent(),
-            ),
-          ],
-        ),
-    );
-  }
-
-  Widget _buildTopSection() {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        children: [
-          IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Color(0xFF242424),
-              size: 22,
-            ),
-          ),
-        ],
+        elevation: 0,
+        centerTitle: true,
       ),
+      backgroundColor: const Color(0xFFF5F5F5), // Very light gray background
+      body: _buildMainContent(),
     );
   }
 
   Widget _buildMainContent() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      child: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Title
-              const Text(
-                "Complete Your Profile",
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF242424), // Dark gray
-                ),
-              ),
-
-              const SizedBox(height: 8),
-
-              // Description
-              const Text(
-                "Don't worry, only you can see your personal data. No one else will be able to see it.",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 13,
-                  color: Color(0xFF9E9E9E), // Lighter gray
-                  height: 1.3,
-                ),
-              ),
-
-              const SizedBox(height: 24),
-
-              // Profile Picture Section
-              _buildProfilePictureSection(),
-
-              const SizedBox(height: 24),
-
-              // Name Field
-              _buildInputField(
-                label: "Name",
-                controller: _nameController,
-                hintText: "Enter your name",
-                prefixIcon: Icons.person_outline,
-              ),
-
-              const SizedBox(height: 16),
-
-              // Phone Number Field
-              _buildPhoneNumberField(),
-
-              const SizedBox(height: 16),
-
-              // Gender Field
-              _buildGenderField(),
-
-              const SizedBox(height: 24),
-
-              // Complete Profile button
-              SizedBox(
-                width: double.infinity,
-                height: 48,
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Navigate to notification permission screen
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const NotificationPermissionScreen(),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFF2994A), // Orange background
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    elevation: 0,
-                  ),
-                  child: const Text(
-                    "Complete Profile",
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // Title
+          const Text(
+            "Complete Your Profile",
+            style: TextStyle(
+              fontSize: 26,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF242424), // Dark gray
+            ),
           ),
-        ),
+
+          const SizedBox(height: 8),
+
+          // Description
+          const Text(
+            "Don't worry, only you can see your personal data. No one else will be able to see it.",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 13,
+              color: Color(0xFF9E9E9E), // Lighter gray
+              height: 1.3,
+            ),
+          ),
+
+          const SizedBox(height: 24),
+
+          // Profile Picture Section
+          _buildProfilePictureSection(),
+
+          const SizedBox(height: 24),
+
+          // Name Field
+          _buildInputField(
+            label: "Name",
+            controller: _nameController,
+            hintText: "Enter your name",
+            prefixIcon: Icons.person_outline,
+          ),
+
+          const SizedBox(height: 16),
+
+          // Phone Number Field
+          _buildPhoneNumberField(),
+
+          const SizedBox(height: 16),
+
+          // Gender Field
+          _buildGenderField(),
+
+          const SizedBox(height: 24),
+
+          // Complete Profile button
+          SizedBox(
+            width: double.infinity,
+            height: 48,
+            child: ElevatedButton(
+              onPressed: () {
+                // Navigate to notification permission screen
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const NotificationPermissionScreen(),
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFF2994A), // Orange background
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                elevation: 0,
+              ),
+              child: const Text(
+                "Complete Profile",
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

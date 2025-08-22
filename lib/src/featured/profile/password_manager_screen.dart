@@ -36,21 +36,25 @@ class _PasswordManagerScreenState extends State<PasswordManagerScreen> {
         centerTitle: true,
         title: const Text('Password Manager', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF242424)),),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildCurrentPasswordField(),
-              const SizedBox(height: 24),
-              _buildNewPasswordField(),
-              const SizedBox(height: 24),
-              _buildConfirmPasswordField(),
-              const SizedBox(height: 32),
-              _buildUpdateButton(),
-            ],
+      body: Expanded(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(20),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildCurrentPasswordField(),
+                const SizedBox(height: 8),
+                _buildForgotPasswordLink(),
+                const SizedBox(height: 24),
+                _buildNewPasswordField(),
+                const SizedBox(height: 24),
+                _buildConfirmPasswordField(),
+                const SizedBox(height: 32),
+                _buildUpdateButton(),
+              ],
+            ),
           ),
         ),
       ),
@@ -111,6 +115,27 @@ class _PasswordManagerScreenState extends State<PasswordManagerScreen> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildForgotPasswordLink() {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: GestureDetector(
+        onTap: () {
+          // Navigate to forgot password screen
+          Navigator.pushNamed(context, '/forgot-password');
+        },
+        child: Text(
+          'Forgot Password?',
+          style: TextStyle(
+            fontSize: 14,
+            color: AppColors.primary,
+            decoration: TextDecoration.underline,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
     );
   }
 

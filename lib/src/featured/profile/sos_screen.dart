@@ -29,7 +29,7 @@ class _SosScreenState extends State<SosScreen> {
             _buildEmergencyText(),
             const SizedBox(height: 40),
             _buildEmergencyActions(),
-            const SizedBox(height: 60),
+            const SizedBox(height: 16),
             _buildDisclaimer(),
           ],
         ),

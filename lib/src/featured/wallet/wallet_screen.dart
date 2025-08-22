@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'add_money_screen.dart';
+import '../../helper/constants/app_colors.dart';
 
 
 class WalletScreen extends StatefulWidget {
@@ -77,11 +78,11 @@ class _WalletScreenState extends State<WalletScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        title: Text('Wallet', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF242424)),),
+        title: Text('Wallet', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.primaryText),),
       ),
       body: Column(
         children: [
@@ -102,7 +103,7 @@ class _WalletScreenState extends State<WalletScreen> {
       margin: const EdgeInsets.all(20),
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFF8F0), // Light orange background
+        color: AppColors.backgroundVariant, // Light orange background
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -115,19 +116,19 @@ class _WalletScreenState extends State<WalletScreen> {
                 'Wallet Balance',
                 style: TextStyle(
                   fontSize: 14,
-                  color: Color(0xFF9E9E9E),
+                  color: AppColors.hintText,
                 ),
               ),
               Container(
                 width: 32,
                 height: 32,
                 decoration: const BoxDecoration(
-                  color: Color(0xFFF2994A),
+                  color: AppColors.primary,
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
                   Icons.remove,
-                  color: Colors.white,
+                  color: AppColors.surface,
                   size: 20,
                 ),
               ),
@@ -139,7 +140,7 @@ class _WalletScreenState extends State<WalletScreen> {
             style: const TextStyle(
               fontSize: 24,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF242424),
+              color: AppColors.primaryText,
             ),
           ),
           const SizedBox(height: 20),
@@ -149,13 +150,13 @@ class _WalletScreenState extends State<WalletScreen> {
             child: ElevatedButton(
               onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AddMoneyScreen())),
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFF2994A),
-                foregroundColor: Colors.white,
+                backgroundColor: AppColors.primary,
+                foregroundColor: AppColors.surface,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
                 elevation: 4,
-                shadowColor: const Color(0xFFF2994A),
+                shadowColor: AppColors.primary,
               ),
               child: const Text(
                 'Add Money',
@@ -173,7 +174,7 @@ class _WalletScreenState extends State<WalletScreen> {
 
   Widget _buildTransactionHistory() {
     return Container(
-      color: Colors.white,
+      color: AppColors.surface,
       child: ListView.builder(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         itemCount: _transactions.length,
@@ -197,7 +198,7 @@ class _WalletScreenState extends State<WalletScreen> {
             style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF242424),
+              color: AppColors.primaryText,
             ),
           ),
         ),
@@ -217,10 +218,10 @@ class _WalletScreenState extends State<WalletScreen> {
       margin: const EdgeInsets.only(bottom: 16),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: const Color(0xFFF0F0F0),
+          color: AppColors.borderLight,
           width: 1,
         ),
       ),
@@ -236,7 +237,7 @@ class _WalletScreenState extends State<WalletScreen> {
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF242424),
+                    color: AppColors.primaryText,
                   ),
                 ),
               ),
@@ -245,7 +246,7 @@ class _WalletScreenState extends State<WalletScreen> {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: isCredit ? const Color(0xFF4CAF50) : const Color(0xFFF44336),
+                  color: isCredit ? AppColors.success : AppColors.error,
                 ),
               ),
             ],
@@ -258,14 +259,14 @@ class _WalletScreenState extends State<WalletScreen> {
                 transaction['dateTime'],
                 style: const TextStyle(
                   fontSize: 14,
-                  color: Color(0xFF9E9E9E),
+                  color: AppColors.hintText,
                 ),
               ),
               Text(
                 'Balance \$${transaction['balance'].toStringAsFixed(2)}',
                 style: const TextStyle(
                   fontSize: 14,
-                  color: Color(0xFF9E9E9E),
+                  color: AppColors.hintText,
                 ),
               ),
             ],

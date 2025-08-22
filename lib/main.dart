@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'src/core/services/app_theme.dart';
 import 'src/route/app_router.dart';
 
 void main() {
@@ -18,10 +19,7 @@ class TaxiApp extends ConsumerWidget {
     return MaterialApp(
       title: 'Taxi App',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        useMaterial3: true,
-      ),
+      theme: AppTheme.lightTheme,
       initialRoute: '/onboarding',
       onGenerateRoute: AppRouter.generateRoute,
     );

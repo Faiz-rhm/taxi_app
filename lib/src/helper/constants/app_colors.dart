@@ -5,9 +5,9 @@ class AppColors {
   AppColors._();
 
   // Primary colors
-  static const Color primary = Color(0xFF6D53F4); // Orange/Purple
-  static const Color primaryLight = Color(0xFF8A6FF5);
-  static const Color primaryDark = Color(0xFF5A3FD1);
+  static const Color primary = Color(0xFFeb8e01); // Orange
+  static const Color primaryLight = Color(0xFFffa726); // Lighter orange
+  static const Color primaryDark = Color(0xFFd76500); // Darker orange
 
   // Secondary colors
   static const Color secondary = Color(0xFF242424); // Black
@@ -33,9 +33,9 @@ class AppColors {
   static const Color successLight = Color(0xFF81C784);
   static const Color successDark = Color(0xFF388E3C);
 
-  static const Color info = Color(0xFF6D53F4); // Using primary color
-  static const Color infoLight = Color(0xFF8A6FF5);
-  static const Color infoDark = Color(0xFF5A3FD1);
+  static const Color info = Color(0xFFeb8e01); // Using primary color
+  static const Color infoLight = Color(0xFFffa726);
+  static const Color infoDark = Color(0xFFd76500);
 
   // Neutral colors
   static const Color background = Color(0xFFF6F6F6); // Light Grey
@@ -55,8 +55,8 @@ class AppColors {
 
   // Gradient colors
   static const List<Color> primaryGradientColors = [
-    Color(0xFF6D53F4),
-    Color(0xFF5A3FD1),
+    Color(0xFFeb8e01),
+    Color(0xFFd76500),
   ];
 
   static const List<Color> secondaryGradientColors = [
@@ -77,24 +77,24 @@ class AppColors {
   // Semantic colors
   static const Color online = Color(0xFF4CAF50);
   static const Color offline = Color(0xFF9E9E9E);
-  static const Color busy = Color(0xFFFF9800);
-  static const Color away = Color(0xFFFFC107);
+  static const Color busy = Color(0xFFeb8e01);
+  static const Color away = Color(0xFFffa726);
 
   // Rating colors
   static const Color rating1 = Color(0xFFE53935); // Poor
   static const Color rating2 = Color(0xFFFF9800); // Fair
-  static const Color rating3 = Color(0xFFFFC107); // Good
+  static const Color rating3 = Color(0xFFffa726); // Good
   static const Color rating4 = Color(0xFF4CAF50); // Very Good
-  static const Color rating5 = Color(0xFF2196F3); // Excellent
+  static const Color rating5 = Color(0xFFeb8e01); // Excellent
 
   // Payment colors
   static const Color cash = Color(0xFF4CAF50);
-  static const Color cardPayment = Color(0xFF2196F3);
+  static const Color cardPayment = Color(0xFFeb8e01);
   static const Color digitalWallet = Color(0xFF9C27B0);
 
   // Vehicle type colors
   static const Color economy = Color(0xFF4CAF50);
-  static const Color comfort = Color(0xFF2196F3);
+  static const Color comfort = Color(0xFFeb8e01);
   static const Color premium = Color(0xFF9C27B0);
   static const Color luxury = Color(0xFFFFD700);
 
@@ -138,8 +138,8 @@ class AppColors {
   static const Color iconInverse = Color(0xFFFFFFFF);
 
   // Button colors
-  static const Color buttonPrimary = Color(0xFF1E88E5);
-  static const Color buttonSecondary = Color(0xFFFFC107);
+  static const Color buttonPrimary = Color(0xFFeb8e01);
+  static const Color buttonSecondary = Color(0xFFffa726);
   static const Color buttonSuccess = Color(0xFF4CAF50);
   static const Color buttonWarning = Color(0xFFFF9800);
   static const Color buttonError = Color(0xFFE53935);
@@ -148,22 +148,22 @@ class AppColors {
   // Input colors
   static const Color inputBackground = Color(0xFFFAFAFA);
   static const Color inputBorder = Color(0xFFE0E0E0);
-  static const Color inputBorderFocused = Color(0xFF1E88E5);
+  static const Color inputBorderFocused = Color(0xFFeb8e01);
   static const Color inputBorderError = Color(0xFFE53935);
   static const Color inputLabel = Color(0xFF757575);
   static const Color inputHint = Color(0xFF9E9E9E);
 
   // Navigation colors
   static const Color navigationBackground = Color(0xFFFFFFFF);
-  static const Color navigationSelected = Color(0xFF1E88E5);
+  static const Color navigationSelected = Color(0xFFeb8e01);
   static const Color navigationUnselected = Color(0xFF757575);
-  static const Color navigationIndicator = Color(0xFF1E88E5);
+  static const Color navigationIndicator = Color(0xFFeb8e01);
 
   // Tab colors
   static const Color tabBackground = Color(0xFFFFFFFF);
-  static const Color tabSelected = Color(0xFF1E88E5);
+  static const Color tabSelected = Color(0xFFeb8e01);
   static const Color tabUnselected = Color(0xFF757575);
-  static const Color tabIndicator = Color(0xFF1E88E5);
+  static const Color tabIndicator = Color(0xFFeb8e01);
 
   // Bottom sheet colors
   static const Color bottomSheetBackground = Color(0xFFFFFFFF);
@@ -178,7 +178,7 @@ class AppColors {
   // Snackbar colors
   static const Color snackbarBackground = Color(0xFF323232);
   static const Color snackbarText = Color(0xFFFFFFFF);
-  static const Color snackbarAction = Color(0xFFFFC107);
+  static const Color snackbarAction = Color(0xFFeb8e01);
 
   // Tooltip colors
   static const Color tooltipBackground = Color(0xFF323232);
@@ -186,42 +186,42 @@ class AppColors {
 
   // Progress colors
   static const Color progressBackground = Color(0xFFE0E0E0);
-  static const Color progressValue = Color(0xFF1E88E5);
-  static const Color progressValueSecondary = Color(0xFFFFC107);
+  static const Color progressValue = Color(0xFFeb8e01);
+  static const Color progressValueSecondary = Color(0xFFffa726);
 
   // Switch colors
   static const Color switchTrack = Color(0xFFE0E0E0);
-  static const Color switchTrackActive = Color(0xFF1E88E5);
+  static const Color switchTrackActive = Color(0xFFeb8e01);
   static const Color switchThumb = Color(0xFFFFFFFF);
-  static const Color switchThumbActive = Color(0xFF1E88E5);
+  static const Color switchThumbActive = Color(0xFFeb8e01);
 
   // Checkbox colors
   static const Color checkboxBorder = Color(0xFFE0E0E0);
-  static const Color checkboxBorderActive = Color(0xFF1E88E5);
+  static const Color checkboxBorderActive = Color(0xFFeb8e01);
   static const Color checkboxBackground = Color(0xFFFFFFFF);
-  static const Color checkboxBackgroundActive = Color(0xFF1E88E5);
+  static const Color checkboxBackgroundActive = Color(0xFFeb8e01);
   static const Color checkboxCheck = Color(0xFFFFFFFF);
 
   // Radio colors
   static const Color radioBorder = Color(0xFFE0E0E0);
-  static const Color radioBorderActive = Color(0xFF1E88E5);
+  static const Color radioBorderActive = Color(0xFFeb8e01);
   static const Color radioBackground = Color(0xFFFFFFFF);
-  static const Color radioBackgroundActive = Color(0xFF1E88E5);
+  static const Color radioBackgroundActive = Color(0xFFeb8e01);
   static const Color radioDot = Color(0xFFFFFFFF);
 
   // Slider colors
   static const Color sliderTrack = Color(0xFFE0E0E0);
-  static const Color sliderTrackActive = Color(0xFF1E88E5);
-  static const Color sliderThumb = Color(0xFF1E88E5);
-  static const Color sliderThumbOverlay = Color(0x1A1E88E5);
+  static const Color sliderTrackActive = Color(0xFFeb8e01);
+  static const Color sliderThumb = Color(0xFFeb8e01);
+  static const Color sliderThumbOverlay = Color(0x1Aeb8e01);
 
   // Chip colors
   static const Color chipBackground = Color(0xFFE0E0E0);
-  static const Color chipBackgroundSelected = Color(0xFF1E88E5);
+  static const Color chipBackgroundSelected = Color(0xFFeb8e01);
   static const Color chipText = Color(0xFF212121);
   static const Color chipTextSelected = Color(0xFFFFFFFF);
   static const Color chipBorder = Color(0xFFE0E0E0);
-  static const Color chipBorderSelected = Color(0xFF1E88E5);
+  static const Color chipBorderSelected = Color(0xFFeb8e01);
 
   // Badge colors
   static const Color badgeBackground = Color(0xFFE53935);
