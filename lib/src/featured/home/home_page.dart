@@ -60,6 +60,7 @@ class _HomePageState extends State<HomePage> {
             _currentUserLocation = LatLng(position.latitude, position.longitude);
           });
           _updateCurrentLocationMarker();
+          _createCarMarkers(); // Recreate car markers near user's location
 
           // Update map camera to user's location only if map is ready
           if (_mapController != null && _currentUserLocation != null) {
@@ -68,7 +69,7 @@ class _HomePageState extends State<HomePage> {
                 CameraUpdate.newCameraPosition(
                   CameraPosition(
                     target: _currentUserLocation!,
-                    zoom: 15.0,
+                    zoom: 14.0, // Slightly zoomed out to show car markers
                   ),
                 ),
               );
@@ -117,39 +118,49 @@ class _HomePageState extends State<HomePage> {
       child: Stack(
       children: [
         // Google Maps with optimized configuration
-        // GoogleMap(
-        //   onMapCreated: (GoogleMapController controller) {
-        //     _mapController = controller;
-        //     // Try to get user location after map is created
-        //     if (_currentUserLocation != null) {
-        //       try {
-        //         controller.animateCamera(
-        //           CameraUpdate.newCameraPosition(
-        //             MapConfigService().getOptimizedCameraPosition(_currentUserLocation!),
-        //           ),
-        //         );
-        //       } catch (e) {
-        //         debugPrint('Map camera update error: $e');
-        //       }
-        //     }
-        //   },
-        //   initialCameraPosition: _currentUserLocation != null
-        //       ? MapConfigService().getOptimizedCameraPosition(_currentUserLocation!)
-        //       : _defaultLocation,
-        //   markers: MapConfigService().getOptimizedMarkers({..._carMarkers, ..._currentLocationMarker}),
-        //   myLocationEnabled: true,
-        //   myLocationButtonEnabled: false,
-        //   zoomControlsEnabled: false,
-        //   mapToolbarEnabled: false,
-        //   compassEnabled: false,
-        //   mapType: MapType.normal,
-        //   liteModeEnabled: false,
-        //   trafficEnabled: false,
-        //   buildingsEnabled: false,
-        //   indoorViewEnabled: false,
-        //   onCameraMove: null,
-        //   onCameraIdle: null,
-        // ),
+        GoogleMap(
+          onMapCreated: (GoogleMapController controller) {
+            _mapController = controller;
+            debugPrint('Map created. Current markers: ${_carMarkers.length} cars, ${_currentLocationMarker.length} location markers');
+
+            // Ensure markers are created if not already done
+            if (_carMarkers.isEmpty) {
+              _createCarMarkers();
+            }
+
+            // Try to get user location after map is created
+            if (_currentUserLocation != null) {
+              try {
+                controller.animateCamera(
+                  CameraUpdate.newCameraPosition(
+                    CameraPosition(
+                      target: _currentUserLocation!,
+                      zoom: 14.0,
+                    ),
+                  ),
+                );
+              } catch (e) {
+                debugPrint('Map camera update error: $e');
+              }
+            }
+          },
+          initialCameraPosition: _currentUserLocation != null
+              ? CameraPosition(target: _currentUserLocation!, zoom: 14.0)
+              : _defaultLocation,
+          markers: {..._carMarkers, ..._currentLocationMarker},
+          myLocationEnabled: true,
+          myLocationButtonEnabled: false,
+          zoomControlsEnabled: false,
+          mapToolbarEnabled: false,
+          compassEnabled: false,
+          mapType: MapType.normal,
+          liteModeEnabled: false,
+          trafficEnabled: false,
+          buildingsEnabled: false,
+          indoorViewEnabled: false,
+          onCameraMove: null,
+          onCameraIdle: null,
+        ),
 
         // Current Location Bar
         Positioned(
@@ -412,35 +423,45 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _createCarMarkers() {
+    // If user location is not available, use default location (NYC)
+    final LatLng baseLocation = _currentUserLocation ?? const LatLng(40.7128, -74.0060);
+
+    // Generate car markers near the user's location with better spacing
     setState(() {
       _carMarkers = {
-        // Car markers representing available taxis
         Marker(
           markerId: const MarkerId('car1'),
-          position: const LatLng(40.7128, -74.0060),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-          infoWindow: const InfoWindow(title: 'Available Taxi'),
+          position: LatLng(baseLocation.latitude + 0.003, baseLocation.longitude - 0.002),
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+          infoWindow: const InfoWindow(title: 'Available Taxi 1'),
         ),
         Marker(
           markerId: const MarkerId('car2'),
-          position: const LatLng(40.7140, -74.0080),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-          infoWindow: const InfoWindow(title: 'Available Taxi'),
+          position: LatLng(baseLocation.latitude - 0.002, baseLocation.longitude + 0.004),
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+          infoWindow: const InfoWindow(title: 'Available Taxi 2'),
         ),
         Marker(
           markerId: const MarkerId('car3'),
-          position: const LatLng(40.7100, -74.0040),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-          infoWindow: const InfoWindow(title: 'Available Taxi'),
+          position: LatLng(baseLocation.latitude + 0.001, baseLocation.longitude + 0.003),
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+          infoWindow: const InfoWindow(title: 'Available Taxi 3'),
         ),
         Marker(
           markerId: const MarkerId('car4'),
-          position: const LatLng(40.7160, -74.0020),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-          infoWindow: const InfoWindow(title: 'Available Taxi'),
+          position: LatLng(baseLocation.latitude - 0.004, baseLocation.longitude - 0.001),
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+          infoWindow: const InfoWindow(title: 'Available Taxi 4'),
+        ),
+        Marker(
+          markerId: const MarkerId('car5'),
+          position: LatLng(baseLocation.latitude + 0.002, baseLocation.longitude + 0.001),
+          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+          infoWindow: const InfoWindow(title: 'Available Taxi 5'),
         ),
       };
     });
+    debugPrint('Created ${_carMarkers.length} car markers around location: ${baseLocation.latitude}, ${baseLocation.longitude}');
   }
 
   void _updateCurrentLocationMarker() {
