@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../helper/constants/app_constants.dart';
-import '../../helper/constants/app_colors.dart';
+import 'package:shape_of_view_null_safe/shape_of_view_null_safe.dart';
 import 'welcome_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -15,21 +14,21 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   final List<OnboardingPage> _pages = [
     OnboardingPage(
-      title: "Book a Ride Anywhere,",
+      imagePath: "assets/images/onboarding1.png",
       titleHighlight: "Book a Ride",
-      titleHighlight2: "Anytime!",
+      titleHighlight2: "Anywhere, Anytime!",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
     ),
     OnboardingPage(
-      title: "Track Your Journey",
-      titleHighlight: "Track Your",
-      titleHighlight2: "Journey",
+      imagePath: "assets/images/onboarding2.png",
+      titleHighlight: "Choose Your Comfort:",
+      titleHighlight2: "Enjoy a Luxurious Ride",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
     ),
     OnboardingPage(
-      title: "Earn While You Drive",
-      titleHighlight: "Earn While",
-      titleHighlight2: "You Drive",
+      imagePath: "assets/images/onboarding3.png",
+      titleHighlight: "Elevate Your",
+      titleHighlight2: "Ride Tracking Experience",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt",
     ),
   ];
@@ -37,27 +36,32 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5), // Light gray background
+      backgroundColor: Colors.white,
       body: Column(
         children: [
             // Skip button section
             _buildSkipButton(),
 
-            // Main content area
+            // Main image section
             Expanded(
-              child: _buildMainContent(),
+              flex: 3,
+              child: _buildMainImageSection(),
             ),
 
             // Bottom section with content and navigation
-            _buildBottomSection(),
+            Expanded(
+              flex: 2,
+              child: _buildBottomSection(),
+            ),
           ],
         ),
     );
   }
 
   Widget _buildSkipButton() {
-    return Padding(
-      padding: AppConstants.paddingM,
+    return Container(
+      padding: const EdgeInsets.only(right: 24, top: 36),
+      color: Color(0xFFF6f6f6),
       child: Row(
         children: [
           const Spacer(),
@@ -85,41 +89,36 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 
-  Widget _buildMainContent() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      child: Container(
+  Widget _buildMainImageSection() {
+    final currentPage = _pages[_currentPage];
+
+    return ShapeOfView(
+      shape: ArcShape(
+        direction: ArcDirection.Outside,
+        height: 20,
+        position: ArcPosition.Bottom
+      ),
+      elevation: 0,
+      child: SizedBox(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
-          color: const Color(0xFFF5F5F5), // Light gray background
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: Container(
-            decoration: BoxDecoration(
-              color: const Color(0xFFF5F5F5), // Light gray background
-            ),
-            child: Stack(
-              children: [
-                // Background with darker borders
-                Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFF5F5F5),
-                    border: Border.symmetric(
-                      horizontal: BorderSide(
-                        color: const Color(0xFFE0E0E0), // Darker gray borders
-                        width: 2,
-                      ),
-                    ),
-                  ),
+        child: Image.asset(
+          currentPage.imagePath,
+          width: double.infinity,
+          height: double.infinity,
+          fit: BoxFit.cover,
+          errorBuilder: (context, error, stackTrace) {
+            return Container(
+              color: const Color(0xFFF5F5F5),
+              child: Center(
+                child: Icon(
+                  Icons.image_not_supported,
+                  size: 100,
+                  color: const Color(0xFFE0E0E0),
                 ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ),
       ),
     );
@@ -129,8 +128,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     final currentPage = _pages[_currentPage];
 
     return Container(
+      width: double.infinity,
       padding: const EdgeInsets.all(24),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+      ),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // Title
           RichText(
@@ -168,38 +172,49 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
           const SizedBox(height: 32),
 
-          // Page indicators
+          // Navigation controls
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(_pages.length, (index) {
-              return Container(
-                margin: const EdgeInsets.symmetric(horizontal: 6),
-                width: 12,
-                height: 12,
-                decoration: BoxDecoration(
-                  color: _currentPage == index
-                      ? const Color(0xFFF2994A) // Orange for active
-                      : const Color(0xFFD4A574), // Lighter orange/beige for inactive
-                  shape: BoxShape.circle,
-                ),
-              );
-            }),
-          ),
-
-          const SizedBox(height: 24),
-
-          // Navigation button
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
+              // Left arrow button
+              _currentPage > 0 ? SizedBox(
                 width: 56,
                 height: 56,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF2994A), // Orange background
-                  shape: BoxShape.circle,
+                child: IconButton.outlined(
+                  onPressed: _currentPage > 0 ? () {
+                    setState(() {
+                      _currentPage--;
+                    });
+                  } : null,
+                  icon: Icon(
+                    Icons.arrow_back,
+                    size: 24,
+                  ),
                 ),
-                child: IconButton(
+              ) : const SizedBox(width: 56, height: 56),
+
+              // Page indicators
+              Row(
+                children: List.generate(_pages.length, (index) {
+                  return Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 6),
+                    width: _currentPage == index ? 12 : 8,
+                    height: _currentPage == index ? 12 : 8,
+                    decoration: BoxDecoration(
+                      color: _currentPage == index
+                          ? const Color(0xFFF2994A) // Orange for active
+                          : const Color(0xFFF2994A).withOpacity(0.3), // Light gray for inactive
+                      shape: BoxShape.circle,
+                    ),
+                  );
+                }),
+              ),
+
+              // Right arrow button
+              SizedBox(
+                width: 56,
+                height: 56,
+                child: IconButton.filled(
                   onPressed: _currentPage < _pages.length - 1 ? () {
                     setState(() {
                       _currentPage++;
@@ -228,13 +243,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 }
 
 class OnboardingPage {
-  final String title;
+  final String imagePath;
   final String titleHighlight;
   final String titleHighlight2;
   final String description;
 
   OnboardingPage({
-    required this.title,
+    required this.imagePath,
     required this.titleHighlight,
     required this.titleHighlight2,
     required this.description,

@@ -12,6 +12,11 @@ import '../featured/booking/ride_tracking_screen.dart';
 import '../featured/profile/complete_profile_screen.dart';
 import '../featured/profile/notification_permission_screen.dart';
 import '../featured/profile/location_permission_screen.dart';
+import '../featured/profile/add_card_screen.dart';
+import '../featured/profile/help_center_screen.dart';
+import '../featured/profile/invite_friends_screen.dart';
+import '../featured/profile/sos_screen.dart';
+import '../featured/profile/notification_screen.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -38,6 +43,16 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const NotificationPermissionScreen());
       case '/location-permission':
         return MaterialPageRoute(builder: (_) => const LocationPermissionScreen());
+      case '/add-card':
+        return MaterialPageRoute(builder: (_) => const AddCardScreen());
+      case '/help-center':
+        return MaterialPageRoute(builder: (_) => const HelpCenterScreen());
+      case '/invite-friends':
+        return MaterialPageRoute(builder: (_) => const InviteFriendsScreen());
+      case '/sos':
+        return MaterialPageRoute(builder: (_) => const SosScreen());
+      case '/notifications':
+        return MaterialPageRoute(builder: (_) => const NotificationScreen());
       case '/bookings':
         return MaterialPageRoute(builder: (_) => const BookingsScreen());
       case '/ride-tracking':
