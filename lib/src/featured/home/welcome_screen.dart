@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shape_of_view_null_safe/shape_of_view_null_safe.dart';
+import '../../helper/constants/app_colors.dart';
 
 import '../auth/sign_in_screen.dart';
 import '../tab/tab_screen.dart';
@@ -10,7 +11,7 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.surface,
       body: Column(
         children: [
           // Main image section with floating icons
@@ -51,7 +52,7 @@ class WelcomeScreen extends StatelessWidget {
       margin: const EdgeInsets.only(top: 24),
       padding: const EdgeInsets.all(24),
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -63,14 +64,14 @@ class WelcomeScreen extends StatelessWidget {
               style: TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
-                color: const Color(0xFF242424), // Dark gray
+                color: AppColors.primaryText, // Dark gray
                 height: 1.2,
               ),
               children: [
                 const TextSpan(text: "Welcome to Your "),
                 TextSpan(
                   text: "Ultimate Transportation Solution",
-                  style: const TextStyle(color: Color(0xFFF2994A)), // Orange color
+                  style: const TextStyle(color: AppColors.primary), // Orange color
                 ),
               ],
             ),
@@ -84,7 +85,7 @@ class WelcomeScreen extends StatelessWidget {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 14,
-              color: const Color(0xFF9E9E9E), // Lighter gray
+              color: AppColors.hintText, // Lighter gray
               height: 1.4,
             ),
           ),
@@ -105,8 +106,8 @@ class WelcomeScreen extends StatelessWidget {
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFF2994A), // Orange background
-                foregroundColor: Colors.white,
+                backgroundColor: AppColors.primary, // Orange background
+                foregroundColor: AppColors.textInverse,
                 elevation: 0,
               ),
               child: const Text(
@@ -135,14 +136,14 @@ class WelcomeScreen extends StatelessWidget {
               text: TextSpan(
                 style: TextStyle(
                   fontSize: 14,
-                  color: const Color(0xFF9E9E9E), // Lighter gray
+                  color: AppColors.hintText, // Lighter gray
                 ),
                 children: [
                   const TextSpan(text: "Already have an account? "),
                   TextSpan(
                     text: "Sign In",
                     style: TextStyle(
-                      color: const Color(0xFFF2994A), // Orange color
+                      color: AppColors.primary, // Orange color
                       decoration: TextDecoration.underline,
                       fontWeight: FontWeight.w600,
                     ),

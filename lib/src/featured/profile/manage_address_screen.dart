@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../helper/constants/app_colors.dart';
 import 'add_address_screen.dart';
+import '../../helper/constants/app_colors.dart';
 
 class ManageAddressScreen extends StatefulWidget {
   const ManageAddressScreen({super.key});
@@ -58,12 +60,12 @@ class _ManageAddressScreenState extends State<ManageAddressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.surface,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.surface,
         elevation: 0,
         centerTitle: true,
-        title: const Text('Manage Address', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF242424)),),
+        title: const Text('Manage Address', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.primaryText),),
       ),
       body: Column(
         children: [
@@ -111,15 +113,15 @@ class _ManageAddressScreenState extends State<ManageAddressScreen> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: const Color(0xFFF2994A), // Orange outline
+                  color: const AppColors.primary, // Orange outline
                   width: 2,
                 ),
-                color: isSelected ? const Color(0xFFF2994A) : Colors.white,
+                color: isSelected ? const AppColors.primary : AppColors.surface,
               ),
               child: isSelected
                   ? const Icon(
                       Icons.check,
-                      color: Colors.white,
+                      color: AppColors.surface,
                       size: 16,
                     )
                   : null,
@@ -130,7 +132,7 @@ class _ManageAddressScreenState extends State<ManageAddressScreen> {
             style: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF242424),
+              color: AppColors.primaryText,
             ),
           ),
           subtitle: Padding(
@@ -139,7 +141,7 @@ class _ManageAddressScreenState extends State<ManageAddressScreen> {
               address['address'],
               style: const TextStyle(
                 fontSize: 14,
-                color: Color(0xFF9E9E9E),
+                color: AppColors.hintText,
                 height: 1.3,
               ),
             ),
@@ -147,7 +149,7 @@ class _ManageAddressScreenState extends State<ManageAddressScreen> {
           trailing: PopupMenuButton<String>(
             icon: const Icon(
               Icons.more_vert,
-              color: Color(0xFF9E9E9E),
+              color: AppColors.hintText,
             ),
             onSelected: (value) {
               if (value == 'edit') {
@@ -191,7 +193,7 @@ class _ManageAddressScreenState extends State<ManageAddressScreen> {
 
   Widget _buildAddNewAddressButton() {
     return Container(
-      color: Colors.white,
+      color: AppColors.surface,
       margin: const EdgeInsets.only(top: 20),
       padding: const EdgeInsets.all(20),
       child: Container(
@@ -199,7 +201,7 @@ class _ManageAddressScreenState extends State<ManageAddressScreen> {
         height: 56,
         decoration: BoxDecoration(
           border: Border.all(
-            color: const Color(0xFFF2994A), // Orange border
+            color: const AppColors.primary, // Orange border
             width: 2,
             style: BorderStyle.solid,
           ),
@@ -229,7 +231,7 @@ class _ManageAddressScreenState extends State<ManageAddressScreen> {
             children: [
               const Icon(
                 Icons.add,
-                color: Color(0xFFF2994A), // Orange color
+                color: AppColors.primary, // Orange color
                 size: 24,
               ),
               const SizedBox(width: 8),
@@ -238,7 +240,7 @@ class _ManageAddressScreenState extends State<ManageAddressScreen> {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFFF2994A), // Orange color
+                  color: AppColors.primary, // Orange color
                 ),
               ),
             ],
@@ -250,7 +252,7 @@ class _ManageAddressScreenState extends State<ManageAddressScreen> {
 
   Widget _buildApplyButton() {
     return Container(
-      color: Colors.white,
+      color: AppColors.surface,
       padding: const EdgeInsets.all(20),
       child: SizedBox(
         width: double.infinity,
@@ -259,14 +261,14 @@ class _ManageAddressScreenState extends State<ManageAddressScreen> {
           onPressed: _selectedAddressId != null ? _applySelection : null,
           style: ElevatedButton.styleFrom(
             backgroundColor: _selectedAddressId != null
-                ? const Color(0xFFF2994A) // Orange when enabled
-                : const Color(0xFFE0E0E0), // Grey when disabled
-            foregroundColor: Colors.white,
+                ? const AppColors.primary // Orange when enabled
+                : const AppColors.borderLight, // Grey when disabled
+            foregroundColor: AppColors.surface,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
             elevation: _selectedAddressId != null ? 4 : 0,
-            shadowColor: const Color(0xFFF2994A),
+            shadowColor: const AppColors.primary,
           ),
           child: const Text(
             'Apply',
@@ -335,7 +337,7 @@ class _ManageAddressScreenState extends State<ManageAddressScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: const Color(0xFFF2994A),
+        backgroundColor: const AppColors.primary,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shape_of_view_null_safe/shape_of_view_null_safe.dart';
+import '../../helper/constants/app_colors.dart';
 import 'welcome_screen.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -36,7 +37,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.surface,
       body: Column(
         children: [
             // Skip button section
@@ -61,7 +62,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget _buildSkipButton() {
     return Container(
       padding: const EdgeInsets.only(right: 24, top: 36),
-      color: Color(0xFFF6f6f6),
+      color: AppColors.background,
       child: Row(
         children: [
           const Spacer(),
@@ -78,7 +79,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: Text(
               "Skip",
               style: TextStyle(
-                color: const Color(0xFFF2994A), // Orange color
+                color: AppColors.primary, // Orange color
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
               ),
@@ -109,12 +110,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           fit: BoxFit.cover,
           errorBuilder: (context, error, stackTrace) {
             return Container(
-              color: const Color(0xFFF5F5F5),
+              color: AppColors.surfaceDark,
               child: Center(
                 child: Icon(
                   Icons.image_not_supported,
                   size: 100,
-                  color: const Color(0xFFE0E0E0),
+                  color: AppColors.borderLight,
                 ),
               ),
             );
@@ -131,7 +132,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -143,13 +144,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               style: TextStyle(
                 fontSize: 32, // Larger font size
                 fontWeight: FontWeight.bold,
-                color: const Color(0xFF242424), // Dark gray/black
+                color: AppColors.primaryText, // Dark gray/black
                 height: 1.2,
               ),
               children: [
                 TextSpan(
                   text: currentPage.titleHighlight,
-                  style: const TextStyle(color: Color(0xFFF2994A)), // Orange color
+                  style: const TextStyle(color: AppColors.primary), // Orange color
                 ),
                 const TextSpan(text: " "),
                 TextSpan(text: currentPage.titleHighlight2),
@@ -165,7 +166,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 16,
-              color: const Color(0xFF9E9E9E), // Lighter gray
+              color: AppColors.hintText, // Lighter gray
               height: 1.5,
             ),
           ),
@@ -186,6 +187,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       _currentPage--;
                     });
                   } : null,
+                  style: IconButton.styleFrom(
+                    foregroundColor: AppColors.primaryText,
+                    side: BorderSide(color: AppColors.borderLight),
+                  ),
                   icon: Icon(
                     Icons.arrow_back,
                     size: 24,
@@ -202,8 +207,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     height: _currentPage == index ? 12 : 8,
                     decoration: BoxDecoration(
                       color: _currentPage == index
-                          ? const Color(0xFFF2994A) // Orange for active
-                          : const Color(0xFFF2994A).withOpacity(0.3), // Light gray for inactive
+                          ? AppColors.primary // Orange for active
+                          : AppColors.primary.withOpacity(0.3), // Light gray for inactive
                       shape: BoxShape.circle,
                     ),
                   );
@@ -227,9 +232,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       ),
                     );
                   },
+                  style: IconButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: AppColors.textInverse,
+                  ),
                   icon: Icon(
                     _currentPage < _pages.length - 1 ? Icons.arrow_forward : Icons.check,
-                    color: Colors.white,
+                    color: AppColors.textInverse,
                     size: 24,
                   ),
                 ),

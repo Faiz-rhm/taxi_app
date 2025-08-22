@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../helper/constants/app_colors.dart';
 import '../home/home_page.dart';
 import '../booking/bookings_screen.dart';
 import '../message/message_screen.dart';
@@ -35,9 +36,9 @@ class _TabScreenState extends State<TabScreen> {
             _currentIndex = index;
           });
         },
-        selectedItemColor: const Color(0xFFF2994A), // Orange color
-        unselectedItemColor: const Color(0xFF9E9E9E),
-        backgroundColor: Colors.white,
+        selectedItemColor: AppColors.primary, // Orange color
+        unselectedItemColor: AppColors.hintText,
+        backgroundColor: AppColors.surface,
         elevation: 8,
         items: const [
           BottomNavigationBarItem(

@@ -10,7 +10,7 @@ class MessageScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Messages'),
         backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
+        foregroundColor: AppColors.surface,
       ),
       body: const Center(
         child: Column(

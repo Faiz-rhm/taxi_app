@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../helper/constants/app_colors.dart';
 
 class YourProfileScreen extends StatefulWidget {
   const YourProfileScreen({super.key});
@@ -26,12 +27,12 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.surface,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.surface,
         elevation: 0,
         centerTitle: true,
-        title: const Text('Your Profile', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF242424)),),
+        title: const Text('Your Profile', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.primaryText),),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -52,7 +53,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
 
   Widget _buildProfilePicture() {
     return Container(
-      color: Colors.white,
+      color: AppColors.surface,
       padding: const EdgeInsets.symmetric(vertical: 30),
       child: Stack(
         alignment: Alignment.bottomRight,
@@ -62,12 +63,12 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
               width: 120,
               height: 120,
               decoration: BoxDecoration(
-                color: const Color(0xFFE0E0E0),
+                color: const AppColors.borderLight,
                 borderRadius: BorderRadius.circular(60),
               ),
               child: const Icon(
                 Icons.person,
-                color: Color(0xFF9E9E9E),
+                color: AppColors.hintText,
                 size: 60,
               ),
             ),
@@ -79,12 +80,12 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
               width: 36,
               height: 36,
               decoration: const BoxDecoration(
-                color: Color(0xFFF2994A), // Orange color
+                color: AppColors.primary, // Orange color
                 shape: BoxShape.circle,
               ),
               child: const Icon(
                 Icons.edit,
-                color: Colors.white,
+                color: AppColors.surface,
                 size: 20,
               ),
             ),
@@ -96,7 +97,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
 
   Widget _buildFormFields() {
     return Container(
-      color: Colors.white,
+      color: AppColors.surface,
       margin: const EdgeInsets.only(top: 20),
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -147,17 +148,17 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF242424),
+            color: AppColors.primaryText,
           ),
         ),
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.surface,
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.05),
+                color: AppColors.primaryText.withOpacity(0.05),
                 blurRadius: 10,
                 offset: const Offset(0, 2),
               ),
@@ -169,7 +170,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: const TextStyle(
-                color: Color(0xFF9E9E9E),
+                color: AppColors.hintText,
                 fontSize: 16,
               ),
               border: OutlineInputBorder(
@@ -177,7 +178,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                 borderSide: BorderSide.none,
               ),
               filled: true,
-              fillColor: Colors.white,
+              fillColor: AppColors.surface,
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 16,
                 vertical: 16,
@@ -185,7 +186,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
             ),
             style: const TextStyle(
               fontSize: 16,
-              color: Color(0xFF242424),
+              color: AppColors.primaryText,
             ),
           ),
         ),
@@ -202,17 +203,17 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF242424),
+            color: AppColors.primaryText,
           ),
         ),
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.surface,
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.05),
+                color: AppColors.primaryText.withOpacity(0.05),
                 blurRadius: 10,
                 offset: const Offset(0, 2),
               ),
@@ -233,7 +234,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
-                    fillColor: Colors.white,
+                    fillColor: AppColors.surface,
                     contentPadding: EdgeInsets.symmetric(
                       horizontal: 16,
                       vertical: 16,
@@ -241,7 +242,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                   ),
                   style: const TextStyle(
                     fontSize: 16,
-                    color: Color(0xFF242424),
+                    color: AppColors.primaryText,
                   ),
                 ),
               ),
@@ -256,7 +257,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
-                      color: Color(0xFFF2994A), // Orange color
+                      color: AppColors.primary, // Orange color
                     ),
                   ),
                 ),
@@ -277,17 +278,17 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF242424),
+            color: AppColors.primaryText,
           ),
         ),
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.surface,
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.05),
+                color: AppColors.primaryText.withOpacity(0.05),
                 blurRadius: 10,
                 offset: const Offset(0, 2),
               ),
@@ -308,14 +309,14 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                       style: TextStyle(
                         fontSize: 16,
                         color: _selectedGender.isEmpty
-                            ? const Color(0xFF9E9E9E)
-                            : const Color(0xFF242424),
+                            ? const AppColors.hintText
+                            : const AppColors.primaryText,
                       ),
                     ),
                   ),
                   const Icon(
                     Icons.keyboard_arrow_down,
-                    color: Color(0xFFF2994A), // Orange color
+                    color: AppColors.primary, // Orange color
                     size: 24,
                   ),
                 ],
@@ -330,7 +331,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
   void _showGenderPicker() {
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.surface,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -344,7 +345,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFE0E0E0),
+                  color: const AppColors.borderLight,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
@@ -354,7 +355,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF242424),
+                  color: AppColors.primaryText,
                 ),
               ),
               const SizedBox(height: 20),
@@ -363,13 +364,13 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                   gender,
                   style: const TextStyle(
                     fontSize: 16,
-                    color: Color(0xFF242424),
+                    color: AppColors.primaryText,
                   ),
                 ),
                 trailing: _selectedGender == gender
                     ? const Icon(
                         Icons.check,
-                        color: Color(0xFFF2994A),
+                        color: AppColors.primary,
                       )
                     : null,
                 onTap: () {
@@ -388,7 +389,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
 
   Widget _buildUpdateButton() {
     return Container(
-      color: Colors.white,
+      color: AppColors.surface,
       padding: const EdgeInsets.all(20),
       child: SizedBox(
         width: double.infinity,
@@ -399,8 +400,8 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
             _updateProfile();
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFFF2994A), // Orange color
-            foregroundColor: Colors.white,
+            backgroundColor: const AppColors.primary, // Orange color
+            foregroundColor: AppColors.surface,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
@@ -446,7 +447,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: const Color(0xFFF2994A),
+        backgroundColor: const AppColors.primary,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),

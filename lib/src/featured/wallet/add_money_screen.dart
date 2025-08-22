@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../helper/constants/app_colors.dart';
 
 class AddMoneyScreen extends StatefulWidget {
   const AddMoneyScreen({super.key});
@@ -25,7 +26,7 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.surface,
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
@@ -34,7 +35,7 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF242424),
+            color: AppColors.primaryText,
           ),
         ),
         leading: GestureDetector(
@@ -47,7 +48,7 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
             ),
             child: const Icon(
               Icons.arrow_back,
-              color: Color(0xFF242424),
+              color: AppColors.primaryText,
               size: 24,
             ),
           ),
@@ -111,7 +112,7 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
                 style: TextStyle(
                   fontSize: 32,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF242424),
+                  color: AppColors.primaryText,
                 ),
               ),
             ],
@@ -120,12 +121,12 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
             width: 48,
             height: 48,
             decoration: BoxDecoration(
-              color: const Color(0xFFF2994A),
+              color: const AppColors.primary,
               borderRadius: BorderRadius.circular(12),
             ),
             child: const Icon(
               Icons.account_balance_wallet_outlined,
-              color: Colors.white,
+              color: AppColors.surface,
               size: 24,
             ),
           ),
@@ -160,7 +161,7 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
             },
             child: Container(
               decoration: BoxDecoration(
-                color: isSelected ? const Color(0xFFF2994A) : Colors.white,
+                color: isSelected ? const AppColors.primary : AppColors.surface,
                 borderRadius: BorderRadius.circular(12),
                 border: Border.all(
                   color: const Color(0xFFE8E8E8),
@@ -168,7 +169,7 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.04),
+                    color: AppColors.primaryText.withOpacity(0.04),
                     blurRadius: 8,
                     offset: const Offset(0, 2),
                   ),
@@ -180,7 +181,7 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: isSelected ? Colors.white : const Color(0xFF242424),
+                    color: isSelected ? AppColors.surface : const AppColors.primaryText,
                   ),
                 ),
               ),
@@ -197,7 +198,7 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.surface,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
             color: const Color(0xFFE8E8E8),
@@ -205,7 +206,7 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.04),
+              color: AppColors.primaryText.withOpacity(0.04),
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -216,7 +217,7 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
             const Text(
               '\$',
               style: TextStyle(
-                color: Color(0xFF242424),
+                color: AppColors.primaryText,
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
               ),
@@ -229,7 +230,7 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF242424),
+                  color: AppColors.primaryText,
                 ),
                 decoration: const InputDecoration(
                   hintText: 'Enter Amount',
@@ -272,9 +273,9 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
           onPressed: hasValidAmount ? _addMoney : null,
           style: ElevatedButton.styleFrom(
             backgroundColor: hasValidAmount
-                ? const Color(0xFFF2994A) // Orange when enabled
-                : const Color(0xFFE0E0E0), // Grey when disabled
-            foregroundColor: Colors.white,
+                ? const AppColors.primary // Orange when enabled
+                : const AppColors.borderLight, // Grey when disabled
+            foregroundColor: AppColors.surface,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),
@@ -308,7 +309,7 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: const Color(0xFFF2994A),
+        backgroundColor: const AppColors.primary,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),

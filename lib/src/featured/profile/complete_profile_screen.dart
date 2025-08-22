@@ -62,7 +62,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
             },
             icon: const Icon(
               Icons.arrow_back,
-              color: Color(0xFF242424),
+              color: AppColors.primaryText,
               size: 22,
             ),
           ),
@@ -77,7 +77,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.surface,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Padding(
@@ -91,7 +91,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                 style: TextStyle(
                   fontSize: 26,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF242424), // Dark gray
+                  color: AppColors.primaryText, // Dark gray
                 ),
               ),
 
@@ -103,7 +103,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 13,
-                  color: Color(0xFF9E9E9E), // Lighter gray
+                  color: AppColors.hintText, // Lighter gray
                   height: 1.3,
                 ),
               ),
@@ -150,8 +150,8 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFF2994A), // Orange background
-                    foregroundColor: Colors.white,
+                    backgroundColor: const AppColors.primary, // Orange background
+                    foregroundColor: AppColors.surface,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -181,13 +181,13 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
           width: 100,
           height: 100,
           decoration: BoxDecoration(
-            color: const Color(0xFFE0E0E0), // Light gray background
+            color: const AppColors.borderLight, // Light gray background
             shape: BoxShape.circle,
           ),
           child: const Icon(
             Icons.person,
             size: 50,
-            color: Color(0xFF9E9E9E), // Dark gray icon
+            color: AppColors.hintText, // Dark gray icon
           ),
         ),
 
@@ -199,12 +199,12 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
             width: 32,
             height: 32,
             decoration: BoxDecoration(
-              color: const Color(0xFFF2994A), // Orange background
+              color: const AppColors.primary, // Orange background
               shape: BoxShape.circle,
             ),
             child: const Icon(
               Icons.edit,
-              color: Colors.white,
+              color: AppColors.surface,
               size: 16,
             ),
           ),
@@ -227,16 +227,16 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
           style: const TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF242424), // Dark gray
+            color: AppColors.primaryText, // Dark gray
           ),
         ),
         const SizedBox(height: 6),
         Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.surface,
             borderRadius: BorderRadius.circular(10),
             border: Border.all(
-              color: const Color(0xFFE0E0E0), // Light gray border
+              color: const AppColors.borderLight, // Light gray border
               width: 1,
             ),
           ),
@@ -245,12 +245,12 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: const TextStyle(
-                color: Color(0xFF9E9E9E), // Lighter gray
+                color: AppColors.hintText, // Lighter gray
                 fontSize: 13,
               ),
               prefixIcon: Icon(
                 prefixIcon,
-                color: const Color(0xFF9E9E9E),
+                color: const AppColors.hintText,
                 size: 17,
               ),
               border: InputBorder.none,
@@ -274,16 +274,16 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
           style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF242424), // Dark gray
+            color: AppColors.primaryText, // Dark gray
           ),
         ),
         const SizedBox(height: 6),
         Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.surface,
             borderRadius: BorderRadius.circular(10),
             border: Border.all(
-              color: const Color(0xFFE0E0E0), // Light gray border
+              color: const AppColors.borderLight, // Light gray border
               width: 1,
             ),
           ),
@@ -300,13 +300,13 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                       style: const TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w600,
-                        color: Color(0xFF242424),
+                        color: AppColors.primaryText,
                       ),
                     ),
                     const SizedBox(width: 3),
                     const Icon(
                       Icons.keyboard_arrow_down,
-                      color: Color(0xFF9E9E9E),
+                      color: AppColors.hintText,
                       size: 14,
                     ),
                   ],
@@ -317,7 +317,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
               Container(
                 width: 1,
                 height: 20,
-                color: const Color(0xFFE0E0E0),
+                color: const AppColors.borderLight,
               ),
 
               // Phone number input
@@ -328,7 +328,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                   decoration: const InputDecoration(
                     hintText: "Enter Phone Number",
                     hintStyle: TextStyle(
-                      color: Color(0xFF9E9E9E),
+                      color: AppColors.hintText,
                       fontSize: 13,
                     ),
                     border: InputBorder.none,
@@ -355,7 +355,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
           style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF242424), // Dark gray
+            color: AppColors.primaryText, // Dark gray
           ),
         ),
         const SizedBox(height: 6),
@@ -367,10 +367,10 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
             width: double.infinity,
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.surface,
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
-                color: const Color(0xFFE0E0E0), // Light gray border
+                color: const AppColors.borderLight, // Light gray border
                 width: 1,
               ),
             ),
@@ -381,14 +381,14 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                   style: TextStyle(
                     fontSize: 13,
                     color: _selectedGender == "Select"
-                        ? const Color(0xFF9E9E9E)
-                        : const Color(0xFF242424),
+                        ? const AppColors.hintText
+                        : const AppColors.primaryText,
                   ),
                 ),
                 const Spacer(),
                 const Icon(
                   Icons.keyboard_arrow_down,
-                  color: Color(0xFF9E9E9E),
+                  color: AppColors.hintText,
                   size: 14,
                 ),
               ],
@@ -441,7 +441,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Please enter your name"),
-          backgroundColor: Color(0xFFE53935),
+          backgroundColor: AppColors.error,
         ),
       );
       return;
@@ -451,7 +451,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Please enter your phone number"),
-          backgroundColor: Color(0xFFE53935),
+          backgroundColor: AppColors.error,
         ),
       );
       return;
@@ -461,7 +461,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Please select your gender"),
-          backgroundColor: Color(0xFFE53935),
+          backgroundColor: AppColors.error,
         ),
       );
       return;
@@ -471,7 +471,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text("Profile completed successfully!"),
-        backgroundColor: Color(0xFF4CAF50),
+        backgroundColor: AppColors.success,
       ),
     );
 

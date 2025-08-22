@@ -49,6 +49,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.surface,
       body: SafeArea(
         child: Column(
           children: [
@@ -74,7 +75,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: const Color(0xFFE0E0E0), // Light gray background
+              color: AppColors.borderLight, // Light gray background
               shape: BoxShape.circle,
             ),
             child: IconButton(
@@ -83,7 +84,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
               },
               icon: const Icon(
                 Icons.arrow_back,
-                color: Color(0xFF242424), // Dark gray
+                color: AppColors.primaryText, // Dark gray
                 size: 20,
               ),
             ),
@@ -99,7 +100,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.surface,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Padding(
@@ -113,7 +114,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF242424), // Dark gray
+                  color: AppColors.primaryText, // Dark gray
                 ),
               ),
 
@@ -125,7 +126,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 14,
-                  color: Color(0xFF9E9E9E), // Lighter gray
+                  color: AppColors.hintText, // Lighter gray
                   height: 1.3,
                 ),
               ),
@@ -137,7 +138,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                 widget.email,
                 style: const TextStyle(
                   fontSize: 14,
-                  color: Color(0xFFF2994A), // Orange color
+                  color: AppColors.primary, // Orange color
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -169,8 +170,8 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFF2994A), // Orange background
-                    foregroundColor: Colors.white,
+                    backgroundColor: AppColors.primary, // Orange background
+                    foregroundColor: AppColors.textInverse,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
@@ -211,7 +212,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
             style: const TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF242424), // Dark gray
+              color: AppColors.primaryText, // Dark gray
             ),
             decoration: InputDecoration(
               counterText: "",
@@ -219,26 +220,26 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: const BorderSide(
-                  color: Color(0xFFE0E0E0), // Light gray border
+                  color: AppColors.borderLight, // Light gray border
                   width: 1,
                 ),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: const BorderSide(
-                  color: Color(0xFFE0E0E0), // Light gray border
+                  color: AppColors.borderLight, // Light gray border
                   width: 1,
                 ),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: const BorderSide(
-                  color: Color(0xFFF2994A), // Orange border when focused
+                  color: AppColors.primary, // Orange border when focused
                   width: 2,
                 ),
               ),
               filled: true,
-              fillColor: Colors.white,
+              fillColor: AppColors.surface,
             ),
             onChanged: (value) {
               if (value.length == 1 && index < 3) {
@@ -262,7 +263,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
         const Text(
           "Didn't receive OTP? ",
           style: TextStyle(
-            color: Color(0xFF9E9E9E), // Lighter gray
+            color: AppColors.hintText, // Lighter gray
             fontSize: 14,
           ),
         ),
@@ -274,7 +275,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
           child: const Text(
             "Resend code",
             style: TextStyle(
-              color: Color(0xFF2196F3), // Blue color
+              color: AppColors.buttonPrimary, // Blue color
               fontSize: 14,
               fontWeight: FontWeight.w600,
               decoration: TextDecoration.underline,
@@ -301,7 +302,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Code verified successfully!"),
-          backgroundColor: Color(0xFF4CAF50),
+          backgroundColor: AppColors.success,
         ),
       );
     } else {
@@ -309,7 +310,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Please enter a valid 4-digit code"),
-          backgroundColor: Color(0xFFE53935),
+          backgroundColor: AppColors.error,
         ),
       );
     }
@@ -323,7 +324,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text("Code resent successfully!"),
-        backgroundColor: Color(0xFF4CAF50),
+        backgroundColor: AppColors.success,
       ),
     );
   }

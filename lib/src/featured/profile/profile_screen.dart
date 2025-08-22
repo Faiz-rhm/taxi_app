@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import '../../helper/constants/app_colors.dart';
 import 'your_profile_screen.dart';
+import '../../helper/constants/app_colors.dart';
 import 'manage_address_screen.dart';
+import '../../helper/constants/app_colors.dart';
 import 'emergency_contact_screen.dart';
+import '../../helper/constants/app_colors.dart';
 import 'payment_methods_screen.dart';
+import '../../helper/constants/app_colors.dart';
 import 'logout_bottom_sheet.dart';
+import '../../helper/constants/app_colors.dart';
 import 'pre_booking_ride_screen.dart';
+import '../../helper/constants/app_colors.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -12,12 +19,12 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.surface,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.surface,
         elevation: 0,
         centerTitle: true,
-        title: const Text('Profile', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF242424)),),
+        title: const Text('Profile', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.primaryText),),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -58,7 +65,7 @@ class ProfileScreen extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                   // Fallback if image doesn't exist
-                  color: const Color(0xFFE0E0E0),
+                  color: const AppColors.borderLight,
                 ),
                 child: Container(
                   decoration: BoxDecoration(
@@ -67,7 +74,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   child: const Icon(
                     Icons.person,
-                    color: Color(0xFF9E9E9E),
+                    color: AppColors.hintText,
                     size: 60,
                   ),
                 ),
@@ -82,7 +89,7 @@ class ProfileScreen extends StatelessWidget {
                 width: 36,
                 height: 36,
                 decoration: const BoxDecoration(
-                  color: Color(0xFFF2994A), // Orange color
+                  color: AppColors.primary, // Orange color
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
@@ -94,7 +101,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 child: const Icon(
                   Icons.edit,
-                  color: Colors.white,
+                  color: AppColors.surface,
                   size: 20,
                 ),
               ),
@@ -110,7 +117,7 @@ class ProfileScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
-            color: Color(0xFF242424),
+            color: AppColors.primaryText,
           ),
         ),
       ],
@@ -264,7 +271,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             child: Icon(
               item['icon'],
-              color: isLogout ? const Color(0xFFE65100) : const Color(0xFFF2994A),
+              color: isLogout ? const Color(0xFFE65100) : const AppColors.primary,
               size: 24,
             ),
           ),
@@ -273,12 +280,12 @@ class ProfileScreen extends StatelessWidget {
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,
-              color: isLogout ? const Color(0xFFE65100) : const Color(0xFF242424),
+              color: isLogout ? const Color(0xFFE65100) : const AppColors.primaryText,
             ),
           ),
           trailing: Icon(
             Icons.chevron_right,
-            color: isLogout ? const Color(0xFFE65100) : const Color(0xFFF2994A),
+            color: isLogout ? const Color(0xFFE65100) : const AppColors.primary,
             size: 24,
           ),
           onTap: item['onTap'],

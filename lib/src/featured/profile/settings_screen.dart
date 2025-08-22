@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../helper/constants/app_colors.dart';
 import 'password_manager_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -7,17 +8,17 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.surface,
       appBar: AppBar(
         elevation: 0,
         centerTitle: true,
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.surface,
         title: const Text(
           'Settings',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF242424),
+            color: AppColors.primaryText,
           ),
         ),
       ),
@@ -82,15 +83,15 @@ class SettingsScreen extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.surface,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: const Color(0xFFF0F0F0),
+            color: AppColors.borderLight,
             width: 1,
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.04),
+              color: AppColors.shadowLight,
               blurRadius: 8,
               offset: const Offset(0, 2),
             ),
@@ -103,15 +104,15 @@ class SettingsScreen extends StatelessWidget {
               height: 44,
               decoration: BoxDecoration(
                 color: isDestructive
-                    ? const Color(0xFFFFEBEE)
-                    : const Color(0xFFFFF8F0),
+                    ? AppColors.error.withOpacity(0.1)
+                    : AppColors.primary.withOpacity(0.1),
                 borderRadius: BorderRadius.circular(22),
               ),
               child: Icon(
                 icon,
                 color: isDestructive
-                    ? const Color(0xFFE53935)
-                    : const Color(0xFFF2994A),
+                    ? AppColors.error
+                    : AppColors.primary,
                 size: 24,
               ),
             ),
@@ -123,16 +124,16 @@ class SettingsScreen extends StatelessWidget {
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: isDestructive
-                      ? const Color(0xFFE53935)
-                      : const Color(0xFF242424),
+                      ? AppColors.error
+                      : AppColors.primaryText,
                 ),
               ),
             ),
             Icon(
               Icons.chevron_right,
               color: isDestructive
-                  ? const Color(0xFFE53935)
-                  : const Color(0xFFF2994A),
+                  ? AppColors.error
+                  : AppColors.primary,
               size: 24,
             ),
           ],
@@ -155,6 +156,7 @@ class SettingsScreen extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: AppColors.surface,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -163,14 +165,14 @@ class SettingsScreen extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Color(0xFFE53935),
+              color: AppColors.error,
             ),
           ),
           content: const Text(
             'Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently removed.',
             style: TextStyle(
               fontSize: 16,
-              color: Color(0xFF666666),
+              color: AppColors.secondaryText,
               height: 1.4,
             ),
           ),
@@ -184,7 +186,7 @@ class SettingsScreen extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xFF666666),
+                  color: AppColors.secondaryText,
                 ),
               ),
             ),
@@ -194,8 +196,8 @@ class SettingsScreen extends StatelessWidget {
                 _showDeleteConfirmationDialog(context);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFE53935),
-                foregroundColor: Colors.white,
+                backgroundColor: AppColors.error,
+                foregroundColor: AppColors.textInverse,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -221,6 +223,7 @@ class SettingsScreen extends StatelessWidget {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: AppColors.surface,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -229,14 +232,14 @@ class SettingsScreen extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Color(0xFFE53935),
+              color: AppColors.error,
             ),
           ),
           content: const Text(
             'Type "DELETE" to confirm account deletion:',
             style: TextStyle(
               fontSize: 16,
-              color: Color(0xFF666666),
+              color: AppColors.secondaryText,
             ),
           ),
           actions: [
@@ -245,13 +248,14 @@ class SettingsScreen extends StatelessWidget {
                 TextField(
                   decoration: InputDecoration(
                     hintText: 'Type DELETE here',
+                    hintStyle: TextStyle(color: AppColors.hintText),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: Color(0xFFE0E0E0)),
+                      borderSide: const BorderSide(color: AppColors.borderLight),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(color: Color(0xFFE53935)),
+                      borderSide: const BorderSide(color: AppColors.error),
                     ),
                   ),
                   onChanged: (value) {
@@ -271,7 +275,7 @@ class SettingsScreen extends StatelessWidget {
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
-                          color: Color(0xFF666666),
+                          color: AppColors.secondaryText,
                         ),
                       ),
                     ),
@@ -283,8 +287,8 @@ class SettingsScreen extends StatelessWidget {
                         _showAccountDeletedSnackBar(context);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFFE53935),
-                        foregroundColor: Colors.white,
+                        backgroundColor: AppColors.error,
+                        foregroundColor: AppColors.textInverse,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
@@ -313,9 +317,9 @@ class SettingsScreen extends StatelessWidget {
       SnackBar(
         content: const Text(
           'Account deletion process initiated. You will receive a confirmation email.',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: AppColors.textInverse),
         ),
-        backgroundColor: const Color(0xFFE53935),
+        backgroundColor: AppColors.error,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
@@ -346,7 +350,7 @@ class _NotificationSettingsBottomSheetState extends State<NotificationSettingsBo
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: AppColors.surface,
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
       child: Column(
@@ -359,7 +363,7 @@ class _NotificationSettingsBottomSheetState extends State<NotificationSettingsBo
               width: 40,
               height: 4,
               decoration: BoxDecoration(
-                color: const Color(0xFFE0E0E0),
+                color: AppColors.borderLight,
                 borderRadius: BorderRadius.circular(2),
               ),
             ),
@@ -372,7 +376,7 @@ class _NotificationSettingsBottomSheetState extends State<NotificationSettingsBo
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Color(0xFF242424),
+              color: AppColors.primaryText,
             ),
           ),
 
@@ -399,7 +403,7 @@ class _NotificationSettingsBottomSheetState extends State<NotificationSettingsBo
             (value) => setState(() => _smsNotifications = value),
           ),
 
-          const Divider(height: 32, color: Color(0xFFF0F0F0)),
+          const Divider(height: 32, color: AppColors.borderLight),
 
           _buildNotificationToggle(
             'Ride Updates',
@@ -433,8 +437,8 @@ class _NotificationSettingsBottomSheetState extends State<NotificationSettingsBo
                 _showSettingsSavedSnackBar();
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFF2994A),
-                foregroundColor: Colors.white,
+                backgroundColor: AppColors.primary,
+                foregroundColor: AppColors.textInverse,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
@@ -475,7 +479,7 @@ class _NotificationSettingsBottomSheetState extends State<NotificationSettingsBo
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w500,
-                    color: Color(0xFF242424),
+                    color: AppColors.primaryText,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -483,7 +487,7 @@ class _NotificationSettingsBottomSheetState extends State<NotificationSettingsBo
                   subtitle,
                   style: const TextStyle(
                     fontSize: 14,
-                    color: Color(0xFF9E9E9E),
+                    color: AppColors.hintText,
                   ),
                 ),
               ],
@@ -492,10 +496,10 @@ class _NotificationSettingsBottomSheetState extends State<NotificationSettingsBo
           Switch(
             value: value,
             onChanged: onChanged,
-            activeColor: const Color(0xFFF2994A),
-            activeTrackColor: const Color(0xFFF2994A).withOpacity(0.3),
-            inactiveThumbColor: const Color(0xFFE0E0E0),
-            inactiveTrackColor: const Color(0xFFF5F5F5),
+            activeColor: AppColors.primary,
+            activeTrackColor: AppColors.primary.withOpacity(0.3),
+            inactiveThumbColor: AppColors.borderLight,
+            inactiveTrackColor: AppColors.surfaceDark,
           ),
         ],
       ),
@@ -507,9 +511,9 @@ class _NotificationSettingsBottomSheetState extends State<NotificationSettingsBo
       SnackBar(
         content: const Text(
           'Notification settings saved successfully!',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: AppColors.textInverse),
         ),
-        backgroundColor: const Color(0xFFF2994A),
+        backgroundColor: AppColors.primary,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),

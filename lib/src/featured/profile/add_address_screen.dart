@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import '../../helper/constants/app_colors.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import '../../helper/constants/app_colors.dart';
 import 'package:geolocator/geolocator.dart';
+import '../../helper/constants/app_colors.dart';
 import 'package:geocoding/geocoding.dart';
+import '../../helper/constants/app_colors.dart';
 
 class AddAddressScreen extends StatefulWidget {
   const AddAddressScreen({super.key});
@@ -68,7 +72,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
 
   Widget _buildHeader() {
     return Container(
-      color: Colors.white,
+      color: AppColors.surface,
       padding: const EdgeInsets.all(20),
       child: Row(
         children: [
@@ -83,7 +87,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
               onPressed: () => Navigator.pop(context),
               icon: const Icon(
                 Icons.arrow_back_ios,
-                color: Color(0xFF242424),
+                color: AppColors.primaryText,
                 size: 20,
               ),
             ),
@@ -95,7 +99,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF242424),
+                  color: AppColors.primaryText,
                 ),
               ),
             ),
@@ -226,7 +230,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
 
   Widget _buildAddressForm() {
     return Container(
-      color: Colors.white,
+      color: AppColors.surface,
       margin: const EdgeInsets.only(top: 20),
       padding: const EdgeInsets.all(20),
       child: Column(
@@ -276,7 +280,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF242424),
+            color: AppColors.primaryText,
           ),
         ),
         const SizedBox(height: 12),
@@ -295,7 +299,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 decoration: BoxDecoration(
                   color: isSelected
-                      ? const Color(0xFFF2994A) // Orange when selected
+                      ? const AppColors.primary // Orange when selected
                       : const Color(0xFFF5F5F5), // Light grey when not selected
                   borderRadius: BorderRadius.circular(25),
                 ),
@@ -305,8 +309,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: isSelected
-                        ? Colors.white
-                        : const Color(0xFF9E9E9E),
+                        ? AppColors.surface
+                        : const AppColors.hintText,
                   ),
                 ),
               ),
@@ -331,16 +335,16 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF242424),
+            color: AppColors.primaryText,
           ),
         ),
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.surface,
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
-              color: const Color(0xFFE0E0E0),
+              color: const AppColors.borderLight,
               width: 1,
             ),
           ),
@@ -350,7 +354,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             decoration: InputDecoration(
               hintText: hintText,
               hintStyle: const TextStyle(
-                color: Color(0xFF9E9E9E),
+                color: AppColors.hintText,
                 fontSize: 16,
               ),
               border: OutlineInputBorder(
@@ -358,7 +362,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 borderSide: BorderSide.none,
               ),
               filled: true,
-              fillColor: Colors.white,
+              fillColor: AppColors.surface,
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 16,
                 vertical: 16,
@@ -366,7 +370,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             ),
             style: const TextStyle(
               fontSize: 16,
-              color: Color(0xFF242424),
+              color: AppColors.primaryText,
             ),
           ),
         ),
@@ -376,7 +380,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
 
   Widget _buildSaveButton() {
     return Container(
-      color: Colors.white,
+      color: AppColors.surface,
       padding: const EdgeInsets.all(20),
       child: SizedBox(
         width: double.infinity,
@@ -386,8 +390,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             _saveAddress();
           },
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFFF2994A), // Orange color
-            foregroundColor: Colors.white,
+            backgroundColor: const AppColors.primary, // Orange color
+            foregroundColor: AppColors.surface,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
@@ -440,7 +444,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(message),
-        backgroundColor: const Color(0xFFF2994A),
+        backgroundColor: const AppColors.primary,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),

@@ -29,12 +29,12 @@ class _PasswordManagerScreenState extends State<PasswordManagerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.surface,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.surface,
         elevation: 0,
         centerTitle: true,
-        title: const Text('Password Manager', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF242424)),),
+        title: const Text('Password Manager', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.primaryText),),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -72,7 +72,7 @@ class _PasswordManagerScreenState extends State<PasswordManagerScreen> {
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.surface,
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
@@ -129,7 +129,7 @@ class _PasswordManagerScreenState extends State<PasswordManagerScreen> {
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.surface,
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
@@ -189,7 +189,7 @@ class _PasswordManagerScreenState extends State<PasswordManagerScreen> {
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.surface,
             borderRadius: BorderRadius.circular(12),
             boxShadow: [
               BoxShadow(
@@ -242,7 +242,7 @@ class _PasswordManagerScreenState extends State<PasswordManagerScreen> {
         onPressed: _updatePassword,
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.primary,
-          foregroundColor: Colors.white,
+          foregroundColor: AppColors.textInverse,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -272,6 +272,7 @@ class _PasswordManagerScreenState extends State<PasswordManagerScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: AppColors.surface,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
@@ -287,7 +288,7 @@ class _PasswordManagerScreenState extends State<PasswordManagerScreen> {
                 ),
                 child: const Icon(
                   Icons.check,
-                  color: Colors.white,
+                  color: AppColors.textInverse,
                   size: 30,
                 ),
               ),
