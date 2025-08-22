@@ -81,51 +81,13 @@ class _NotificationScreenState extends State<NotificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: Column(
-          children: [
-            _buildHeader(),
-            Expanded(
-              child: _buildNotificationsList(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHeader() {
-    return Container(
-      decoration: const BoxDecoration(color: Colors.white),
-      padding: const EdgeInsets.all(20),
-      child: Row(
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: AppColors.light,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.arrow_back_ios, color: AppColors.secondary, size: 20),
-            ),
-          ),
-          const Expanded(
-            child: Center(
-              child: Text(
-                'Notification',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.secondary,
-                ),
-              ),
-            ),
-          ),
-          // Badge showing unread count
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
+        title: const Text('Notification', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF242424)),),
+        actions: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
@@ -141,33 +103,33 @@ class _NotificationScreenState extends State<NotificationScreen> {
               ),
             ),
           ),
+          const SizedBox(width: 16),
         ],
+      ),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: _buildNotificationsList(),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildNotificationsList() {
-    return Container(
-      margin: const EdgeInsets.only(top: 20),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        ),
-      ),
-      child: ListView(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        children: [
-          // TODAY Section
-          _buildDateSection('TODAY', _todayNotifications, () => _markAllAsRead(_todayNotifications)),
+    return ListView(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      children: [
+        // TODAY Section
+        _buildDateSection('TODAY', _todayNotifications, () => _markAllAsRead(_todayNotifications)),
 
-          const SizedBox(height: 24),
+        const SizedBox(height: 24),
 
-          // YESTERDAY Section
-          _buildDateSection('YESTERDAY', _yesterdayNotifications, () => _markAllAsRead(_yesterdayNotifications)),
-        ],
-      ),
+        // YESTERDAY Section
+        _buildDateSection('YESTERDAY', _yesterdayNotifications, () => _markAllAsRead(_yesterdayNotifications)),
+      ],
     );
   }
 
@@ -300,32 +262,5 @@ class _NotificationScreenState extends State<NotificationScreen> {
         ),
       ),
     );
-  }
-
-  void _markNotificationAsRead(String notificationId) {
-    // Find and mark specific notification as read
-    final todayNotification = _todayNotifications.firstWhere(
-      (n) => n['id'] == notificationId,
-      orElse: () => {},
-    );
-
-    final yesterdayNotification = _yesterdayNotifications.firstWhere(
-      (n) => n['id'] == notificationId,
-      orElse: () => {},
-    );
-
-    if (todayNotification.isNotEmpty) {
-      setState(() {
-        todayNotification['isRead'] = true;
-        todayNotification['iconColor'] = AppColors.secondaryText;
-        todayNotification['backgroundColor'] = AppColors.light;
-      });
-    } else if (yesterdayNotification.isNotEmpty) {
-      setState(() {
-        yesterdayNotification['isRead'] = true;
-        yesterdayNotification['iconColor'] = AppColors.secondaryText;
-        yesterdayNotification['backgroundColor'] = AppColors.light;
-      });
-    }
   }
 }

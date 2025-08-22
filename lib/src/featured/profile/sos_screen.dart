@@ -12,65 +12,27 @@ class _SosScreenState extends State<SosScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
+        title: const Text('SOS', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF242424)),),
+      ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _buildHeader(),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    _buildEmergencyIcon(),
-                    const SizedBox(height: 24),
-                    _buildEmergencyText(),
-                    const SizedBox(height: 40),
-                    _buildEmergencyActions(),
-                    const Spacer(),
-                    _buildDisclaimer(),
-                  ],
-                ),
-              ),
-            ),
+            _buildEmergencyIcon(),
+            const SizedBox(height: 24),
+            _buildEmergencyText(),
+            const SizedBox(height: 40),
+            _buildEmergencyActions(),
+            const SizedBox(height: 60),
+            _buildDisclaimer(),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildHeader() {
-    return Container(
-      decoration: const BoxDecoration(color: Colors.white),
-      padding: const EdgeInsets.all(20),
-      child: Row(
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: AppColors.light,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.arrow_back_ios, color: AppColors.secondary, size: 20),
-            ),
-          ),
-          const Expanded(
-            child: Center(
-              child: Text(
-                'SOS',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.secondary,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 40),
-        ],
       ),
     );
   }
@@ -140,7 +102,7 @@ class _SosScreenState extends State<SosScreen> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 160,
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
@@ -205,10 +167,13 @@ class _SosScreenState extends State<SosScreen> {
             const SizedBox(height: 16),
 
             // Arrow icon
-            Icon(
-              Icons.arrow_forward_ios,
-              color: AppColors.primary,
-              size: 20,
+            IconButton.filled(
+              onPressed: () {},
+              icon: Icon(
+                Icons.arrow_forward_ios,
+                color: Colors.white,
+                size: 20,
+              ),
             ),
           ],
         ),
@@ -338,7 +303,7 @@ class AlertConfirmationBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.5,
+      height: MediaQuery.of(context).size.height * 0.3,
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
@@ -409,8 +374,6 @@ class AlertConfirmationBottomSheet extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
 
-          const Spacer(),
-
           // Action buttons
           Padding(
             padding: const EdgeInsets.all(20),
@@ -480,17 +443,6 @@ class AlertConfirmationBottomSheet extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
-          ),
-
-          // Bottom indicator
-          Container(
-            margin: const EdgeInsets.only(bottom: 12),
-            width: 40,
-            height: 4,
-            decoration: BoxDecoration(
-              color: AppColors.secondary,
-              borderRadius: BorderRadius.circular(2),
             ),
           ),
         ],

@@ -28,25 +28,11 @@ class _PreBookingRideScreenState extends State<PreBookingRideScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: Container(
-          margin: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: const Color(0xFFF5F5F5),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              color: Color(0xFF242424),
-              size: 20,
-            ),
-          ),
-        ),
+        centerTitle: true,
         title: const Text(
           'Pre-Booked Rides',
           style: TextStyle(
@@ -56,7 +42,7 @@ class _PreBookingRideScreenState extends State<PreBookingRideScreen> {
           ),
         ),
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
+          preferredSize: const Size.fromHeight(70),
           child: Container(
             color: Colors.white,
             padding: const EdgeInsets.symmetric(horizontal: 20),

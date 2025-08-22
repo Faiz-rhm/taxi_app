@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shape_of_view_null_safe/shape_of_view_null_safe.dart';
-import 'home_page.dart';
+
 import '../auth/sign_in_screen.dart';
+import '../tab/tab_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -47,7 +48,7 @@ class WelcomeScreen extends StatelessWidget {
 
   Widget _buildContentSection(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 40),
+      margin: const EdgeInsets.only(top: 24),
       padding: const EdgeInsets.all(24),
       decoration: const BoxDecoration(
         color: Colors.white,
@@ -99,7 +100,7 @@ class WelcomeScreen extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const HomePage(),
+                    builder: (context) => const TabScreen(),
                   ),
                 );
               },

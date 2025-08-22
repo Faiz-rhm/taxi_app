@@ -69,81 +69,32 @@ class _InviteFriendsScreenState extends State<InviteFriendsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: Column(
-          children: [
-            _buildHeader(),
-            Expanded(
-              child: _buildContactsList(),
-            ),
-          ],
-        ),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
+        title: const Text('Invite Friends', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF242424)),),
       ),
-    );
-  }
-
-  Widget _buildHeader() {
-    return Container(
-      decoration: const BoxDecoration(color: Colors.white),
-      padding: const EdgeInsets.all(20),
-      child: Row(
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: AppColors.light,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.arrow_back_ios, color: AppColors.secondary, size: 20),
-            ),
-          ),
-          const Expanded(
-            child: Center(
-              child: Text(
-                'Invite Friends',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.secondary,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 40),
-        ],
-      ),
+      body: _buildContactsList(),
     );
   }
 
   Widget _buildContactsList() {
-    return Container(
-      margin: const EdgeInsets.only(top: 20),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        ),
+    return ListView.separated(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      itemCount: _contacts.length,
+      separatorBuilder: (context, index) => const Divider(
+        height: 1,
+        thickness: 1,
+        color: Color(0xFFF0F0F0),
+        indent: 80,
+        endIndent: 20,
       ),
-      child: ListView.separated(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        itemCount: _contacts.length,
-        separatorBuilder: (context, index) => const Divider(
-          height: 1,
-          thickness: 1,
-          color: Color(0xFFF0F0F0),
-          indent: 80,
-          endIndent: 20,
-        ),
-        itemBuilder: (context, index) {
-          final contact = _contacts[index];
-          return _buildContactItem(contact, index);
-        },
-      ),
+      itemBuilder: (context, index) {
+        final contact = _contacts[index];
+        return _buildContactItem(contact, index);
+      },
     );
   }
 
@@ -177,9 +128,9 @@ class _InviteFriendsScreenState extends State<InviteFriendsScreen> {
               ),
             ),
           ),
-          
+
           const SizedBox(width: 16),
-          
+
           // Contact Info
           Expanded(
             child: Column(
@@ -204,7 +155,7 @@ class _InviteFriendsScreenState extends State<InviteFriendsScreen> {
               ],
             ),
           ),
-          
+
           // Invite Button
           _buildInviteButton(contact, index),
         ],
@@ -214,13 +165,13 @@ class _InviteFriendsScreenState extends State<InviteFriendsScreen> {
 
   Widget _buildInviteButton(Map<String, dynamic> contact, int index) {
     final isInvited = contact['isInvited'];
-    
+
     return GestureDetector(
       onTap: () {
         setState(() {
           _contacts[index]['isInvited'] = !isInvited;
         });
-        
+
         if (!isInvited) {
           _showInviteSentSnackBar(contact['name']);
         }

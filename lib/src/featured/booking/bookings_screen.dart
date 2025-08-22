@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'pre_booking_ride_screen.dart';
+import '../profile/pre_booking_ride_screen.dart';
 
 class BookingsScreen extends StatefulWidget {
   const BookingsScreen({super.key});
@@ -98,25 +98,11 @@ class _BookingsScreenState extends State<BookingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: Container(
-          margin: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: const Color(0xFFF5F5F5),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: const Icon(
-              Icons.arrow_back_ios,
-              color: Color(0xFF242424),
-              size: 20,
-            ),
-          ),
-        ),
+        centerTitle: true,
         title: const Text(
           'Bookings',
           style: TextStyle(

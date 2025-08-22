@@ -26,65 +26,26 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF6F6F6),
-      body: SafeArea(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
+        title: const Text('Your Profile', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF242424)),),
+      ),
+      body: SingleChildScrollView(
         child: Column(
           children: [
-            // Header Section
-            _buildHeader(),
-            
             // Profile Picture Section
             _buildProfilePicture(),
-            
+
             // Form Fields
-            Expanded(
-              child: _buildFormFields(),
-            ),
-            
+            _buildFormFields(),
+
             // Update Button
             _buildUpdateButton(),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildHeader() {
-    return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.all(20),
-      child: Row(
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: const Color(0xFFF5F5F5),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(
-                Icons.arrow_back_ios,
-                color: Color(0xFF242424),
-                size: 20,
-              ),
-            ),
-          ),
-          const Expanded(
-            child: Center(
-              child: Text(
-                'Your Profile',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF242424),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 40), // Balance the layout
-        ],
       ),
     );
   }
@@ -147,14 +108,14 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
             controller: _nameController,
             hintText: 'Enter your name',
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Phone Number Field
           _buildPhoneField(),
-          
+
           const SizedBox(height: 24),
-          
+
           // Email Field
           _buildFormField(
             label: 'Email',
@@ -162,9 +123,9 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
             hintText: 'example@gmail.com',
             keyboardType: TextInputType.emailAddress,
           ),
-          
+
           const SizedBox(height: 24),
-          
+
           // Gender Field
           _buildGenderField(),
         ],
@@ -346,8 +307,8 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                       _selectedGender.isEmpty ? 'Select' : _selectedGender,
                       style: TextStyle(
                         fontSize: 16,
-                        color: _selectedGender.isEmpty 
-                            ? const Color(0xFF9E9E9E) 
+                        color: _selectedGender.isEmpty
+                            ? const Color(0xFF9E9E9E)
                             : const Color(0xFF242424),
                       ),
                     ),
@@ -463,21 +424,21 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
       _showSnackBar('Please enter your name');
       return;
     }
-    
+
     if (_phoneController.text.trim().isEmpty) {
       _showSnackBar('Please enter your phone number');
       return;
     }
-    
-    if (_emailController.text.trim().isNotEmpty && 
+
+    if (_emailController.text.trim().isNotEmpty &&
         !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(_emailController.text.trim())) {
       _showSnackBar('Please enter a valid email address');
       return;
     }
-    
+
     // Show success message
     _showSnackBar('Profile updated successfully!');
-    
+
     // You can add API call here to update the profile
   }
 

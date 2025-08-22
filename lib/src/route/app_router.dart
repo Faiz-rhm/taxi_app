@@ -8,7 +8,6 @@ import '../featured/home/welcome_screen.dart';
 import '../featured/home/home_page.dart';
 import '../featured/tab/tab_screen.dart';
 import '../featured/booking/bookings_screen.dart';
-import '../featured/booking/ride_tracking_screen.dart';
 import '../featured/profile/complete_profile_screen.dart';
 import '../featured/profile/notification_permission_screen.dart';
 import '../featured/profile/location_permission_screen.dart';
@@ -17,6 +16,7 @@ import '../featured/profile/help_center_screen.dart';
 import '../featured/profile/invite_friends_screen.dart';
 import '../featured/profile/sos_screen.dart';
 import '../featured/profile/notification_screen.dart';
+import '../featured/profile/settings_screen.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -53,10 +53,10 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const SosScreen());
       case '/notifications':
         return MaterialPageRoute(builder: (_) => const NotificationScreen());
+      case '/settings':
+        return MaterialPageRoute(builder: (_) => const SettingsScreen());
       case '/bookings':
         return MaterialPageRoute(builder: (_) => const BookingsScreen());
-      case '/ride-tracking':
-        return MaterialPageRoute(builder: (_) => const RideTrackingScreen());
       default:
         return MaterialPageRoute(builder: (_) => const OnboardingScreen());
     }

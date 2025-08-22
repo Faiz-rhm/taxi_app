@@ -58,176 +58,134 @@ class _ManageAddressScreenState extends State<ManageAddressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF6F6F6),
-      body: SafeArea(
-        child: Column(
-          children: [
-            // Header
-            _buildHeader(),
-
-            // Address List
-            Expanded(
-              child: _buildAddressList(),
-            ),
-
-            // Add New Address Button
-            _buildAddNewAddressButton(),
-
-            // Apply Button
-            _buildApplyButton(),
-          ],
-        ),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
+        title: const Text('Manage Address', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF242424)),),
       ),
-    );
-  }
-
-  Widget _buildHeader() {
-    return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.all(20),
-      child: Row(
+      body: Column(
         children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: const Color(0xFFF5F5F5),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(
-                Icons.arrow_back_ios,
-                color: Color(0xFF242424),
-                size: 20,
-              ),
-            ),
+
+          // Address List
+          Expanded(
+            child: _buildAddressList(),
           ),
-          const Expanded(
-            child: Center(
-              child: Text(
-                'Manage Address',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF242424),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 40), // Balance the layout
+
+          // Add New Address Button
+          _buildAddNewAddressButton(),
+
+          // Apply Button
+          _buildApplyButton(),
         ],
       ),
     );
   }
 
   Widget _buildAddressList() {
-    return Container(
-      color: Colors.white,
-      margin: const EdgeInsets.only(top: 20),
-      child: ListView.separated(
-        padding: const EdgeInsets.symmetric(vertical: 10),
-        itemCount: _addresses.length,
-        separatorBuilder: (context, index) => const Divider(
-          height: 1,
-          thickness: 1,
-          color: Color(0xFFF0F0F0),
-          indent: 70,
-        ),
-        itemBuilder: (context, index) {
-          final address = _addresses[index];
-          final isSelected = _selectedAddressId == address['id'];
+    return ListView.separated(
+      padding: const EdgeInsets.symmetric(vertical: 20),
+      itemCount: _addresses.length,
+      separatorBuilder: (context, index) => const Divider(
+        height: 1,
+        thickness: 1,
+        color: Color(0xFFF0F0F0),
+        indent: 70,
+      ),
+      itemBuilder: (context, index) {
+        final address = _addresses[index];
+        final isSelected = _selectedAddressId == address['id'];
 
-          return ListTile(
-            contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-            leading: GestureDetector(
-              onTap: () {
-                setState(() {
-                  _selectedAddressId = address['id'];
-                });
-              },
-              child: Container(
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: const Color(0xFFF2994A), // Orange outline
-                    width: 2,
-                  ),
-                  color: isSelected ? const Color(0xFFF2994A) : Colors.white,
-                ),
-                child: isSelected
-                    ? const Icon(
-                        Icons.check,
-                        color: Colors.white,
-                        size: 16,
-                      )
-                    : null,
-              ),
-            ),
-            title: Text(
-              address['title'],
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF242424),
-              ),
-            ),
-            subtitle: Padding(
-              padding: const EdgeInsets.only(top: 4),
-              child: Text(
-                address['address'],
-                style: const TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF9E9E9E),
-                  height: 1.3,
-                ),
-              ),
-            ),
-            trailing: PopupMenuButton<String>(
-              icon: const Icon(
-                Icons.more_vert,
-                color: Color(0xFF9E9E9E),
-              ),
-              onSelected: (value) {
-                if (value == 'edit') {
-                  _editAddress(address);
-                } else if (value == 'delete') {
-                  _deleteAddress(address);
-                }
-              },
-              itemBuilder: (context) => [
-                const PopupMenuItem(
-                  value: 'edit',
-                  child: Row(
-                    children: [
-                      Icon(Icons.edit, size: 20),
-                      SizedBox(width: 8),
-                      Text('Edit'),
-                    ],
-                  ),
-                ),
-                const PopupMenuItem(
-                  value: 'delete',
-                  child: Row(
-                    children: [
-                      Icon(Icons.delete, size: 20, color: Colors.red),
-                      SizedBox(width: 8),
-                      Text('Delete', style: TextStyle(color: Colors.red)),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+        return ListTile(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          leading: GestureDetector(
             onTap: () {
               setState(() {
                 _selectedAddressId = address['id'];
               });
             },
-          );
-        },
-      ),
+            child: Container(
+              width: 24,
+              height: 24,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: const Color(0xFFF2994A), // Orange outline
+                  width: 2,
+                ),
+                color: isSelected ? const Color(0xFFF2994A) : Colors.white,
+              ),
+              child: isSelected
+                  ? const Icon(
+                      Icons.check,
+                      color: Colors.white,
+                      size: 16,
+                    )
+                  : null,
+            ),
+          ),
+          title: Text(
+            address['title'],
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF242424),
+            ),
+          ),
+          subtitle: Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: Text(
+              address['address'],
+              style: const TextStyle(
+                fontSize: 14,
+                color: Color(0xFF9E9E9E),
+                height: 1.3,
+              ),
+            ),
+          ),
+          trailing: PopupMenuButton<String>(
+            icon: const Icon(
+              Icons.more_vert,
+              color: Color(0xFF9E9E9E),
+            ),
+            onSelected: (value) {
+              if (value == 'edit') {
+                _editAddress(address);
+              } else if (value == 'delete') {
+                _deleteAddress(address);
+              }
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: 'edit',
+                child: Row(
+                  children: [
+                    Icon(Icons.edit, size: 20),
+                    SizedBox(width: 8),
+                    Text('Edit'),
+                  ],
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'delete',
+                child: Row(
+                  children: [
+                    Icon(Icons.delete, size: 20, color: Colors.red),
+                    SizedBox(width: 8),
+                    Text('Delete', style: TextStyle(color: Colors.red)),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          onTap: () {
+            setState(() {
+              _selectedAddressId = address['id'];
+            });
+          },
+        );
+      },
     );
   }
 

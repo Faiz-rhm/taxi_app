@@ -13,7 +13,7 @@ class _PasswordManagerScreenState extends State<PasswordManagerScreen> {
   final _currentPasswordController = TextEditingController();
   final _newPasswordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  
+
   bool _showCurrentPassword = false;
   bool _showNewPassword = false;
   bool _showConfirmPassword = false;
@@ -29,71 +29,30 @@ class _PasswordManagerScreenState extends State<PasswordManagerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: Column(
-          children: [
-            _buildHeader(),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(20),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildCurrentPasswordField(),
-                      const SizedBox(height: 8),
-                      _buildForgotPasswordLink(),
-                      const SizedBox(height: 24),
-                      _buildNewPasswordField(),
-                      const SizedBox(height: 24),
-                      _buildConfirmPasswordField(),
-                      const SizedBox(height: 32),
-                      _buildUpdateButton(),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
+        title: const Text('Password Manager', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF242424)),),
       ),
-    );
-  }
-
-  Widget _buildHeader() {
-    return Container(
-      decoration: const BoxDecoration(color: Colors.white),
-      padding: const EdgeInsets.all(20),
-      child: Row(
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: AppColors.light,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.arrow_back_ios, color: AppColors.secondary, size: 20),
-            ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildCurrentPasswordField(),
+              const SizedBox(height: 24),
+              _buildNewPasswordField(),
+              const SizedBox(height: 24),
+              _buildConfirmPasswordField(),
+              const SizedBox(height: 32),
+              _buildUpdateButton(),
+            ],
           ),
-          const Expanded(
-            child: Center(
-              child: Text(
-                'Password Manager',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.secondary,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 40),
-        ],
+        ),
       ),
     );
   }
@@ -152,27 +111,6 @@ class _PasswordManagerScreenState extends State<PasswordManagerScreen> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildForgotPasswordLink() {
-    return Align(
-      alignment: Alignment.centerRight,
-      child: GestureDetector(
-        onTap: () {
-          // Navigate to forgot password screen
-          Navigator.pushNamed(context, '/forgot-password');
-        },
-        child: Text(
-          'Forgot Password?',
-          style: TextStyle(
-            fontSize: 14,
-            color: AppColors.primary,
-            decoration: TextDecoration.underline,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ),
     );
   }
 

@@ -103,56 +103,23 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: Column(
-          children: [
-            _buildHeader(),
-            _buildSearchBar(),
-            _buildTabs(),
-            if (_selectedTabIndex == 0) ...[
-              _buildCategoryFilters(),
-              Expanded(child: _buildFaqList()),
-            ] else ...[
-              Expanded(child: _buildContactList()),
-            ],
-          ],
-        ),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
+        title: const Text('Help Center', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF242424)),),
       ),
-    );
-  }
-
-  Widget _buildHeader() {
-    return Container(
-      decoration: const BoxDecoration(color: Colors.white),
-      padding: const EdgeInsets.all(20),
-      child: Row(
+      body: Column(
         children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: AppColors.light,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.arrow_back_ios, color: AppColors.secondary, size: 20),
-            ),
-          ),
-          const Expanded(
-            child: Center(
-              child: Text(
-                'Help Center',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.secondary,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 40),
+          _buildSearchBar(),
+          _buildTabs(),
+          if (_selectedTabIndex == 0) ...[
+            _buildCategoryFilters(),
+            Expanded(child: _buildFaqList()),
+          ] else ...[
+            Expanded(child: _buildContactList()),
+          ],
         ],
       ),
     );
@@ -273,7 +240,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
         : _faqItems.where((item) => item['category'] == _categories[_selectedCategoryIndex]).toList();
 
     return ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       itemCount: filteredFaqItems.length,
       itemBuilder: (context, index) {
         final item = filteredFaqItems[index];

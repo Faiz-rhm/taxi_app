@@ -31,7 +31,7 @@ class LogoutBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.4,
+      height: MediaQuery.of(context).size.height * 0.3,
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
@@ -79,8 +79,6 @@ class LogoutBottomSheet extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
-
-          const Spacer(),
 
           // Action buttons
           Padding(
@@ -157,16 +155,6 @@ class LogoutBottomSheet extends StatelessWidget {
             ),
           ),
 
-          // Bottom handle bar
-          Container(
-            margin: const EdgeInsets.only(bottom: 12),
-            width: 40,
-            height: 4,
-            decoration: BoxDecoration(
-              color: AppColors.divider,
-              borderRadius: BorderRadius.circular(2),
-            ),
-          ),
         ],
       ),
     );

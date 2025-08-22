@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'add_money_screen.dart';
+
 
 class WalletScreen extends StatefulWidget {
   const WalletScreen({super.key});
@@ -75,61 +77,21 @@ class _WalletScreenState extends State<WalletScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF6F6F6),
-      body: SafeArea(
-        child: Column(
-          children: [
-            // Header
-            _buildHeader(),
-
-            // Wallet Balance Section
-            _buildWalletBalanceSection(),
-
-            // Transaction History
-            Expanded(
-              child: _buildTransactionHistory(),
-            ),
-          ],
-        ),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        title: Text('Wallet', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF242424)),),
       ),
-    );
-  }
-
-  Widget _buildHeader() {
-    return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.all(20),
-      child: Row(
+      body: Column(
         children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: const Color(0xFFF5F5F5),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(
-                Icons.arrow_back_ios,
-                color: Color(0xFF242424),
-                size: 20,
-              ),
-            ),
+          // Wallet Balance Section
+          _buildWalletBalanceSection(),
+
+          // Transaction History
+          Expanded(
+            child: _buildTransactionHistory(),
           ),
-          const Expanded(
-            child: Center(
-              child: Text(
-                'Wallet',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF242424),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 40), // Balance the layout
         ],
       ),
     );
@@ -175,7 +137,7 @@ class _WalletScreenState extends State<WalletScreen> {
           Text(
             '\$${_walletBalance.toStringAsFixed(2)}',
             style: const TextStyle(
-              fontSize: 32,
+              fontSize: 24,
               fontWeight: FontWeight.bold,
               color: Color(0xFF242424),
             ),
@@ -183,9 +145,9 @@ class _WalletScreenState extends State<WalletScreen> {
           const SizedBox(height: 20),
           SizedBox(
             width: double.infinity,
-            height: 56,
+            height: 48,
             child: ElevatedButton(
-              onPressed: _addMoney,
+              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AddMoneyScreen())),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFFF2994A),
                 foregroundColor: Colors.white,
@@ -309,75 +271,6 @@ class _WalletScreenState extends State<WalletScreen> {
             ],
           ),
         ],
-      ),
-    );
-  }
-
-  void _addMoney() {
-    // Show add money dialog
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Add Money to Wallet'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              decoration: const InputDecoration(
-                labelText: 'Amount',
-                prefixText: '\$',
-                border: OutlineInputBorder(),
-              ),
-              keyboardType: TextInputType.number,
-              onSubmitted: (value) {
-                if (value.isNotEmpty) {
-                  final amount = double.tryParse(value);
-                  if (amount != null && amount > 0) {
-                    _processAddMoney(amount);
-                    Navigator.pop(context);
-                  }
-                }
-              },
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              // For simplicity, add a default amount
-              _processAddMoney(100.0);
-              Navigator.pop(context);
-            },
-            child: const Text('Add'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _processAddMoney(double amount) {
-    // In a real app, this would integrate with payment gateway
-    setState(() {
-      // Add to wallet balance
-      // Update transaction history
-    });
-
-    _showSnackBar('Added \$${amount.toStringAsFixed(2)} to wallet successfully!');
-  }
-
-  void _showSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: const Color(0xFFF2994A),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
       ),
     );
   }
