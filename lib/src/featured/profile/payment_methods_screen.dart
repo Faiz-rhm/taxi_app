@@ -1,229 +1,27 @@
 import 'package:flutter/material.dart';
+import '../../helper/constants/app_colors.dart';
 
 class PaymentMethodsScreen extends StatefulWidget {
-  const PaymentMethodsScreen({super.key});
+  final String? selectedPaymentMethod;
+
+  const PaymentMethodsScreen({
+    super.key,
+    this.selectedPaymentMethod,
+  });
 
   @override
   State<PaymentMethodsScreen> createState() => _PaymentMethodsScreenState();
 }
 
 class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
-  String? _selectedPaymentMethod;
+  String _selectedPaymentMethod = 'Cash';
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-        title: const Text('Payment Methods', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF242424)),),
-      ),
-      body: Column(
-        children: [
-          Expanded(child: _buildContent()),
-          _buildConfirmPaymentButton(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildContent() {
-    return Container(
-      color: Colors.white,
-      margin: const EdgeInsets.only(top: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildCreditDebitSection(),
-          _buildMorePaymentOptionsSection(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCreditDebitSection() {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: Color(0xFFF0F0F0), width: 1)),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'Credit & Debit Card',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Color(0xFF242424)),
-          ),
-          const SizedBox(height: 16),
-          _buildAddCardButton(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildAddCardButton() {
-    return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, '/add-card');
-      },
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: const Color(0xFFE0E0E0), width: 1),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 32,
-              height: 32,
-              decoration: BoxDecoration(
-                color: const Color(0xFFF2994A),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: const Icon(Icons.credit_card, color: Colors.white, size: 20),
-            ),
-            const SizedBox(width: 12),
-            const Expanded(
-              child: Text(
-                'Add Card',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Color(0xFF242424)),
-              ),
-            ),
-            const Icon(Icons.arrow_forward_ios, color: Color(0xFFF2994A), size: 20),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildMorePaymentOptionsSection() {
-    return Container(
-      padding: const EdgeInsets.all(20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            'More Payment Options',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: Color(0xFF242424)),
-          ),
-          const SizedBox(height: 16),
-          _buildPaymentOption(
-            icon: Icons.payment,
-            iconColor: const Color(0xFF0070BA),
-            title: 'Paypal',
-            isSelected: _selectedPaymentMethod == 'paypal',
-            onTap: () => _selectPaymentMethod('paypal'),
-          ),
-          _buildPaymentOption(
-            icon: Icons.apple,
-            iconColor: Colors.black,
-            title: 'Apple Pay',
-            isSelected: _selectedPaymentMethod == 'apple_pay',
-            onTap: () => _selectPaymentMethod('apple_pay'),
-          ),
-          _buildPaymentOption(
-            icon: Icons.g_mobiledata,
-            iconColor: const Color(0xFF4285F4),
-            title: 'Google Pay',
-            isSelected: _selectedPaymentMethod == 'google_pay',
-            onTap: () => _selectPaymentMethod('google_pay'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPaymentOption({
-    required IconData icon,
-    required Color iconColor,
-    required String title,
-    required bool isSelected,
-    required VoidCallback onTap,
-  }) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(12),
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: const Color(0xFFE0E0E0), width: 1),
-          ),
-          child: Row(
-            children: [
-              Container(
-                width: 32,
-                height: 32,
-                decoration: BoxDecoration(
-                  color: iconColor,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Icon(icon, color: Colors.white, size: 20),
-              ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Text(
-                  title,
-                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Color(0xFF242424)),
-                ),
-              ),
-              Container(
-                width: 20,
-                height: 20,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: isSelected ? const Color(0xFFF2994A) : const Color(0xFFE0E0E0),
-                    width: 2,
-                  ),
-                  color: isSelected ? const Color(0xFFF2994A) : Colors.white,
-                ),
-                child: isSelected
-                    ? const Icon(Icons.check, color: Colors.white, size: 14)
-                    : null,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildConfirmPaymentButton() {
-    final hasSelectedMethod = _selectedPaymentMethod != null;
-
-    return Container(
-      color: Colors.white,
-      margin: const EdgeInsets.only(top: 20),
-      padding: const EdgeInsets.all(20),
-      child: SizedBox(
-        width: double.infinity,
-        height: 56,
-        child: ElevatedButton(
-          onPressed: hasSelectedMethod ? _confirmPayment : null,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: hasSelectedMethod ? const Color(0xFFF2994A) : const Color(0xFFE0E0E0),
-            foregroundColor: Colors.white,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            elevation: hasSelectedMethod ? 4 : 0,
-            shadowColor: const Color(0xFFF2994A),
-          ),
-          child: const Text(
-            'Confirm Payment',
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-          ),
-        ),
-      ),
-    );
+  void initState() {
+    super.initState();
+    if (widget.selectedPaymentMethod != null) {
+      _selectedPaymentMethod = widget.selectedPaymentMethod!;
+    }
   }
 
   void _selectPaymentMethod(String method) {
@@ -232,19 +30,348 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
     });
   }
 
-  void _confirmPayment() {
-    if (_selectedPaymentMethod != null) {
-      _showSnackBar('Payment method "${_selectedPaymentMethod!.replaceAll('_', ' ').toUpperCase()}" confirmed successfully!');
-    }
+  void _addCard() {
+    // Navigate to add card screen
+    Navigator.pushNamed(context, '/add-card');
   }
 
-  void _showSnackBar(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: const Color(0xFFF2994A),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+  void _confirmPayment() {
+    // Return the selected payment method
+    Navigator.pop(context, _selectedPaymentMethod);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      body: SafeArea(
+        child: Column(
+        children: [
+            // Header
+            _buildHeader(),
+
+            // Content
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+                    // Cash Section
+                    _buildSectionHeader('Cash'),
+                    _buildPaymentCard(
+                      icon: Icons.money,
+                      title: 'Cash',
+                      isSelected: _selectedPaymentMethod == 'Cash',
+                      onTap: () => _selectPaymentMethod('Cash'),
+                    ),
+
+                    const SizedBox(height: 24),
+
+                    // Wallet Section
+                    _buildSectionHeader('Wallet'),
+                    _buildPaymentCard(
+                      icon: Icons.account_balance_wallet,
+                      title: 'Wallet',
+                      isSelected: _selectedPaymentMethod == 'Wallet',
+                      onTap: () => _selectPaymentMethod('Wallet'),
+                    ),
+
+                    const SizedBox(height: 24),
+
+                    // Credit & Debit Card Section
+                    _buildSectionHeader('Credit & Debit Card'),
+                    _buildPaymentCard(
+                      icon: Icons.credit_card,
+                      title: 'Add Card',
+                      isSelected: false,
+                      onTap: _addCard,
+                      showArrow: true,
+                    ),
+
+                    const SizedBox(height: 24),
+
+                    // More Payment Options Section
+                    _buildSectionHeader('More Payment Options'),
+                    _buildPaymentCard(
+                      icon: Icons.payment,
+                      title: 'Paypal',
+                      isSelected: _selectedPaymentMethod == 'Paypal',
+                      onTap: () => _selectPaymentMethod('Paypal'),
+                      customIcon: _buildPaypalIcon(),
+                    ),
+                    const SizedBox(height: 12),
+                    _buildPaymentCard(
+                      icon: Icons.payment,
+                      title: 'Apple Pay',
+                      isSelected: _selectedPaymentMethod == 'Apple Pay',
+                      onTap: () => _selectPaymentMethod('Apple Pay'),
+                      customIcon: _buildApplePayIcon(),
+                    ),
+                    const SizedBox(height: 12),
+                    _buildPaymentCard(
+                      icon: Icons.payment,
+                      title: 'Google Pay',
+                      isSelected: _selectedPaymentMethod == 'Google Pay',
+                      onTap: () => _selectPaymentMethod('Google Pay'),
+                      customIcon: _buildGooglePayIcon(),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+            // Bottom Button
+            _buildConfirmButton(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeader() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      child: Row(
+        children: [
+          // Back Button
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+              onPressed: () => Navigator.of(context).pop(),
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+                size: 20,
+              ),
+              padding: EdgeInsets.zero,
+            ),
+          ),
+
+          const SizedBox(width: 16),
+
+          // Title
+          const Text(
+            "Payment Methods",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: AppColors.primaryText,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSectionHeader(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Text(
+        title,
+        style: const TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+          color: AppColors.primaryText,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPaymentCard({
+    required IconData icon,
+    required String title,
+    required bool isSelected,
+    required VoidCallback onTap,
+    bool showArrow = false,
+    Widget? customIcon,
+  }) {
+    return Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(12),
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+                // Icon
+                if (customIcon != null)
+                  customIcon
+                else
+                  Icon(
+                    icon,
+                    color: AppColors.primary,
+                    size: 24,
+                  ),
+
+                const SizedBox(width: 16),
+
+                // Title
+              Expanded(
+                child: Text(
+                  title,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.primaryText,
+                    ),
+                  ),
+                ),
+
+                // Radio Button or Arrow
+                if (showArrow)
+                  Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.grey[400],
+                    size: 16,
+                  )
+                else
+              Container(
+                width: 20,
+                height: 20,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                        color: isSelected ? AppColors.primary : Colors.grey[300]!,
+                    width: 2,
+                  ),
+                      color: isSelected ? AppColors.primary : Colors.white,
+                ),
+                child: isSelected
+                        ? const Icon(
+                            Icons.check,
+                            color: Colors.white,
+                            size: 14,
+                          )
+                    : null,
+              ),
+            ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPaypalIcon() {
+    return Container(
+      width: 24,
+      height: 24,
+      decoration: BoxDecoration(
+        color: const Color(0xFF0070BA),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: const Center(
+        child: Text(
+          'P',
+          style: TextStyle(
+      color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildApplePayIcon() {
+    return Container(
+      width: 24,
+      height: 24,
+      decoration: const BoxDecoration(
+        color: Colors.black,
+        shape: BoxShape.circle,
+      ),
+      child: const Icon(
+        Icons.apple,
+        color: Colors.white,
+        size: 20,
+      ),
+    );
+  }
+
+  Widget _buildGooglePayIcon() {
+    return Container(
+      width: 24,
+      height: 24,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(4),
+        gradient: const LinearGradient(
+          colors: [
+            Color(0xFF4285F4), // Blue
+            Color(0xFFEA4335), // Red
+            Color(0xFFFBBC05), // Yellow
+            Color(0xFF34A853), // Green
+          ],
+        ),
+      ),
+      child: const Center(
+        child: Text(
+          'G',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildConfirmButton() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.1),
+            blurRadius: 8,
+            offset: const Offset(0, -2),
+          ),
+        ],
+      ),
+      child: SafeArea(
+        child: SizedBox(
+          width: double.infinity,
+          height: 50,
+          child: ElevatedButton(
+            onPressed: _confirmPayment,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              elevation: 0,
+            ),
+            child: const Text(
+              "Confirm Payment",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

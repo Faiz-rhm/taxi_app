@@ -484,6 +484,33 @@ class _BookingsScreenState extends State<BookingsScreen> {
                 size: 20,
               ),
             ),
+
+            const SizedBox(height: 16),
+
+            // E-Receipt Button
+            SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/e-receipt');
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: AppColors.textInverse,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  textStyle: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Poppins',
+                  ),
+                ),
+                child: const Text('View E-Receipt'),
+              ),
+            ),
           ],
         ),
       ),
@@ -904,6 +931,33 @@ class _BookingsScreenState extends State<BookingsScreen> {
                 ),
               ],
             ),
+
+            const SizedBox(height: 20),
+
+            // E-Receipt Button
+            SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/e-receipt');
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: AppColors.textInverse,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  textStyle: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Poppins',
+                  ),
+                ),
+                child: const Text('View E-Receipt'),
+              ),
+            ),
           ],
         ),
       ),
@@ -1216,6 +1270,33 @@ class _BookingsScreenState extends State<BookingsScreen> {
                 Icons.keyboard_arrow_up,
                 color: AppColors.hintText,
                 size: 20,
+              ),
+            ),
+
+            const SizedBox(height: 16),
+
+            // E-Receipt Button
+            SizedBox(
+              width: double.infinity,
+              height: 48,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/e-receipt');
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary,
+                  foregroundColor: AppColors.textInverse,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  textStyle: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Poppins',
+                  ),
+                ),
+                child: const Text('View E-Receipt'),
               ),
             ),
           ],

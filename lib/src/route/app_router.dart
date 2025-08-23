@@ -3,8 +3,8 @@ import '../featured/auth/sign_in_screen.dart';
 import '../featured/auth/sign_up_screen.dart';
 import '../featured/auth/forgot_password_screen.dart';
 import '../featured/auth/verify_code_screen.dart';
-import '../featured/home/onboarding_screen.dart';
-import '../featured/home/welcome_screen.dart';
+import '../featured/onboarding/onboarding_screen.dart';
+import '../featured/onboarding/welcome_screen.dart';
 import '../featured/home/home_page.dart';
 import '../featured/tab/tab_screen.dart';
 import '../featured/booking/bookings_screen.dart';
@@ -17,6 +17,7 @@ import '../featured/profile/invite_friends_screen.dart';
 import '../featured/profile/sos_screen.dart';
 import '../featured/profile/notification_screen.dart';
 import '../featured/profile/settings_screen.dart';
+import '../featured/home/e_receipt_screen.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -57,6 +58,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const SettingsScreen());
       case '/bookings':
         return MaterialPageRoute(builder: (_) => const BookingsScreen());
+      case '/e-receipt':
+        return MaterialPageRoute(builder: (_) => const EReceiptScreen());
       default:
         return MaterialPageRoute(builder: (_) => const OnboardingScreen());
     }

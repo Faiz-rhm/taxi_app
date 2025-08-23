@@ -4,6 +4,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../core/services/map_config_service.dart';
 import '../../helper/constants/app_colors.dart';
+import 'pickup_location_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -167,7 +168,17 @@ class _HomePageState extends State<HomePage> {
           top: MediaQuery.of(context).padding.top + 32,
           left: 20,
           right: 20,
-          child: _buildCurrentLocationBar(),
+          child: GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const PickupLocationScreen(),
+                ),
+              );
+            },
+            child: _buildCurrentLocationBar(),
+          ),
         ),
       ],
       ),
@@ -243,20 +254,25 @@ class _HomePageState extends State<HomePage> {
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: [
-                        // Destination Button
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              // Handle destination selection
-                            },
-                            child: _buildDestinationCard(
-                              iconData: Icons.place,
-                              title: "Destination",
-                              subtitle: "Enter Destination",
-                              isHighlighted: true,
-                            ),
+                                              // Destination Button
+                      Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const PickupLocationScreen(),
+                              ),
+                            );
+                          },
+                          child: _buildDestinationCard(
+                            iconData: Icons.place,
+                            title: "Destination",
+                            subtitle: "Enter Destination",
+                            isHighlighted: true,
                           ),
                         ),
+                      ),
 
                         const SizedBox(width: 16),
 
@@ -311,11 +327,15 @@ class _HomePageState extends State<HomePage> {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
         ],
+        border: Border.all(
+          color: AppColors.primary.withValues(alpha: 0.2),
+          width: 1,
+        ),
       ),
       child: Row(
         children: [
@@ -342,10 +362,11 @@ class _HomePageState extends State<HomePage> {
 
           const Spacer(),
 
-          const Icon(
-            Icons.bookmark_border,
+                    // Arrow indicator
+          Icon(
+            Icons.arrow_forward_ios,
             color: AppColors.primary,
-            size: 30,
+            size: 16,
           ),
         ],
       ),
@@ -369,7 +390,7 @@ class _HomePageState extends State<HomePage> {
             : Border.all(color: AppColors.borderLight, width: 1),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -410,7 +431,7 @@ class _HomePageState extends State<HomePage> {
             subtitle,
             style: TextStyle(
               color: isHighlighted
-                  ? Colors.white.withOpacity(0.9)
+                                      ? Colors.white.withValues(alpha: 0.9)
                   : AppColors.secondaryText,
               fontSize: 12,
               fontWeight: FontWeight.w400,
