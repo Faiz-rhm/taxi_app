@@ -422,9 +422,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _createCarMarkers() {
+  Future<void> _createCarMarkers() async {
     // If user location is not available, use default location (NYC)
     final LatLng baseLocation = _currentUserLocation ?? const LatLng(40.7128, -74.0060);
+
+    final icon = await BitmapDescriptor.asset(const ImageConfiguration(size: Size(48, 48)), 'assets/images/car.png');
 
     // Generate car markers near the user's location with better spacing
     setState(() {
@@ -432,31 +434,31 @@ class _HomePageState extends State<HomePage> {
         Marker(
           markerId: const MarkerId('car1'),
           position: LatLng(baseLocation.latitude + 0.003, baseLocation.longitude - 0.002),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+          icon: icon,
           infoWindow: const InfoWindow(title: 'Available Taxi 1'),
         ),
         Marker(
           markerId: const MarkerId('car2'),
           position: LatLng(baseLocation.latitude - 0.002, baseLocation.longitude + 0.004),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+          icon: icon,
           infoWindow: const InfoWindow(title: 'Available Taxi 2'),
         ),
         Marker(
           markerId: const MarkerId('car3'),
           position: LatLng(baseLocation.latitude + 0.001, baseLocation.longitude + 0.003),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+          icon: icon,
           infoWindow: const InfoWindow(title: 'Available Taxi 3'),
         ),
         Marker(
           markerId: const MarkerId('car4'),
           position: LatLng(baseLocation.latitude - 0.004, baseLocation.longitude - 0.001),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+          icon: icon,
           infoWindow: const InfoWindow(title: 'Available Taxi 4'),
         ),
         Marker(
           markerId: const MarkerId('car5'),
           position: LatLng(baseLocation.latitude + 0.002, baseLocation.longitude + 0.001),
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueBlue),
+          icon: icon,
           infoWindow: const InfoWindow(title: 'Available Taxi 5'),
         ),
       };
