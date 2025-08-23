@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../helper/constants/app_colors.dart';
+import 'track_driver_screen.dart';
 
 class RideAcceptedScreen extends StatelessWidget {
   final Map<String, dynamic> driverInfo;
@@ -188,6 +189,11 @@ class RideAcceptedScreen extends StatelessWidget {
   }
 
   void _trackDriver(BuildContext context) {
-    Navigator.pushNamed(context, '/track-driver');
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const TrackDriverScreen(),
+      ),
+    );
   }
 }

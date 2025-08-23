@@ -8,6 +8,12 @@ import '../featured/onboarding/welcome_screen.dart';
 import '../featured/home/home_page.dart';
 import '../featured/home/destination_screen.dart';
 import '../featured/home/saved_places_screen.dart';
+import '../featured/home/track_driver_screen.dart';
+import '../featured/home/arrived_destination_screen.dart';
+import '../featured/home/pay_cash_screen.dart';
+import '../featured/home/cancel_booking_screen.dart';
+import '../featured/home/tip_screen.dart';
+import '../featured/home/rating_screen.dart';
 import '../featured/tab/tab_screen.dart';
 import '../featured/booking/bookings_screen.dart';
 import '../featured/profile/complete_profile_screen.dart';
@@ -42,6 +48,18 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const DestinationScreen());
       case '/saved-places':
         return MaterialPageRoute(builder: (_) => const SavedPlacesScreen());
+      case '/track-driver':
+        return MaterialPageRoute(builder: (_) => const TrackDriverScreen());
+      case '/arrived-destination':
+        return MaterialPageRoute(builder: (_) => const ArrivedDestinationScreen());
+      case '/pay-cash':
+        return MaterialPageRoute(builder: (_) => const PayCashScreen());
+      case '/cancel-booking':
+        return MaterialPageRoute(builder: (_) => const CancelBookingScreen());
+      case '/tip':
+        return MaterialPageRoute(builder: (_) => const TipScreen());
+      case '/rating':
+        return MaterialPageRoute(builder: (_) => const RatingScreen());
       case '/tabs':
         return MaterialPageRoute(builder: (_) => const TabScreen());
       case '/complete-profile':
