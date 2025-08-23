@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../../helper/constants/app_colors.dart';
 import 'location_permission_screen.dart';
 
 class NotificationPermissionScreen extends StatefulWidget {
@@ -17,7 +16,6 @@ class _NotificationPermissionScreenState extends State<NotificationPermissionScr
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5), // Very light gray background
       body: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(

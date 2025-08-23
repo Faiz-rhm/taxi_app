@@ -17,7 +17,6 @@ class _LocationPermissionScreenState extends State<LocationPermissionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5), // Very light gray background
       body: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(

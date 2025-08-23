@@ -37,47 +37,22 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
             color: Color(0xFF242424),
           ),
         ),
-        leading: GestureDetector(
-          onTap: () => Navigator.pop(context),
-          child: Container(
-            margin: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: const Color(0xFFF5F5F5),
-              borderRadius: BorderRadius.circular(22),
-            ),
-            child: const Icon(
-              Icons.arrow_back,
-              color: Color(0xFF242424),
-              size: 24,
-            ),
-          ),
-        ),
       ),
       body: Column(
         children: [
-          // Content area
-          Expanded(
-            child: Container(
-              color: const Color(0xFFF5F4F1), // Beige/cream background
-              child: Column(
-                children: [
-                  // Wallet Balance Card
-                  _buildWalletBalanceCard(),
+          // Wallet Balance Card
+          _buildWalletBalanceCard(),
 
-                  // Predefined Amount Buttons
-                  _buildPredefinedAmounts(),
+          // Predefined Amount Buttons
+          _buildPredefinedAmounts(),
 
-                  // Custom Amount Input
-                  _buildCustomAmountInput(),
+          // Custom Amount Input
+          _buildCustomAmountInput(),
 
-                  const Spacer(),
+          const Spacer(),
 
-                  // Add Money Button
-                  _buildAddMoneyButton(),
-                ],
-              ),
-            ),
-          ),
+          // Add Money Button
+          _buildAddMoneyButton(),
         ],
       ),
     );

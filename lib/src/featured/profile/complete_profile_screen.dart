@@ -37,11 +37,9 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-
         elevation: 0,
         centerTitle: true,
       ),
-      backgroundColor: const Color(0xFFF5F5F5), // Very light gray background
       body: _buildMainContent(),
     );
   }
