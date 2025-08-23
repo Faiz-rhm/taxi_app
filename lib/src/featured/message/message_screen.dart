@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../helper/constants/app_colors.dart';
+import 'chat_screen.dart';
 
 class MessageScreen extends StatelessWidget {
   const MessageScreen({super.key});
@@ -9,38 +10,191 @@ class MessageScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Messages'),
-        backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.textInverse,
+        elevation: 0,
       ),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      body: _buildChatList(),
+    );
+  }
+
+  Widget _buildChatList() {
+    final List<ChatConversation> conversations = [
+      ChatConversation(
+        name: "Esther Howard",
+        lastMessage: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        timestamp: "08:04 pm",
+        isOnline: true,
+        unreadCount: 2,
+      ),
+      ChatConversation(
+        name: "Jenny Wilson",
+        lastMessage: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        timestamp: "07:30 pm",
+        isOnline: false,
+        unreadCount: 0,
+      ),
+      ChatConversation(
+        name: "Robert Johnson",
+        lastMessage: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        timestamp: "06:15 pm",
+        isOnline: true,
+        unreadCount: 1,
+      ),
+      ChatConversation(
+        name: "Sarah Davis",
+        lastMessage: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        timestamp: "05:45 pm",
+        isOnline: false,
+        unreadCount: 0,
+      ),
+      ChatConversation(
+        name: "Michael Brown",
+        lastMessage: "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+        timestamp: "04:20 pm",
+        isOnline: false,
+        unreadCount: 0,
+      ),
+    ];
+
+    return ListView.builder(
+      itemCount: conversations.length,
+      itemBuilder: (context, index) {
+        final conversation = conversations[index];
+        return _buildChatTile(context, conversation);
+      },
+    );
+  }
+
+  Widget _buildChatTile(BuildContext context, ChatConversation conversation) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.05),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: ListTile(
+        contentPadding: const EdgeInsets.all(16),
+        leading: Stack(
           children: [
-            Icon(
-              Icons.message_outlined,
-              size: 64,
-              color: AppColors.secondaryText,
-            ),
-            SizedBox(height: 16),
-            Text(
-              'No messages yet',
-              style: TextStyle(
-                fontSize: 18,
-                color: AppColors.secondaryText,
+            // Profile Picture
+            CircleAvatar(
+              radius: 28,
+              backgroundColor: Colors.grey[300],
+              child: Text(
+                conversation.name.substring(0, 1).toUpperCase(),
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
-            SizedBox(height: 8),
-            Text(
-              'Your conversations with drivers will appear here',
-              style: TextStyle(
-                fontSize: 14,
-                color: AppColors.hintText,
+            // Online Status Indicator
+            if (conversation.isOnline)
+              Positioned(
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  width: 16,
+                  height: 16,
+                  decoration: BoxDecoration(
+                    color: Colors.green,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: Colors.white, width: 2),
+                  ),
+                ),
               ),
-              textAlign: TextAlign.center,
+          ],
+        ),
+        title: Row(
+          children: [
+            Expanded(
+              child: Text(
+                conversation.name,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.primaryText,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            Text(
+              conversation.timestamp,
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey[600],
+              ),
             ),
           ],
         ),
+        subtitle: Row(
+          children: [
+            Expanded(
+              child: Text(
+                conversation.lastMessage,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey[600],
+                  height: 1.3,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            if (conversation.unreadCount > 0)
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  conversation.unreadCount.toString(),
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+          ],
+        ),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                             builder: (context) => ChatScreen(
+                 contactName: conversation.name,
+                 isOnline: conversation.isOnline,
+               ),
+            ),
+          );
+        },
       ),
     );
   }
+}
+
+class ChatConversation {
+  final String name;
+  final String lastMessage;
+  final String timestamp;
+  final bool isOnline;
+  final int unreadCount;
+
+  ChatConversation({
+    required this.name,
+    required this.lastMessage,
+    required this.timestamp,
+    required this.isOnline,
+    required this.unreadCount,
+  });
 }
