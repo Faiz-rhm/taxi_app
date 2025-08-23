@@ -5,6 +5,7 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../core/services/map_config_service.dart';
 import '../../helper/constants/app_colors.dart';
 import 'pickup_location_screen.dart';
+import 'destination_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -261,7 +262,7 @@ class _HomePageState extends State<HomePage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const PickupLocationScreen(),
+                                builder: (context) => const DestinationScreen(),
                               ),
                             );
                           },

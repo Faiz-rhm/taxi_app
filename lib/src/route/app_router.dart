@@ -6,6 +6,8 @@ import '../featured/auth/verify_code_screen.dart';
 import '../featured/onboarding/onboarding_screen.dart';
 import '../featured/onboarding/welcome_screen.dart';
 import '../featured/home/home_page.dart';
+import '../featured/home/destination_screen.dart';
+import '../featured/home/saved_places_screen.dart';
 import '../featured/tab/tab_screen.dart';
 import '../featured/booking/bookings_screen.dart';
 import '../featured/profile/complete_profile_screen.dart';
@@ -36,6 +38,10 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const VerifyCodeScreen(email: ''));
       case '/home':
         return MaterialPageRoute(builder: (_) => const HomePage());
+      case '/destination':
+        return MaterialPageRoute(builder: (_) => const DestinationScreen());
+      case '/saved-places':
+        return MaterialPageRoute(builder: (_) => const SavedPlacesScreen());
       case '/tabs':
         return MaterialPageRoute(builder: (_) => const TabScreen());
       case '/complete-profile':
