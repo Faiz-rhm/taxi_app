@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../helper/constants/app_colors.dart';
+
 class AddMoneyScreen extends StatefulWidget {
   const AddMoneyScreen({super.key});
 
@@ -63,7 +65,7 @@ class _AddMoneyScreenState extends State<AddMoneyScreen> {
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: const Color(0xFFE8DDD4), // Cream/beige background
+        color: AppColors.primaryLight.withOpacity(0.1), // Cream/beige background
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(

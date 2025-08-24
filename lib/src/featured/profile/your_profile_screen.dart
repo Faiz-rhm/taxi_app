@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../helper/constants/app_colors.dart';
+
 class YourProfileScreen extends StatefulWidget {
   const YourProfileScreen({super.key});
 
@@ -216,37 +218,26 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
               ),
             ],
           ),
-          child: Row(
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: _phoneController,
-                  keyboardType: TextInputType.phone,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(12),
-                        bottomLeft: Radius.circular(12),
-                      ),
-                      borderSide: BorderSide.none,
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    contentPadding: EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 16,
-                    ),
+          child: Expanded(
+            child: TextField(
+              controller: _phoneController,
+              keyboardType: TextInputType.phone,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    bottomLeft: Radius.circular(12),
                   ),
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Color(0xFF242424),
-                  ),
+                  borderSide: BorderSide.none,
                 ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                child: GestureDetector(
-                  onTap: () {
+                filled: true,
+                fillColor: Colors.white,
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 16,
+                ),
+                suffixIcon: TextButton(
+                  onPressed: () {
                     // Handle phone number change
                   },
                   child: const Text(
@@ -259,9 +250,13 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
                   ),
                 ),
               ),
-            ],
+              style: const TextStyle(
+                fontSize: 16,
+                color: Color(0xFF242424),
+              ),
+            ),
           ),
-        ),
+        )
       ],
     );
   }
@@ -283,6 +278,7 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: AppColors.borderLight),
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withOpacity(0.05),

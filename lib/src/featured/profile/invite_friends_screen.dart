@@ -31,7 +31,7 @@ class _InviteFriendsScreenState extends State<InviteFriendsScreen> {
     {
       'name': 'Jacob Jones',
       'phone': '316.555.0116',
-      'profileImage': 'assets/images/user4.png',
+      'profileImage': 'assets/images/user4.jpg',
       'isInvited': false,
     },
     {
@@ -69,12 +69,8 @@ class _InviteFriendsScreenState extends State<InviteFriendsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-        title: const Text('Invite Friends', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF242424)),),
+        title: const Text('Invite Friends'),
       ),
       body: _buildContactsList(),
     );
@@ -115,17 +111,6 @@ class _InviteFriendsScreenState extends State<InviteFriendsScreen> {
                 ),
               // Fallback if image doesn't exist
               color: const Color(0xFFE0E0E0),
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
-                color: Colors.transparent,
-              ),
-              child: const Icon(
-                Icons.person,
-                color: Color(0xFF9E9E9E),
-                size: 30,
-              ),
             ),
           ),
 

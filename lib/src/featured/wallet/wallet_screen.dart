@@ -103,7 +103,7 @@ class _WalletScreenState extends State<WalletScreen> {
       margin: const EdgeInsets.all(20),
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: AppColors.backgroundVariant, // Light orange background
+        color: AppColors.primaryLight.withOpacity(0.1), // Light orange background
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -127,7 +127,7 @@ class _WalletScreenState extends State<WalletScreen> {
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(
-                  Icons.remove,
+                  Icons.wallet,
                   color: AppColors.surface,
                   size: 20,
                 ),
@@ -146,7 +146,6 @@ class _WalletScreenState extends State<WalletScreen> {
           const SizedBox(height: 20),
           SizedBox(
             width: double.infinity,
-            height: 48,
             child: ElevatedButton(
               onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => AddMoneyScreen())),
               style: ElevatedButton.styleFrom(
@@ -263,7 +262,7 @@ class _WalletScreenState extends State<WalletScreen> {
                 ),
               ),
               Text(
-                'Balance \$${transaction['balance'].toStringAsFixed(2)}',
+                '\$${transaction['balance'].toStringAsFixed(2)}',
                 style: const TextStyle(
                   fontSize: 14,
                   color: AppColors.hintText,

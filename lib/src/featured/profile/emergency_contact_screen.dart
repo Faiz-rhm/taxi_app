@@ -40,22 +40,16 @@ class _EmergencyContactScreenState extends State<EmergencyContactScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-        title: const Text('Emergency Contact', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF242424)),),
+        title: const Text('Emergency Contact',),
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: _buildContactsList(),
-            ),
-            _buildBottomActions(),
-          ],
-        ),
+      body: Column(
+        children: [
+          Expanded(
+            child: _buildContactsList(),
+          ),
+          _buildBottomActions(),
+        ],
       ),
     );
   }
@@ -286,6 +280,7 @@ class _EmergencyContactScreenState extends State<EmergencyContactScreen> {
                 color: AppColors.primary,
                 fontWeight: FontWeight.w600,
                 decoration: TextDecoration.underline,
+                decorationColor: AppColors.primary,
               ),
             ),
           ),

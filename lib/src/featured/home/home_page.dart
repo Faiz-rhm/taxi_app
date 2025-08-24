@@ -489,7 +489,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _updateCurrentLocationMarker() async {
-    final icon = await BitmapDescriptor.asset(const ImageConfiguration(size: Size(48, 48)), 'assets/images/pine.png');
+    final icon = await BitmapDescriptor.fromAssetImage(const ImageConfiguration(size: Size(48, 48)), 'assets/images/pine.png');
 
     if (_currentUserLocation != null) {
       setState(() {

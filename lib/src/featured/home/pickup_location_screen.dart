@@ -18,6 +18,7 @@ class _PickupLocationScreenState extends State<PickupLocationScreen> {
   LatLng? _selectedLocation;
   LatLng? _currentUserLocation;
   bool _isLocationLoading = false;
+  Set<Marker> _markers = {};
 
   // Default location (New York City)
   static const CameraPosition _defaultLocation = CameraPosition(
@@ -67,6 +68,9 @@ class _PickupLocationScreenState extends State<PickupLocationScreen> {
             _selectedLocation = _currentUserLocation;
           });
 
+          // Update markers
+          _updateMarkers();
+
           // Update map camera to user's location
           if (_mapController != null && _currentUserLocation != null) {
             _mapController!.animateCamera(
@@ -101,6 +105,9 @@ class _PickupLocationScreenState extends State<PickupLocationScreen> {
           _selectedLocation = _currentUserLocation;
         });
 
+        // Update markers
+        _updateMarkers();
+
         if (_mapController != null) {
           _mapController!.animateCamera(
             CameraUpdate.newCameraPosition(
@@ -127,6 +134,7 @@ class _PickupLocationScreenState extends State<PickupLocationScreen> {
     _addressController.clear();
     setState(() {
       _selectedLocation = null;
+      _markers.clear();
     });
   }
 
@@ -157,21 +165,50 @@ class _PickupLocationScreenState extends State<PickupLocationScreen> {
       _selectedLocation = location;
     });
 
+    // Update markers
+    _updateMarkers();
+
     // Update the address text (in a real app, you'd reverse geocode this)
     _addressController.text = "Selected Location (${location.latitude.toStringAsFixed(4)}, ${location.longitude.toStringAsFixed(4)})";
   }
 
-  Set<Marker> get _markers {
-    if (_selectedLocation == null) return {};
+  Future<void> _updateMarkers() async {
+    if (_selectedLocation == null) {
+      setState(() {
+        _markers.clear();
+      });
+      return;
+    }
 
-    return {
-      Marker(
-        markerId: const MarkerId('pickup_location'),
-        position: _selectedLocation!,
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
-        infoWindow: const InfoWindow(title: 'Pick-up Location'),
-      ),
-    };
+    try {
+      final icon = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(size: Size(48, 48)),
+        'assets/images/pine1.png'
+      );
+
+      setState(() {
+        _markers = {
+          Marker(
+            markerId: const MarkerId('pickup_location'),
+            position: _selectedLocation!,
+            icon: icon,
+            infoWindow: const InfoWindow(title: 'Pick-up Location'),
+          ),
+        };
+      });
+    } catch (e) {
+      debugPrint('Error loading marker icon: $e');
+      // Fallback to default marker if custom icon fails
+      setState(() {
+        _markers = {
+          Marker(
+            markerId: const MarkerId('pickup_location'),
+            position: _selectedLocation!,
+            infoWindow: const InfoWindow(title: 'Pick-up Location'),
+          ),
+        };
+      });
+    }
   }
 
   @override
@@ -293,13 +330,12 @@ class _PickupLocationScreenState extends State<PickupLocationScreen> {
       top: MediaQuery.of(context).padding.top + 80,
       left: 16,
       right: 16,
-      child: Expanded(
-        child: TextField(
+      child: TextField(
           controller: _addressController,
           decoration: InputDecoration(
             hintText: "Enter your pick-up address",
             border: InputBorder.none,
-            contentPadding: EdgeInsets.zero,
+            contentPadding: EdgeInsets.all(16),
             prefixIcon: Icon(Icons.search, color: AppColors.primary),
             suffixIcon: _addressController.text.isNotEmpty ? IconButton(
               onPressed: _clearAddress,
@@ -314,13 +350,12 @@ class _PickupLocationScreenState extends State<PickupLocationScreen> {
             // In a real app, you'd implement address autocomplete here
           },
         ),
-      ),
     );
   }
 
   Widget _buildCurrentLocationButton() {
     return Positioned(
-      bottom: 120,
+      bottom: 130,
       right: 16,
       child: Container(
         width: 48,
@@ -364,7 +399,7 @@ class _PickupLocationScreenState extends State<PickupLocationScreen> {
       left: 0,
       right: 0,
       child: Container(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.only(left: 16, right: 16, bottom: 24),
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [

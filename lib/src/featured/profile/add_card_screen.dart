@@ -29,68 +29,25 @@ class _AddCardScreenState extends State<AddCardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: Column(
-          children: [
-            _buildHeader(),
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(20),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    children: [
-                      _buildCardPreview(),
-                      const SizedBox(height: 32),
-                      _buildInputFields(),
-                      const SizedBox(height: 24),
-                      _buildSaveCardCheckbox(),
-                      const SizedBox(height: 32),
-                      _buildAddCardButton(),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+      appBar: AppBar(
+        title: const Text('Add Card'),
       ),
-    );
-  }
-
-  Widget _buildHeader() {
-    return Container(
-      decoration: const BoxDecoration(color: Colors.white),
-      padding: const EdgeInsets.all(20),
-      child: Row(
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: AppColors.light,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.arrow_back_ios, color: AppColors.secondary, size: 20),
-            ),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              _buildCardPreview(),
+              const SizedBox(height: 32),
+              _buildInputFields(),
+              const SizedBox(height: 24),
+              _buildSaveCardCheckbox(),
+              const SizedBox(height: 32),
+              _buildAddCardButton(),
+            ],
           ),
-          const Expanded(
-            child: Center(
-              child: Text(
-                'Add Card',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.secondary,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 40),
-        ],
+        ),
       ),
     );
   }

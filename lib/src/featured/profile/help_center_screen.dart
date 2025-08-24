@@ -8,13 +8,11 @@ class HelpCenterScreen extends StatefulWidget {
   State<HelpCenterScreen> createState() => _HelpCenterScreenState();
 }
 
-class _HelpCenterScreenState extends State<HelpCenterScreen> {
-  int _selectedTabIndex = 0;
+class _HelpCenterScreenState extends State<HelpCenterScreen> with TickerProviderStateMixin {
   int _selectedCategoryIndex = 0;
   int _expandedFaqIndex = 0;
   int _expandedContactIndex = 1; // WhatsApp is expanded by default
 
-  final List<String> _tabs = ['FAQ', 'Contact Us'];
   final List<String> _categories = ['All', 'Services', 'General', 'Account', 'Payment', 'Safety'];
 
   final List<Map<String, dynamic>> _faqItems = [
@@ -102,25 +100,53 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-        title: const Text('Help Center', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF242424)),),
-      ),
-      body: Column(
-        children: [
-          _buildSearchBar(),
-          _buildTabs(),
-          if (_selectedTabIndex == 0) ...[
-            _buildCategoryFilters(),
-            Expanded(child: _buildFaqList()),
-          ] else ...[
-            Expanded(child: _buildContactList()),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+          appBar: AppBar(
+          title: const Text('Help Center'),
+          bottom: TabBar(
+            tabs: const [
+              Tab(text: 'FAQ'),
+              Tab(text: 'Contact Us'),
+            ],
+            labelColor: AppColors.primary,
+            unselectedLabelColor: AppColors.textSecondary,
+            indicatorColor: AppColors.primary,
+            indicatorWeight: 3,
+            dividerColor: AppColors.borderLight,
+            labelStyle: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              fontFamily: 'Poppins',
+            ),
+            unselectedLabelStyle: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              fontFamily: 'Poppins',
+            ),
+          ),
+        ),
+        body: Column(
+          children: [
+            _buildSearchBar(),
+            Expanded(
+              child: TabBarView(
+                children: [
+                  // FAQ Tab
+                  Column(
+                    children: [
+                      _buildCategoryFilters(),
+                      Expanded(child: _buildFaqList()),
+                    ],
+                  ),
+                  // Contact Us Tab
+                  _buildContactList(),
+                ],
+              ),
+            ),
           ],
-        ],
+        ),
       ),
     );
   }
@@ -131,6 +157,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.borderLight),
         boxShadow: [
           BoxShadow(
             color: AppColors.shadowLight,
@@ -150,49 +177,6 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
         onChanged: (value) {
           // Implement search functionality
         },
-      ),
-    );
-  }
-
-  Widget _buildTabs() {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      child: Row(
-        children: _tabs.asMap().entries.map((entry) {
-          final index = entry.key;
-          final tab = entry.value;
-          final isSelected = index == _selectedTabIndex;
-
-          return Expanded(
-            child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  _selectedTabIndex = index;
-                });
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: isSelected ? AppColors.primary : Colors.transparent,
-                      width: 2,
-                    ),
-                  ),
-                ),
-                child: Text(
-                  tab,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-                    color: isSelected ? AppColors.primary : AppColors.secondaryText,
-                  ),
-                ),
-              ),
-            ),
-          );
-        }).toList(),
       ),
     );
   }
@@ -223,7 +207,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
               child: Text(
                 _categories[index],
                 style: TextStyle(
-                  color: isSelected ? Colors.white : AppColors.secondaryText,
+                  color: isSelected ? Colors.white : AppColors.textSecondary,
                   fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
                 ),
               ),
@@ -285,7 +269,7 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
                   item['answer'],
                   style: TextStyle(
                     fontSize: 14,
-                    color: AppColors.secondaryText,
+                    color: AppColors.textSecondary,
                     height: 1.5,
                   ),
                   maxLines: 5,
@@ -362,14 +346,14 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
                 const SizedBox(width: 8),
                 Icon(
                   isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
-                  color: AppColors.secondaryText,
+                  color: AppColors.textSecondary,
                   size: 16,
                 ),
               ],
             ),
             children: [
               Container(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
                 child: Row(
                   children: [
                     Container(
@@ -381,11 +365,13 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
                       ),
                     ),
                     const SizedBox(width: 12),
-                    Text(
-                      item['details'],
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: AppColors.secondaryText,
+                    Expanded(
+                      child: Text(
+                        item['details'],
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: AppColors.textSecondary,
+                        ),
                       ),
                     ),
                   ],

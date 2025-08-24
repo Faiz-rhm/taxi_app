@@ -9,11 +9,7 @@ class BookingsScreen extends StatefulWidget {
   State<BookingsScreen> createState() => _BookingsScreenState();
 }
 
-class _BookingsScreenState extends State<BookingsScreen> {
-  int _selectedTabIndex = 1; // 0: Active, 1: Completed, 2: Cancelled
-
-  final List<String> _tabs = ['Active', 'Completed', 'Cancelled'];
-
+class _BookingsScreenState extends State<BookingsScreen> with TickerProviderStateMixin {
   // Sample completed bookings data
   final List<Map<String, dynamic>> _completedBookings = [
     {
@@ -50,7 +46,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
   final List<Map<String, dynamic>> _cancelledBookings = [
     {
       'userName': 'Cody Fisher',
-              'userImage': 'assets/images/user4.png', // User image
+              'userImage': 'assets/images/user4.jpg', // User image
       'vehicleType': 'MPV (5 Seater)',
       'rating': '5.0',
       'distance': '4.5 Mile',
@@ -98,104 +94,74 @@ class _BookingsScreenState extends State<BookingsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-
-      appBar: AppBar(
-
-        elevation: 0,
-        centerTitle: true,
-        title: const Text(
-          'Bookings',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: AppColors.primaryText,
+    return DefaultTabController(
+      length: 3,
+      initialIndex: 1, // Start with Completed tab
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          centerTitle: true,
+          title: const Text(
+            'Bookings',
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: AppColors.primaryText,
+            ),
           ),
-        ),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
-          child: Container(
-            color: AppColors.surface,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              children: _tabs.asMap().entries.map((entry) {
-                int index = entry.key;
-                String tab = entry.value;
-                bool isSelected = _selectedTabIndex == index;
-
-                return Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _selectedTabIndex = index;
-                      });
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            color: isSelected ? AppColors.primary : Colors.transparent,
-                            width: 2,
-                          ),
-                        ),
-                      ),
-                      child: Text(
-                        tab,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: isSelected ? AppColors.primary : AppColors.hintText,
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              }).toList(),
+          bottom: TabBar(
+            tabs: const [
+              Tab(text: 'Active'),
+              Tab(text: 'Completed'),
+              Tab(text: 'Cancelled'),
+            ],
+            labelColor: AppColors.primary,
+            unselectedLabelColor: AppColors.hintText,
+            dividerColor: AppColors.borderLight,
+            indicatorColor: AppColors.primary,
+            indicatorWeight: 2,
+            labelStyle: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              fontFamily: 'Poppins',
+            ),
+            unselectedLabelStyle: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              fontFamily: 'Poppins',
             ),
           ),
         ),
-      ),
-      body: Column(
-        children: [
-          // Content
-          Expanded(
-            child: _buildContent(),
-          ),
-        ],
+        body: TabBarView(
+          children: [
+            // Active Tab
+            ListView.builder(
+              padding: const EdgeInsets.all(20),
+              itemCount: _activeBookings.length,
+              itemBuilder: (context, index) {
+                return _buildActiveBookingCard(_activeBookings[index]);
+              },
+            ),
+            // Completed Tab
+            ListView.builder(
+              padding: const EdgeInsets.all(20),
+              itemCount: _completedBookings.length,
+              itemBuilder: (context, index) {
+                return _buildBookingCard(_completedBookings[index]);
+              },
+            ),
+            // Cancelled Tab
+            ListView.builder(
+              padding: const EdgeInsets.all(20),
+              itemCount: _cancelledBookings.length,
+              itemBuilder: (context, index) {
+                return _buildCancelledBookingCard(_cancelledBookings[index]);
+              },
+            ),
+          ],
+        ),
       ),
     );
-  }
-
-  Widget _buildContent() {
-    if (_selectedTabIndex == 0) { // Active tab
-      return ListView.builder(
-        padding: const EdgeInsets.all(20),
-        itemCount: _activeBookings.length,
-        itemBuilder: (context, index) {
-          return _buildActiveBookingCard(_activeBookings[index]);
-        },
-      );
-    } else if (_selectedTabIndex == 1) { // Completed tab
-      return ListView.builder(
-        padding: const EdgeInsets.all(20),
-        itemCount: _completedBookings.length,
-        itemBuilder: (context, index) {
-          return _buildBookingCard(_completedBookings[index]);
-        },
-      );
-    } else if (_selectedTabIndex == 2) { // Cancelled tab
-      return ListView.builder(
-        padding: const EdgeInsets.all(20),
-        itemCount: _cancelledBookings.length,
-        itemBuilder: (context, index) {
-          return _buildCancelledBookingCard(_cancelledBookings[index]);
-        },
-      );
-    } else {
-      return const SizedBox.shrink();
-    }
   }
 
   Widget _buildBookingCard(Map<String, dynamic> booking) {
@@ -236,38 +202,34 @@ class _BookingsScreenState extends State<BookingsScreen> {
                     color: AppColors.borderLight,
                     borderRadius: BorderRadius.circular(25),
                   ),
-                  child: const Icon(
-                    Icons.person,
-                    color: AppColors.hintText,
-                    size: 30,
-                  ),
+                  child: Image.asset(booking['userImage']),
                 ),
                 const SizedBox(width: 16),
 
                 // User Details
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        booking['userName'],
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primaryText,
-                        ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      booking['userName'],
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primaryText,
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        booking['vehicleType'],
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: AppColors.hintText,
-                        ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      booking['vehicleType'],
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: AppColors.hintText,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
+
+                Spacer(),
 
                 // Rating
                 Row(
@@ -291,67 +253,69 @@ class _BookingsScreenState extends State<BookingsScreen> {
               ],
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
+
+            Divider(
+              color: AppColors.borderLight,
+              height: 1,
+            ),
+
+            const SizedBox(height: 16),
 
             // Ride Summary
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.location_on,
-                        color: AppColors.primary,
-                        size: 16,
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.location_on,
+                      color: AppColors.primary,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      booking['distance'],
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: AppColors.primaryText,
                       ),
-                      const SizedBox(width: 8),
-                      Text(
-                        booking['distance'],
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: AppColors.primaryText,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.access_time,
-                        color: AppColors.primary,
-                        size: 16,
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.access_time,
+                      color: AppColors.primary,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      booking['duration'],
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: AppColors.primaryText,
                       ),
-                      const SizedBox(width: 8),
-                      Text(
-                        booking['duration'],
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: AppColors.primaryText,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.attach_money,
-                        color: AppColors.primary,
-                        size: 16,
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.attach_money,
+                      color: AppColors.primary,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      booking['pricePerMile'],
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: AppColors.primaryText,
                       ),
-                      const SizedBox(width: 8),
-                      Text(
-                        booking['pricePerMile'],
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: AppColors.primaryText,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -359,8 +323,8 @@ class _BookingsScreenState extends State<BookingsScreen> {
             const SizedBox(height: 20),
 
             // Date & Time
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   'Date & Time',
@@ -381,7 +345,14 @@ class _BookingsScreenState extends State<BookingsScreen> {
               ],
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
+
+            Divider(
+              color: AppColors.borderLight,
+              height: 1,
+            ),
+
+            const SizedBox(height: 16),
 
             // Route Details
             Row(
@@ -390,14 +361,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
                 Expanded(
                   child: Row(
                     children: [
-                      Container(
-                        width: 12,
-                        height: 12,
-                        decoration: const BoxDecoration(
-                          color: AppColors.primaryText,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
+                      Icon(Icons.circle_outlined),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
@@ -416,7 +380,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
 
             // Dashed line
             Container(
-              margin: const EdgeInsets.only(left: 5),
+              margin: const EdgeInsets.only(left: 12),
               height: 20,
               child: CustomPaint(
                 painter: DashedLinePainter(),
@@ -432,7 +396,6 @@ class _BookingsScreenState extends State<BookingsScreen> {
                       const Icon(
                         Icons.location_on,
                         color: AppColors.primary,
-                        size: 16,
                       ),
                       const SizedBox(width: 12),
                       Expanded(
@@ -450,7 +413,14 @@ class _BookingsScreenState extends State<BookingsScreen> {
               ],
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
+
+            Divider(
+              color: AppColors.borderLight,
+              height: 1,
+            ),
+
+            const SizedBox(height: 16),
 
             // Car Number
             Row(
@@ -485,32 +455,6 @@ class _BookingsScreenState extends State<BookingsScreen> {
               ),
             ),
 
-            const SizedBox(height: 16),
-
-            // E-Receipt Button
-            SizedBox(
-              width: double.infinity,
-              height: 48,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/e-receipt');
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: AppColors.textInverse,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  textStyle: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'Poppins',
-                  ),
-                ),
-                child: const Text('View E-Receipt'),
-              ),
-            ),
           ],
         ),
       ),
@@ -555,38 +499,34 @@ class _BookingsScreenState extends State<BookingsScreen> {
                     color: AppColors.borderLight,
                     borderRadius: BorderRadius.circular(25),
                   ),
-                  child: const Icon(
-                    Icons.person,
-                    color: AppColors.hintText,
-                    size: 30,
-                  ),
+                  child: Image.asset(booking['userImage']),
                 ),
                 const SizedBox(width: 16),
 
                 // User Details
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        booking['userName'],
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primaryText,
-                        ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      booking['userName'],
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primaryText,
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        booking['vehicleType'],
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: AppColors.hintText,
-                        ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      booking['vehicleType'],
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: AppColors.hintText,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
+
+                const Spacer(),
 
                 // Rating
                 Row(
@@ -610,67 +550,69 @@ class _BookingsScreenState extends State<BookingsScreen> {
               ],
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
+
+            Divider(
+              color: AppColors.borderLight,
+              height: 1,
+            ),
+
+            const SizedBox(height: 16),
 
             // Ride Summary
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.location_on,
-                        color: AppColors.primary,
-                        size: 16,
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.location_on,
+                      color: AppColors.primary,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      booking['distance'],
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: AppColors.primaryText,
                       ),
-                      const SizedBox(width: 8),
-                      Text(
-                        booking['distance'],
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: AppColors.primaryText,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.access_time,
-                        color: AppColors.primary,
-                        size: 16,
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.access_time,
+                      color: AppColors.primary,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      booking['duration'],
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: AppColors.primaryText,
                       ),
-                      const SizedBox(width: 8),
-                      Text(
-                        booking['duration'],
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: AppColors.primaryText,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.attach_money,
-                        color: AppColors.primary,
-                        size: 16,
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.attach_money,
+                      color: AppColors.primary,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      booking['pricePerMile'],
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: AppColors.primaryText,
                       ),
-                      const SizedBox(width: 8),
-                      Text(
-                        booking['pricePerMile'],
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: AppColors.primaryText,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -699,7 +641,14 @@ class _BookingsScreenState extends State<BookingsScreen> {
               ],
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
+
+            Divider(
+              color: AppColors.borderLight,
+              height: 1,
+            ),
+
+            const SizedBox(height: 16),
 
             // Route Details
             Row(
@@ -708,14 +657,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
                 Expanded(
                   child: Row(
                     children: [
-                      Container(
-                        width: 12,
-                        height: 12,
-                        decoration: const BoxDecoration(
-                          color: AppColors.primaryText, // Black radio button
-                          shape: BoxShape.circle,
-                        ),
-                      ),
+                      Icon(Icons.circle_outlined),
                       const SizedBox(width: 12),
                       Expanded(
                         child: Text(
@@ -734,7 +676,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
 
             // Dashed line
             Container(
-              margin: const EdgeInsets.only(left: 5),
+              margin: const EdgeInsets.only(left: 12),
               height: 20,
               child: CustomPaint(
                 painter: DashedLinePainter(),
@@ -750,7 +692,6 @@ class _BookingsScreenState extends State<BookingsScreen> {
                       const Icon(
                         Icons.location_on,
                         color: AppColors.primary, // Orange location pin
-                        size: 16,
                       ),
                       const SizedBox(width: 12),
                       Expanded(
@@ -768,7 +709,14 @@ class _BookingsScreenState extends State<BookingsScreen> {
               ],
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
+
+            Divider(
+              color: AppColors.borderLight,
+              height: 1,
+            ),
+
+            const SizedBox(height: 16),
 
             // Car Number
             Row(
@@ -887,11 +835,9 @@ class _BookingsScreenState extends State<BookingsScreen> {
                       // Handle cancel action
                     },
                     style: ElevatedButton.styleFrom(
-
-                      foregroundColor: AppColors.primary,
+                      backgroundColor: AppColors.light,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
-                        side: const BorderSide(color: AppColors.primary),
                       ),
                       elevation: 0,
                       padding: const EdgeInsets.symmetric(vertical: 16),
@@ -901,6 +847,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
+                        color: AppColors.primary,
                       ),
                     ),
                   ),
@@ -933,31 +880,6 @@ class _BookingsScreenState extends State<BookingsScreen> {
             ),
 
             const SizedBox(height: 20),
-
-            // E-Receipt Button
-            SizedBox(
-              width: double.infinity,
-              height: 48,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/e-receipt');
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: AppColors.textInverse,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  textStyle: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'Poppins',
-                  ),
-                ),
-                child: const Text('View E-Receipt'),
-              ),
-            ),
           ],
         ),
       ),
@@ -995,13 +917,13 @@ class _BookingsScreenState extends State<BookingsScreen> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
-                color: AppColors.primary, // Orange background
+                color: AppColors.primary.withOpacity(0.1), // Orange background
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
                 booking['cancelledBy'] == 'driver' ? 'Cancelled by Driver' : 'Cancelled by You',
                 style: const TextStyle(
-                  color: AppColors.surface,
+                  color: AppColors.primary,
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                 ),
@@ -1021,38 +943,34 @@ class _BookingsScreenState extends State<BookingsScreen> {
                     color: AppColors.borderLight,
                     borderRadius: BorderRadius.circular(25),
                   ),
-                  child: const Icon(
-                    Icons.person,
-                    color: AppColors.hintText,
-                    size: 30,
-                  ),
+                  child: Image.asset(booking['userImage']),
                 ),
                 const SizedBox(width: 16),
 
                 // Driver Details
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        booking['userName'],
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primaryText,
-                        ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      booking['userName'],
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.primaryText,
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        booking['vehicleType'],
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: AppColors.hintText,
-                        ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      booking['vehicleType'],
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: AppColors.hintText,
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
+
+                Spacer(),
 
                 // Rating
                 Row(
@@ -1076,67 +994,69 @@ class _BookingsScreenState extends State<BookingsScreen> {
               ],
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
+
+            Divider(
+              color: AppColors.borderLight,
+              height: 1,
+            ),
+
+            const SizedBox(height: 16),
 
             // Ride Summary
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.my_location,
-                        color: AppColors.primary,
-                        size: 16,
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.my_location,
+                      color: AppColors.primary,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      booking['distance'],
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: AppColors.primaryText,
                       ),
-                      const SizedBox(width: 8),
-                      Text(
-                        booking['distance'],
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: AppColors.primaryText,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.access_time,
-                        color: AppColors.primary,
-                        size: 16,
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.access_time,
+                      color: AppColors.primary,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      booking['duration'],
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: AppColors.primaryText,
                       ),
-                      const SizedBox(width: 8),
-                      Text(
-                        booking['duration'],
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: AppColors.primaryText,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.attach_money,
-                        color: AppColors.primary,
-                        size: 16,
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.attach_money,
+                      color: AppColors.primary,
+                      size: 16,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      booking['pricePerMile'],
+                      style: const TextStyle(
+                        fontSize: 14,
+                        color: AppColors.primaryText,
                       ),
-                      const SizedBox(width: 8),
-                      Text(
-                        booking['pricePerMile'],
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: AppColors.primaryText,
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -1165,7 +1085,14 @@ class _BookingsScreenState extends State<BookingsScreen> {
               ],
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
+
+            Divider(
+              color: AppColors.borderLight,
+              height: 1,
+            ),
+
+            const SizedBox(height: 16),
 
             // Route Details
             Row(
@@ -1238,7 +1165,14 @@ class _BookingsScreenState extends State<BookingsScreen> {
               ],
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
+
+            Divider(
+              color: AppColors.borderLight,
+              height: 1,
+            ),
+
+            const SizedBox(height: 16),
 
             // Car Number
             Row(
@@ -1273,32 +1207,6 @@ class _BookingsScreenState extends State<BookingsScreen> {
               ),
             ),
 
-            const SizedBox(height: 16),
-
-            // E-Receipt Button
-            SizedBox(
-              width: double.infinity,
-              height: 48,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/e-receipt');
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: AppColors.textInverse,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  textStyle: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'Poppins',
-                  ),
-                ),
-                child: const Text('View E-Receipt'),
-              ),
-            ),
           ],
         ),
       ),

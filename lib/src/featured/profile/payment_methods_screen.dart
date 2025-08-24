@@ -43,127 +43,87 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
-      body: SafeArea(
-        child: Column(
-        children: [
-            // Header
-            _buildHeader(),
-
-            // Content
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-                    // Cash Section
-                    _buildSectionHeader('Cash'),
-                    _buildPaymentCard(
-                      icon: Icons.money,
-                      title: 'Cash',
-                      isSelected: _selectedPaymentMethod == 'Cash',
-                      onTap: () => _selectPaymentMethod('Cash'),
-                    ),
-
-                    const SizedBox(height: 24),
-
-                    // Wallet Section
-                    _buildSectionHeader('Wallet'),
-                    _buildPaymentCard(
-                      icon: Icons.account_balance_wallet,
-                      title: 'Wallet',
-                      isSelected: _selectedPaymentMethod == 'Wallet',
-                      onTap: () => _selectPaymentMethod('Wallet'),
-                    ),
-
-                    const SizedBox(height: 24),
-
-                    // Credit & Debit Card Section
-                    _buildSectionHeader('Credit & Debit Card'),
-                    _buildPaymentCard(
-                      icon: Icons.credit_card,
-                      title: 'Add Card',
-                      isSelected: false,
-                      onTap: _addCard,
-                      showArrow: true,
-                    ),
-
-                    const SizedBox(height: 24),
-
-                    // More Payment Options Section
-                    _buildSectionHeader('More Payment Options'),
-                    _buildPaymentCard(
-                      icon: Icons.payment,
-                      title: 'Paypal',
-                      isSelected: _selectedPaymentMethod == 'Paypal',
-                      onTap: () => _selectPaymentMethod('Paypal'),
-                      customIcon: _buildPaypalIcon(),
-                    ),
-                    const SizedBox(height: 12),
-                    _buildPaymentCard(
-                      icon: Icons.payment,
-                      title: 'Apple Pay',
-                      isSelected: _selectedPaymentMethod == 'Apple Pay',
-                      onTap: () => _selectPaymentMethod('Apple Pay'),
-                      customIcon: _buildApplePayIcon(),
-                    ),
-                    const SizedBox(height: 12),
-                    _buildPaymentCard(
-                      icon: Icons.payment,
-                      title: 'Google Pay',
-                      isSelected: _selectedPaymentMethod == 'Google Pay',
-                      onTap: () => _selectPaymentMethod('Google Pay'),
-                      customIcon: _buildGooglePayIcon(),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            // Bottom Button
-            _buildConfirmButton(),
-          ],
+      appBar: AppBar(
+        title: Text(
+          "Payment Methods",
         ),
       ),
-    );
-  }
+      body: Column(
+      children: [
 
-  Widget _buildHeader() {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        children: [
-          // Back Button
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              shape: BoxShape.circle,
-            ),
-            child: IconButton(
-              onPressed: () => Navigator.of(context).pop(),
-              icon: const Icon(
-                Icons.arrow_back,
-                color: Colors.black,
-                size: 20,
+          // Content
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+            child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+                  // Cash Section
+                  _buildSectionHeader('Cash'),
+                  _buildPaymentCard(
+                    icon: Icons.money,
+                    title: 'Cash',
+                    isSelected: _selectedPaymentMethod == 'Cash',
+                    onTap: () => _selectPaymentMethod('Cash'),
+                  ),
+
+                  const SizedBox(height: 24),
+
+                  // Wallet Section
+                  _buildSectionHeader('Wallet'),
+                  _buildPaymentCard(
+                    icon: Icons.account_balance_wallet,
+                    title: 'Wallet',
+                    isSelected: _selectedPaymentMethod == 'Wallet',
+                    onTap: () => _selectPaymentMethod('Wallet'),
+                  ),
+
+                  const SizedBox(height: 24),
+
+                  // Credit & Debit Card Section
+                  _buildSectionHeader('Credit & Debit Card'),
+                  _buildPaymentCard(
+                    icon: Icons.credit_card,
+                    title: 'Add Card',
+                    isSelected: false,
+                    onTap: _addCard,
+                    showArrow: true,
+                  ),
+
+                  const SizedBox(height: 24),
+
+                  // More Payment Options Section
+                  _buildSectionHeader('More Payment Options'),
+                  _buildPaymentCard(
+                    icon: Icons.payment,
+                    title: 'Paypal',
+                    isSelected: _selectedPaymentMethod == 'Paypal',
+                    onTap: () => _selectPaymentMethod('Paypal'),
+                    customIcon: _buildPaypalIcon(),
+                  ),
+                  const SizedBox(height: 12),
+                  _buildPaymentCard(
+                    icon: Icons.payment,
+                    title: 'Apple Pay',
+                    isSelected: _selectedPaymentMethod == 'Apple Pay',
+                    onTap: () => _selectPaymentMethod('Apple Pay'),
+                    customIcon: _buildApplePayIcon(),
+                  ),
+                  const SizedBox(height: 12),
+                  _buildPaymentCard(
+                    icon: Icons.payment,
+                    title: 'Google Pay',
+                    isSelected: _selectedPaymentMethod == 'Google Pay',
+                    onTap: () => _selectPaymentMethod('Google Pay'),
+                    customIcon: _buildGooglePayIcon(),
+                  ),
+                ],
               ),
-              padding: EdgeInsets.zero,
             ),
           ),
 
-          const SizedBox(width: 16),
-
-          // Title
-          const Text(
-            "Payment Methods",
-            style: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: AppColors.primaryText,
-            ),
-          ),
+          // Bottom Button
+          _buildConfirmButton(),
         ],
       ),
     );
@@ -195,6 +155,7 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.grey[200]!),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withValues(alpha: 0.05),

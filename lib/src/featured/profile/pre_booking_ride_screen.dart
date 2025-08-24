@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../helper/constants/app_colors.dart';
+
 class PreBookingRideScreen extends StatefulWidget {
   final Map<String, dynamic> bookingData;
 
@@ -147,38 +149,34 @@ class _PreBookingRideScreenState extends State<PreBookingRideScreen> {
                   color: const Color(0xFFE0E0E0),
                   borderRadius: BorderRadius.circular(25),
                 ),
-                child: const Icon(
-                  Icons.person,
-                  color: Color(0xFF9E9E9E),
-                  size: 30,
-                ),
+                child: Image.asset(booking['userImage']),
               ),
               const SizedBox(width: 16),
 
               // Driver Details
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      booking['userName'],
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF242424),
-                      ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    booking['userName'],
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF242424),
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      booking['vehicleType'],
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Color(0xFF9E9E9E),
-                      ),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    booking['vehicleType'],
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFF9E9E9E),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+
+              Spacer(),
 
               // Rating
               Row(
@@ -202,51 +200,52 @@ class _PreBookingRideScreenState extends State<PreBookingRideScreen> {
             ],
           ),
 
-          const SizedBox(height: 20),
+          const SizedBox(height: 16),
+          Divider(
+            color: AppColors.borderLight,
+            height: 1,
+          ),
+          const SizedBox(height: 16),
 
           // Ride Summary
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.location_on,
-                      color: Color(0xFFF2994A),
-                      size: 16,
+              Row(
+                children: [
+                  const Icon(
+                    Icons.location_on,
+                    color: Color(0xFFF2994A),
+                    size: 16,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    booking['distance'],
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFF242424),
                     ),
-                    const SizedBox(width: 8),
-                    Text(
-                      booking['distance'],
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Color(0xFF242424),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Expanded(
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.access_time,
-                      color: Color(0xFFF2994A),
-                      size: 16,
+              Row(
+                children: [
+                  const Icon(
+                    Icons.access_time,
+                    color: Color(0xFFF2994A),
+                    size: 16,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    booking['duration'],
+                    style: const TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFF242424),
                     ),
-                    const SizedBox(width: 8),
-                    Text(
-                      booking['duration'],
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Color(0xFF242424),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Expanded(
-                child: Row(
+              Row(
                   children: [
                     const Icon(
                       Icons.attach_money,
@@ -263,7 +262,6 @@ class _PreBookingRideScreenState extends State<PreBookingRideScreen> {
                     ),
                   ],
                 ),
-              ),
             ],
           ),
 
@@ -291,7 +289,12 @@ class _PreBookingRideScreenState extends State<PreBookingRideScreen> {
             ],
           ),
 
-          const SizedBox(height: 20),
+          const SizedBox(height: 16),
+          Divider(
+            color: AppColors.borderLight,
+            height: 1,
+          ),
+          const SizedBox(height: 16),
 
           // Route Details
           Row(
@@ -300,14 +303,7 @@ class _PreBookingRideScreenState extends State<PreBookingRideScreen> {
               Expanded(
                 child: Row(
                   children: [
-                    Container(
-                      width: 12,
-                      height: 12,
-                      decoration: const BoxDecoration(
-                        color: Color(0xFF242424),
-                        shape: BoxShape.circle,
-                      ),
-                    ),
+                    Icon(Icons.circle_outlined),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(
@@ -326,7 +322,7 @@ class _PreBookingRideScreenState extends State<PreBookingRideScreen> {
 
           // Dashed line
           Container(
-            margin: const EdgeInsets.only(left: 5),
+            margin: const EdgeInsets.only(left: 12),
             height: 20,
             child: CustomPaint(
               painter: DashedLinePainter(),
@@ -342,7 +338,6 @@ class _PreBookingRideScreenState extends State<PreBookingRideScreen> {
                     const Icon(
                       Icons.location_on,
                       color: Color(0xFFF2994A),
-                      size: 16,
                     ),
                     const SizedBox(width: 12),
                     Expanded(
@@ -360,7 +355,12 @@ class _PreBookingRideScreenState extends State<PreBookingRideScreen> {
             ],
           ),
 
-          const SizedBox(height: 20),
+          const SizedBox(height: 16),
+          Divider(
+            color: AppColors.borderLight,
+            height: 1,
+          ),
+          const SizedBox(height: 16),
 
           // Vehicle Specifics
           Row(

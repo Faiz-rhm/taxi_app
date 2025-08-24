@@ -43,6 +43,23 @@ class AppTheme {
       ),
     ),
 
+    expansionTileTheme: ExpansionTileThemeData(
+      backgroundColor: AppColors.card,
+      collapsedBackgroundColor: AppColors.card,
+      iconColor: AppColors.primary,
+      collapsedIconColor: AppColors.textSecondary,
+      textColor: AppColors.textPrimary,
+      collapsedTextColor: AppColors.textSecondary,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      collapsedShape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      childrenPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+    ),
+
     // Card theme
     cardTheme: CardThemeData(
       color: AppColors.card,
@@ -405,6 +422,24 @@ class AppTheme {
     iconTheme: const IconThemeData(
       color: Color(0xFFBDBDBD),
       size: 24,
+    ),
+
+    // Expansion tile theme
+    expansionTileTheme: ExpansionTileThemeData(
+      backgroundColor: const Color(0xFF2D2D2D),
+      collapsedBackgroundColor: const Color(0xFF2D2D2D),
+      iconColor: AppColors.primary,
+      collapsedIconColor: const Color(0xFFBDBDBD),
+      textColor: AppColors.textInverse,
+      collapsedTextColor: const Color(0xFFBDBDBD),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      collapsedShape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      tilePadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      childrenPadding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
     ),
 
     // Icon button theme

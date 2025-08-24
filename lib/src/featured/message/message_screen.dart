@@ -48,7 +48,7 @@ class MessageScreen extends StatelessWidget {
         timestamp: "05:45 pm",
         isOnline: false,
         unreadCount: 0,
-        profileImage: "assets/images/user4.png",
+        profileImage: "assets/images/user4.jpg",
       ),
       ChatConversation(
         name: "Michael Brown",
