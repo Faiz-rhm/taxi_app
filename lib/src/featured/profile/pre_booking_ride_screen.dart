@@ -101,7 +101,7 @@ class _PreBookingRideScreenState extends State<PreBookingRideScreen> {
           const SizedBox(height: 16),
           _buildPreBookingCard({
             'userName': 'Robert Fox',
-            'userImage': 'assets/images/robert.jpg',
+            'userImage': 'assets/images/user3.png',
             'vehicleType': 'MPV (5 Seater)',
             'rating': '5.0',
             'distance': '4.5 mile',

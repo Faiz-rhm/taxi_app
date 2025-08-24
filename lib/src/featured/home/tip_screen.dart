@@ -108,19 +108,17 @@ class _TipScreenState extends State<TipScreen> {
           onTap: () {
             Navigator.pushNamed(context, '/driver-profile');
           },
-          child: Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.borderLight,
-            ),
-            child: const Icon(
-              Icons.person,
-              size: 40,
-              color: AppColors.secondaryText,
+          child:         Container(
+          width: 80,
+          height: 80,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            image: const DecorationImage(
+              image: AssetImage('assets/images/user6.jpg'),
+              fit: BoxFit.cover,
             ),
           ),
+        ),
         ),
 
         const SizedBox(height: 16),

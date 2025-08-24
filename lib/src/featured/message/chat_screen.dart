@@ -165,15 +165,14 @@ class _ChatScreenState extends State<ChatScreen> {
             child: Row(
               children: [
                 // Profile Picture
-                CircleAvatar(
-                  radius: 20,
-                  backgroundColor: Colors.grey[300],
-                  child: Text(
-                    widget.contactName.substring(0, 1).toUpperCase(),
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: const DecorationImage(
+                      image: AssetImage('assets/images/user1.png'),
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
@@ -223,7 +222,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   MaterialPageRoute(
                     builder: (context) => CallScreen(
                       callerName: widget.contactName,
-                      callerImage: "assets/images/profile_placeholder.png",
+                      callerImage: "assets/images/user1.png",
                       isVideoCall: true,
                     ),
                   ),
@@ -340,15 +339,14 @@ class _ChatScreenState extends State<ChatScreen> {
               ],
 
               // Profile Picture
-              CircleAvatar(
-                radius: 12,
-                backgroundColor: Colors.grey[300],
-                child: Text(
-                  message.senderName.substring(0, 1).toUpperCase(),
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                    fontWeight: FontWeight.w600,
+              Container(
+                width: 24,
+                height: 24,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: const DecorationImage(
+                    image: AssetImage('assets/images/user1.png'),
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),

@@ -219,7 +219,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     color: AppColors.secondaryText,
                     height: 1.4,
                   ),
-                  maxLines: 2,
+                  maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                 ),
               ],

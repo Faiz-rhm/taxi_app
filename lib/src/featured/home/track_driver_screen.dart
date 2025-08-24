@@ -317,19 +317,17 @@ class _TrackDriverScreenState extends State<TrackDriverScreen> {
                         onTap: () {
                           Navigator.pushNamed(context, '/driver-profile');
                         },
-                        child: Container(
-                          width: 60,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppColors.borderLight,
-                          ),
-                          child: const Icon(
-                            Icons.person,
-                            size: 30,
-                            color: AppColors.secondaryText,
+                        child:                       Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: const DecorationImage(
+                            image: AssetImage('assets/images/user6.jpg'),
+                            fit: BoxFit.cover,
                           ),
                         ),
+                      ),
                       ),
 
                       const SizedBox(width: 16),

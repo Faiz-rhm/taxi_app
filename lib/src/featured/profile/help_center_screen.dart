@@ -288,6 +288,8 @@ class _HelpCenterScreenState extends State<HelpCenterScreen> {
                     color: AppColors.secondaryText,
                     height: 1.5,
                   ),
+                  maxLines: 5,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],

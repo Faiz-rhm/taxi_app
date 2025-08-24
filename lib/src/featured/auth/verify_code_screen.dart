@@ -218,11 +218,11 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
           child: const Text(
             "Resend code",
             style: TextStyle(
-              color: AppColors.info, // Blue color
+              color: AppColors.primaryText, // Blue color
               fontSize: 14,
               fontWeight: FontWeight.w600,
               decoration: TextDecoration.underline,
-              decorationColor: AppColors.primary,
+              decorationColor: AppColors.primaryText,
             ),
           ),
         ),

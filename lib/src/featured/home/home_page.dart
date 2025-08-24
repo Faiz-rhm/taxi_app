@@ -247,7 +247,7 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
 
-
+                  SizedBox(height: 20,),
 
                   // Destination Options
                   SizedBox(
@@ -304,23 +304,6 @@ class _HomePageState extends State<HomePage> {
                               iconData: Icons.home,
                               title: "Home",
                               subtitle: "100 Km Away",
-                              isHighlighted: false,
-                            ),
-                          ),
-                        ),
-
-                        const SizedBox(width: 16),
-
-                        // Promo Button
-                        Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.pushNamed(context, '/promo');
-                            },
-                            child: _buildDestinationCard(
-                              iconData: Icons.local_offer,
-                              title: "Promo",
-                              subtitle: "Apply Coupons",
                               isHighlighted: false,
                             ),
                           ),
@@ -505,14 +488,16 @@ class _HomePageState extends State<HomePage> {
     debugPrint('Created ${_carMarkers.length} car markers around location: ${baseLocation.latitude}, ${baseLocation.longitude}');
   }
 
-  void _updateCurrentLocationMarker() {
+  Future<void> _updateCurrentLocationMarker() async {
+    final icon = await BitmapDescriptor.asset(const ImageConfiguration(size: Size(48, 48)), 'assets/images/pine.png');
+
     if (_currentUserLocation != null) {
       setState(() {
         _currentLocationMarker = {
           Marker(
             markerId: const MarkerId('current_location'),
             position: _currentUserLocation!,
-            icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
+            icon: icon,
             infoWindow: const InfoWindow(title: 'Your Location'),
           ),
         };

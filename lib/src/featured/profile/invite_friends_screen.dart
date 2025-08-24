@@ -13,55 +13,55 @@ class _InviteFriendsScreenState extends State<InviteFriendsScreen> {
     {
       'name': 'Carla Schoen',
       'phone': '207.555.0119',
-      'profileImage': 'assets/images/profile_placeholder.jpg',
+      'profileImage': 'assets/images/user1.png',
       'isInvited': false,
     },
     {
       'name': 'Esther Howard',
       'phone': '702.555.0122',
-      'profileImage': 'assets/images/profile_placeholder.jpg',
+      'profileImage': 'assets/images/user2.png',
       'isInvited': false,
     },
     {
       'name': 'Robert Fox',
       'phone': '239.555.0108',
-      'profileImage': 'assets/images/profile_placeholder.jpg',
+      'profileImage': 'assets/images/user3.png',
       'isInvited': false,
     },
     {
       'name': 'Jacob Jones',
       'phone': '316.555.0116',
-      'profileImage': 'assets/images/profile_placeholder.jpg',
+      'profileImage': 'assets/images/user4.png',
       'isInvited': false,
     },
     {
       'name': 'Jacob Jones',
       'phone': '629.555.0129',
-      'profileImage': 'assets/images/profile_placeholder.jpg',
+      'profileImage': 'assets/images/user5.jpg',
       'isInvited': false,
     },
     {
       'name': 'Darlene Robertson',
       'phone': '629.555.0129',
-      'profileImage': 'assets/images/profile_placeholder.jpg',
+      'profileImage': 'assets/images/user6.jpg',
       'isInvited': false,
     },
     {
       'name': 'Ralph Edwards',
       'phone': '203.555.0106',
-      'profileImage': 'assets/images/profile_placeholder.jpg',
+      'profileImage': 'assets/images/user7.png',
       'isInvited': false,
     },
     {
       'name': 'Ronald Richards',
       'phone': '209.555.0104',
-      'profileImage': 'assets/images/profile_placeholder.jpg',
+      'profileImage': 'assets/images/user8.png',
       'isInvited': false,
     },
     {
       'name': 'Courtney Henry',
       'phone': '209.555.0104',
-      'profileImage': 'assets/images/profile_placeholder.jpg',
+      'profileImage': 'assets/images/user1.png',
       'isInvited': false,
     },
   ];
@@ -109,10 +109,10 @@ class _InviteFriendsScreenState extends State<InviteFriendsScreen> {
             height: 60,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
-              image: const DecorationImage(
-                image: AssetImage('assets/images/profile_placeholder.jpg'),
-                fit: BoxFit.cover,
-              ),
+                              image: DecorationImage(
+                  image: AssetImage(contact['profileImage']),
+                  fit: BoxFit.cover,
+                ),
               // Fallback if image doesn't exist
               color: const Color(0xFFE0E0E0),
             ),

@@ -192,6 +192,8 @@ class _SosScreenState extends State<SosScreen> {
           height: 1.4,
         ),
         textAlign: TextAlign.center,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }

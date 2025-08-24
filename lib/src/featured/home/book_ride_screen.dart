@@ -492,7 +492,7 @@ class _BookRideScreenState extends State<BookRideScreen> {
                   'plateNumber': 'GR 678-UVWX',
                   'eta': '5 min Away',
                   'rating': 4.8,
-                  'avatar': 'assets/images/driver_avatar.png',
+                  'avatar': 'assets/images/user6.jpg',
                 };
               });
             }
@@ -2072,21 +2072,17 @@ class _BookRideScreenState extends State<BookRideScreen> {
                             onTap: () {
                               Navigator.pushNamed(context, '/driver-profile');
                             },
-                            child: Container(
-                              width: 60,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                color: AppColors.primary,
-                                shape: BoxShape.circle,
-                              ),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.person,
-                                  color: Colors.white,
-                                  size: 30,
-                                ),
+                            child:                           Container(
+                            width: 60,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: const DecorationImage(
+                                image: AssetImage('assets/images/user6.jpg'),
+                                fit: BoxFit.cover,
                               ),
                             ),
+                          ),
                           ),
 
                           const SizedBox(width: 16),

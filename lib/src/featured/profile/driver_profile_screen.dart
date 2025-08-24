@@ -86,7 +86,7 @@ class _DriverProfileScreenState extends State<DriverProfileScreen>
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: const DecorationImage(
-                    image: AssetImage('assets/images/car.png'), // Using existing image as placeholder
+                    image: AssetImage('assets/images/user6.jpg'), // Driver profile image
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -454,7 +454,7 @@ class _DriverProfileScreenState extends State<DriverProfileScreen>
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: const DecorationImage(
-                        image: AssetImage('assets/images/car.png'),
+                        image: AssetImage('assets/images/user1.png'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -509,6 +509,8 @@ class _DriverProfileScreenState extends State<DriverProfileScreen>
               color: AppColors.primaryText,
               height: 1.4,
             ),
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
           ),
 
           const SizedBox(height: 12),

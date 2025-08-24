@@ -24,6 +24,7 @@ class MessageScreen extends StatelessWidget {
         timestamp: "08:04 pm",
         isOnline: true,
         unreadCount: 2,
+        profileImage: "assets/images/user1.png",
       ),
       ChatConversation(
         name: "Jenny Wilson",
@@ -31,6 +32,7 @@ class MessageScreen extends StatelessWidget {
         timestamp: "07:30 pm",
         isOnline: false,
         unreadCount: 0,
+        profileImage: "assets/images/user6.jpg",
       ),
       ChatConversation(
         name: "Robert Johnson",
@@ -38,6 +40,7 @@ class MessageScreen extends StatelessWidget {
         timestamp: "06:15 pm",
         isOnline: true,
         unreadCount: 1,
+        profileImage: "assets/images/user3.png",
       ),
       ChatConversation(
         name: "Sarah Davis",
@@ -45,6 +48,7 @@ class MessageScreen extends StatelessWidget {
         timestamp: "05:45 pm",
         isOnline: false,
         unreadCount: 0,
+        profileImage: "assets/images/user4.png",
       ),
       ChatConversation(
         name: "Michael Brown",
@@ -52,6 +56,7 @@ class MessageScreen extends StatelessWidget {
         timestamp: "04:20 pm",
         isOnline: false,
         unreadCount: 0,
+        profileImage: "assets/images/user5.jpg",
       ),
     ];
 
@@ -83,15 +88,14 @@ class MessageScreen extends StatelessWidget {
         leading: Stack(
           children: [
             // Profile Picture
-            CircleAvatar(
-              radius: 28,
-              backgroundColor: Colors.grey[300],
-              child: Text(
-                conversation.name.substring(0, 1).toUpperCase(),
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w600,
+            Container(
+              width: 56,
+              height: 56,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: AssetImage(conversation.profileImage),
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
@@ -189,6 +193,7 @@ class ChatConversation {
   final String timestamp;
   final bool isOnline;
   final int unreadCount;
+  final String profileImage;
 
   ChatConversation({
     required this.name,
@@ -196,5 +201,6 @@ class ChatConversation {
     required this.timestamp,
     required this.isOnline,
     required this.unreadCount,
+    required this.profileImage,
   });
 }

@@ -18,7 +18,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
   final List<Map<String, dynamic>> _completedBookings = [
     {
       'userName': 'Byron Barlow',
-      'userImage': 'assets/images/byron.jpg', // Placeholder
+              'userImage': 'assets/images/user2.png', // User image
       'vehicleType': 'MPV (5 Seater)',
       'rating': '5.0',
       'distance': '4.5 Mile',
@@ -32,7 +32,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
     },
     {
       'userName': 'Robert Fox',
-      'userImage': 'assets/images/robert.jpg', // Placeholder
+              'userImage': 'assets/images/user3.png', // User image
       'vehicleType': 'MPV (5 Seater)',
       'rating': '5.0',
       'distance': '4.5 Mile',
@@ -50,7 +50,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
   final List<Map<String, dynamic>> _cancelledBookings = [
     {
       'userName': 'Cody Fisher',
-      'userImage': 'assets/images/cody.jpg', // Placeholder
+              'userImage': 'assets/images/user4.png', // User image
       'vehicleType': 'MPV (5 Seater)',
       'rating': '5.0',
       'distance': '4.5 Mile',
@@ -64,7 +64,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
     },
     {
       'userName': 'Ralph Edwards',
-      'userImage': 'assets/images/ralph.jpg', // Placeholder
+              'userImage': 'assets/images/user5.jpg', // User image
       'vehicleType': 'MPV (5 Seater)',
       'rating': '5.0',
       'distance': '4.5 Mile',
@@ -82,7 +82,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
   final List<Map<String, dynamic>> _activeBookings = [
     {
       'userName': 'Jenny Wilson',
-      'userImage': 'assets/images/jenny.jpg', // Placeholder
+              'userImage': 'assets/images/user6.jpg', // User image
       'vehicleType': 'Sedan (4 Seater)',
       'rating': '5.0',
       'distance': '4.5 Mile',

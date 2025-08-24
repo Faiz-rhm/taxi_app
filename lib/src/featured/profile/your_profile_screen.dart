@@ -58,17 +58,15 @@ class _YourProfileScreenState extends State<YourProfileScreen> {
         alignment: Alignment.bottomRight,
         children: [
           Center(
-            child: Container(
+            child:             Container(
               width: 120,
               height: 120,
               decoration: BoxDecoration(
-                color: const Color(0xFFE0E0E0),
                 borderRadius: BorderRadius.circular(60),
-              ),
-              child: const Icon(
-                Icons.person,
-                color: Color(0xFF9E9E9E),
-                size: 60,
+                image: const DecorationImage(
+                  image: AssetImage('assets/images/user1.png'),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),

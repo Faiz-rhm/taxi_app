@@ -169,6 +169,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               color: AppColors.hintText, // Lighter gray
               height: 1.5,
             ),
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
           ),
 
           const SizedBox(height: 32),
@@ -182,6 +184,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 width: 56,
                 height: 56,
                 child: IconButton.outlined(
+                  color: AppColors.primary,
+                  style: ButtonStyle(
+                    side: WidgetStateProperty.all(BorderSide(color: AppColors.primary)),
+                  ),
                   onPressed: _currentPage > 0 ? () {
                     setState(() {
                       _currentPage--;
@@ -190,6 +196,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   icon: Icon(
                     Icons.arrow_back,
                     size: 24,
+                    color: AppColors.primary,
                   ),
                 ),
               ) : const SizedBox(width: 56, height: 56),

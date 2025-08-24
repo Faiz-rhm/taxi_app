@@ -150,11 +150,11 @@ class _CallScreenState extends State<CallScreen> with TickerProviderStateMixin {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(22),
               child: Container(
-                color: Colors.grey[800],
-                child: Icon(
-                  Icons.person,
-                  size: 80,
-                                      color: Colors.white.withValues(alpha: 0.7),
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(widget.callerImage),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),

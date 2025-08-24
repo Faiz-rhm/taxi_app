@@ -55,21 +55,8 @@ class ProfileScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(60),
                   image: const DecorationImage(
-                    image: AssetImage('assets/images/profile_placeholder.jpg'),
+                    image: AssetImage('assets/images/user1.png'),
                     fit: BoxFit.cover,
-                  ),
-                  // Fallback if image doesn't exist
-                  color: AppColors.borderLight,
-                ),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(60),
-                    color: Colors.transparent,
-                  ),
-                  child: const Icon(
-                    Icons.person,
-                    color: AppColors.hintText,
-                    size: 60,
                   ),
                 ),
               ),
