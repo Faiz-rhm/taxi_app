@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../helper/constants/app_colors.dart';
+import '../../core/widgets/cancel_booking_bottom_sheet.dart';
 
 class CancelBookingScreen extends StatefulWidget {
   const CancelBookingScreen({super.key});
@@ -254,7 +255,14 @@ class _CancelBookingScreenState extends State<CancelBookingScreen> {
     // You can add API call here to cancel the ride
     debugPrint('Cancelling ride with reason: $reason');
 
-    // Navigate back
-    Navigator.pop(context);
+    // Show success bottom sheet
+    showCancelBookingBottomSheet(
+      context,
+      bookingReference: '854HG23', // This should come from actual booking data
+      onGotIt: () {
+        Navigator.pop(context); // Close the bottom sheet
+        Navigator.pop(context); // Navigate back to previous screen
+      },
+    );
   }
 }

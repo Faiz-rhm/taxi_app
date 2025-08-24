@@ -25,6 +25,9 @@ import '../featured/profile/invite_friends_screen.dart';
 import '../featured/profile/sos_screen.dart';
 import '../featured/profile/notification_screen.dart';
 import '../featured/profile/settings_screen.dart';
+import '../featured/profile/driver_profile_screen.dart';
+import '../featured/home/rating_screen.dart';
+import '../featured/home/promo_screen.dart';
 import '../featured/home/e_receipt_screen.dart';
 
 class AppRouter {
@@ -80,6 +83,12 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const NotificationScreen());
       case '/settings':
         return MaterialPageRoute(builder: (_) => const SettingsScreen());
+      case '/driver-profile':
+        return MaterialPageRoute(builder: (_) => const DriverProfileScreen());
+      case '/rating':
+        return MaterialPageRoute(builder: (_) => const RatingScreen());
+      case '/promo':
+        return MaterialPageRoute(builder: (_) => const PromoScreen());
       case '/bookings':
         return MaterialPageRoute(builder: (_) => const BookingsScreen());
       case '/e-receipt':

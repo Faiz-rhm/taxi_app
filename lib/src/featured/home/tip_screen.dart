@@ -104,17 +104,22 @@ class _TipScreenState extends State<TipScreen> {
     return Column(
       children: [
         // Driver Profile Picture
-        Container(
-          width: 80,
-          height: 80,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: AppColors.borderLight,
-          ),
-          child: const Icon(
-            Icons.person,
-            size: 40,
-            color: AppColors.secondaryText,
+        GestureDetector(
+          onTap: () {
+            Navigator.pushNamed(context, '/driver-profile');
+          },
+          child: Container(
+            width: 80,
+            height: 80,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: AppColors.borderLight,
+            ),
+            child: const Icon(
+              Icons.person,
+              size: 40,
+              color: AppColors.secondaryText,
+            ),
           ),
         ),
 

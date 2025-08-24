@@ -289,17 +289,22 @@ class _PayCashScreenState extends State<PayCashScreen> {
           Row(
             children: [
               // Driver Profile Picture
-              Container(
-                width: 60,
-                height: 60,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.borderLight,
-                ),
-                child: const Icon(
-                  Icons.person,
-                  size: 30,
-                  color: AppColors.secondaryText,
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/driver-profile');
+                },
+                child: Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.borderLight,
+                    ),
+                  child: const Icon(
+                    Icons.person,
+                    size: 30,
+                    color: AppColors.secondaryText,
+                  ),
                 ),
               ),
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../helper/constants/app_colors.dart';
 import '../profile/payment_methods_screen.dart';
+import '../../core/widgets/cancel_booking_bottom_sheet.dart';
 import 'dart:math';
 import 'ride_accepted_screen.dart';
 
@@ -422,124 +423,29 @@ class _BookRideScreenState extends State<BookRideScreen> {
     );
   }
 
-  void _showPromoOptions() {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) => _buildPromoOptionsSheet(),
-    );
+  void _showPromoOptions() async {
+    final result = await Navigator.pushNamed(context, '/promo');
+    if (result != null && result is Map<String, dynamic>) {
+      setState(() {
+        _hasPromo = true;
+      });
+
+      if (result['couponCode'] != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Coupon "${result['couponCode']}" applied successfully!'),
+            backgroundColor: AppColors.success,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+        );
+      }
+    }
   }
 
-  Widget _buildPromoOptionsSheet() {
-    return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        ),
-      ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-        children: [
-          // Handle bar
-          Container(
-            margin: const EdgeInsets.only(top: 12, bottom: 8),
-            width: 40,
-            height: 4,
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              borderRadius: BorderRadius.circular(2),
-            ),
-          ),
 
-          // Header
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-            child: Column(
-          children: [
-            const Text(
-                  "Apply Promo Code",
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                    color: AppColors.primaryText,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  "Enter your promo code to get discounts on your ride",
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey[600],
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ),
-
-          // Promo Code Input
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Enter promo code',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              ),
-            ),
-          ),
-
-          const SizedBox(height: 20),
-
-          // Apply Button
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-            child: SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _hasPromo = true;
-                    });
-                    Navigator.pop(context);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Promo code applied successfully!'),
-                        backgroundColor: AppColors.success,
-                      ),
-                    );
-                  },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  elevation: 0,
-                ),
-                child: const Text(
-                  "Apply Promo",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
-          ),
-
-          // Bottom safe area
-          SizedBox(height: MediaQuery.of(context).padding.bottom),
-        ],
-      ),
-    );
-  }
 
   void _chooseAnotherContact() {
     // TODO: Navigate to contacts selection screen
@@ -1093,7 +999,13 @@ class _BookRideScreenState extends State<BookRideScreen> {
               bottom: 0,
               left: 0,
               right: 0,
-              child: _buildRequestRideButton(),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  _buildCancelButton(),
+                  _buildRequestRideButton(),
+                ],
+              ),
             )
           else if (_isDriverAssigned)
             Positioned(
@@ -2156,18 +2068,23 @@ class _BookRideScreenState extends State<BookRideScreen> {
                       Row(
                         children: [
                           // Driver Avatar
-                          Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              color: AppColors.primary,
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Center(
-                              child: Icon(
-                                Icons.person,
-                                color: Colors.white,
-                                size: 30,
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/driver-profile');
+                            },
+                            child: Container(
+                              width: 60,
+                              height: 60,
+                              decoration: BoxDecoration(
+                                color: AppColors.primary,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Center(
+                                child: Icon(
+                                  Icons.person,
+                                  color: Colors.white,
+                                  size: 30,
+                                ),
                               ),
                             ),
                           ),
@@ -2348,6 +2265,39 @@ class _BookRideScreenState extends State<BookRideScreen> {
     );
   }
 
+  Widget _buildCancelButton() {
+    return Container(
+      padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
+      child: SafeArea(
+        child: SizedBox(
+          width: double.infinity,
+          height: 50,
+          child: ElevatedButton(
+            onPressed: () {
+              _handleCancelRide();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.surface,
+              foregroundColor: AppColors.primaryText,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              elevation: 0,
+              side: BorderSide(color: AppColors.divider),
+            ),
+            child: const Text(
+              "Cancel Ride",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildRequestRideButton() {
     return Container(
       padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
@@ -2425,6 +2375,25 @@ class _BookRideScreenState extends State<BookRideScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  void _handleCancelRide() {
+    // Reset to initial state
+    setState(() {
+      _isRideFound = false;
+      _isSearchingRide = false;
+      _isDriverAssigned = false;
+      _isRideNotFound = false;
+    });
+
+    // Show success bottom sheet
+    showCancelBookingBottomSheet(
+      context,
+      bookingReference: '854HG23', // This should come from actual booking data
+      onGotIt: () {
+        Navigator.pop(context); // Close the bottom sheet
+      },
     );
   }
 }

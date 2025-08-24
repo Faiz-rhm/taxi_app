@@ -247,7 +247,7 @@ class _HomePageState extends State<HomePage> {
                     ],
                   ),
 
-                  const SizedBox(height: 16),
+
 
                   // Destination Options
                   SizedBox(
@@ -304,6 +304,23 @@ class _HomePageState extends State<HomePage> {
                               iconData: Icons.home,
                               title: "Home",
                               subtitle: "100 Km Away",
+                              isHighlighted: false,
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(width: 16),
+
+                        // Promo Button
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, '/promo');
+                            },
+                            child: _buildDestinationCard(
+                              iconData: Icons.local_offer,
+                              title: "Promo",
+                              subtitle: "Apply Coupons",
                               isHighlighted: false,
                             ),
                           ),
