@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../helper/constants/app_colors.dart';
 import 'sign_up_screen.dart';
@@ -301,9 +302,8 @@ class _SignInScreenState extends State<SignInScreen> {
       children: [
         // Apple button
         _buildSocialButton(
-          icon: Icons.apple,
+          svgPath: 'assets/svg/apple.svg',
           backgroundColor: AppColors.surface,
-          iconColor: AppColors.primaryText,
           onPressed: () {
             // Handle Apple sign in
           },
@@ -311,9 +311,8 @@ class _SignInScreenState extends State<SignInScreen> {
         const SizedBox(width: 14),
         // Google button
         _buildSocialButton(
-          icon: Icons.g_mobiledata,
+          svgPath: 'assets/svg/google.svg',
           backgroundColor: AppColors.surface,
-          iconColor: AppColors.info, // Google blue
           onPressed: () {
             // Handle Google sign in
           },
@@ -321,9 +320,8 @@ class _SignInScreenState extends State<SignInScreen> {
         const SizedBox(width: 14),
         // Facebook button
         _buildSocialButton(
-          icon: Icons.facebook,
+          svgPath: 'assets/svg/facebook.svg',
           backgroundColor: AppColors.surface,
-          iconColor: AppColors.info, // Facebook blue
           onPressed: () {
             // Handle Facebook sign in
           },
@@ -333,9 +331,8 @@ class _SignInScreenState extends State<SignInScreen> {
   }
 
   Widget _buildSocialButton({
-    required IconData icon,
+    required String svgPath,
     required Color backgroundColor,
-    required Color iconColor,
     required VoidCallback onPressed,
   }) {
     return Container(
@@ -351,10 +348,10 @@ class _SignInScreenState extends State<SignInScreen> {
       ),
       child: IconButton(
         onPressed: onPressed,
-        icon: Icon(
-          icon,
-          color: iconColor,
-          size: 32,
+        icon: SvgPicture.asset(
+          svgPath,
+          width: 32,
+          height: 32,
         ),
       ),
     );

@@ -60,6 +60,9 @@ dependencies:
   # Pin code input (OTP) text field
   pinput: ^5.0.1
 
+  # SVG support
+  flutter_svg: ^2.0.10
+
   # Barcode generation
   barcode_widget: ^2.0.4
 
