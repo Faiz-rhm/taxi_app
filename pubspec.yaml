@@ -72,6 +72,9 @@ dependencies:
   # Ticket widget for beautiful ticket-style UI
   ticket_widget: ^1.0.2
 
+  # Native splash screen
+  flutter_native_splash: ^2.4.6
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
