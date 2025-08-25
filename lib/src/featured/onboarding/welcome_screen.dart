@@ -50,7 +50,7 @@ class WelcomeScreen extends StatelessWidget {
   Widget _buildContentSection(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 24),
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.all(16),
       decoration: const BoxDecoration(
         color: AppColors.surface,
       ),

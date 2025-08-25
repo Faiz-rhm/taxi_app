@@ -252,49 +252,42 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
           ),
           child: Row(
             children: [
-              // Country code dropdown
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      _selectedCountryCode,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF242424),
-                      ),
-                    ),
-                    const SizedBox(width: 3),
-                    const Icon(
-                      Icons.keyboard_arrow_down,
-                      color: Color(0xFF9E9E9E),
-                      size: 14,
-                    ),
-                  ],
-                ),
-              ),
-
-              // Divider
-              Container(
-                width: 1,
-                height: 20,
-                color: const Color(0xFFE0E0E0),
-              ),
-
               // Phone number input
               Expanded(
                 child: TextField(
                   controller: _phoneController,
                   keyboardType: TextInputType.phone,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     hintText: "Enter Phone Number",
                     hintStyle: TextStyle(
                       color: Color(0xFF9E9E9E),
                       fontSize: 13,
                     ),
                     border: InputBorder.none,
+                    prefixIcon: Row(
+                      children: [
+                        SizedBox(width: 10),
+                        Text(
+                          '+1',
+                          style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF242424),
+                          ),
+                        ),
+                        SizedBox(width: 3),
+                        Icon(
+                          Icons.keyboard_arrow_down,
+                          color: Color(0xFF9E9E9E),
+                          size: 14,
+                        ),
+                        Container(
+                          width: 1,
+                          height: 20,
+                          color: const Color(0xFFE0E0E0),
+                        ),
+                      ]
+                    ),
                     contentPadding: EdgeInsets.symmetric(
                       horizontal: 12,
                       vertical: 12,

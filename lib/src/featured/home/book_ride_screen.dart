@@ -651,7 +651,7 @@ class _BookRideScreenState extends State<BookRideScreen> {
     return StatefulBuilder(
       builder: (context, setModalState) {
         return Container(
-          height: MediaQuery.of(context).size.height * 0.7,
+          height: MediaQuery.of(context).size.height * 0.74,
           decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(

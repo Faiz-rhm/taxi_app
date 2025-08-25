@@ -59,5 +59,47 @@
 		<true/>
 		<key>UIViewControllerBasedStatusBarAppearance</key>
 		<false/>
+		<!-- Camera permissions for Google Maps -->
+		<key>NSCameraUsageDescription</key>
+		<string>This app needs access to camera for Google Maps functionality.</string>
+		<!-- Photo Library permissions for Google Maps -->
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>This app needs access to photo library for Google Maps functionality.</string>
+		<!-- Microphone permissions for Google Maps -->
+		<key>NSMicrophoneUsageDescription</key>
+		<string>This app needs access to microphone for Google Maps functionality.</string>
+		<!-- Network permissions for Google Maps -->
+		<key>NSAppTransportSecurity</key>
+		<dict>
+			<key>NSAllowsArbitraryLoads</key>
+			<true/>
+			<key>NSExceptionDomains</key>
+			<dict>
+				<key>googleapis.com</key>
+				<dict>
+					<key>NSExceptionAllowsInsecureHTTPLoads</key>
+					<true/>
+					<key>NSExceptionMinimumTLSVersion</key>
+					<string>TLSv1.0</string>
+					<key>NSExceptionRequiresForwardSecrecy</key>
+					<false/>
+				</dict>
+				<key>google.com</key>
+				<dict>
+					<key>NSExceptionAllowsInsecureHTTPLoads</key>
+					<true/>
+					<key>NSExceptionMinimumTLSVersion</key>
+					<string>TLSv1.0</string>
+					<key>NSExceptionRequiresForwardSecrecy</key>
+					<false/>
+				</dict>
+			</dict>
+		</dict>
+		<!-- Background location usage for Google Maps -->
+		<key>UIBackgroundModes</key>
+		<array>
+			<string>location</string>
+			<string>background-processing</string>
+		</array>
 	</dict>
 </plist>
