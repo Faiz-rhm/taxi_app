@@ -8,26 +8,7 @@ class EReceiptScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.surface,
       appBar: AppBar(
-        backgroundColor: AppColors.surface,
-        elevation: 0,
-        leading: IconButton(
-          icon: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: AppColors.divider,
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.arrow_back,
-              color: AppColors.textPrimary,
-              size: 20,
-            ),
-          ),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
         title: const Text(
           'E-Receipt',
           style: TextStyle(
