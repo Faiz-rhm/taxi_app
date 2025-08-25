@@ -34,37 +34,13 @@ class _TipScreenState extends State<TipScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.arrow_back,
-              color: AppColors.primaryText,
-              size: 20,
-            ),
-          ),
-          onPressed: () => Navigator.pop(context),
-        ),
         title: const Text(
           'Tip For Driver',
-          style: TextStyle(
-            color: AppColors.primaryText,
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
         ),
         centerTitle: true,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
@@ -90,7 +66,7 @@ class _TipScreenState extends State<TipScreen> {
             // Tipping Section
             _buildTippingSection(),
 
-            const Spacer(),
+            const SizedBox(height: 42),
 
             // Action Buttons
             _buildActionButtons(),
@@ -221,7 +197,7 @@ class _TipScreenState extends State<TipScreen> {
             crossAxisCount: 4,
             crossAxisSpacing: 12,
             mainAxisSpacing: 12,
-            childAspectRatio: 2.5,
+            childAspectRatio: 1,
           ),
           itemCount: _tipAmounts.length,
           itemBuilder: (context, index) {
@@ -242,13 +218,12 @@ class _TipScreenState extends State<TipScreen> {
                     width: 2,
                   ),
                   borderRadius: BorderRadius.circular(12),
-                  color: isSelected ? AppColors.primary : Colors.transparent,
                 ),
                 child: Center(
                   child: Text(
                     amount,
                     style: TextStyle(
-                      color: isSelected ? Colors.white : AppColors.primaryText,
+                      color: isSelected ? AppColors.primary : AppColors.primaryText,
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
@@ -262,20 +237,20 @@ class _TipScreenState extends State<TipScreen> {
         const SizedBox(height: 20),
 
         // Custom Amount Link
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              _showCustomInput = true;
-              _selectedTipAmount = '';
-            });
-          },
-          child: Text(
-            'Enter Custom Amount',
-            style: TextStyle(
-              color: AppColors.primary,
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              decoration: TextDecoration.underline,
+        Center(
+          child: TextButton(
+            onPressed: () {
+              setState(() {
+                _showCustomInput = true;
+                _selectedTipAmount = '';
+              });
+            },
+            child: Text(
+              'Enter Custom Amount',
+              style: TextStyle(
+                color: AppColors.primary,
+                fontSize: 16,
+              ),
             ),
           ),
         ),

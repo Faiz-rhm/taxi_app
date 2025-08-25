@@ -74,7 +74,7 @@ class _DriverProfileScreenState extends State<DriverProfileScreen>
   Widget _buildDriverProfile() {
     return Padding(
       padding: const EdgeInsets.all(20),
-      child: Column(
+      child: Row(
         children: [
           // Profile Picture with Verified Badge
           Stack(
@@ -107,49 +107,59 @@ class _DriverProfileScreenState extends State<DriverProfileScreen>
             ],
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(width: 16),
 
           // Driver Name
-          const Text(
-            'Jenny Wilson',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: AppColors.primaryText,
-            ),
-          ),
-
-          const SizedBox(height: 8),
-
-          // Driver Email
-          const Text(
-            'example@gmail.com',
-            style: TextStyle(
-              fontSize: 16,
-              color: AppColors.secondaryText,
-            ),
-          ),
-
-          const SizedBox(height: 12),
-
-          // Location
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.location_on,
-                color: AppColors.primary,
-                size: 20,
-              ),
-              const SizedBox(width: 8),
-              const Text(
-                'New York, United States',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: AppColors.secondaryText,
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Jenny Wilson',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primaryText,
+                  ),
                 ),
-              ),
-            ],
+
+                const SizedBox(height: 8),
+
+                // Driver Email
+                const Text(
+                  'example@gmail.com',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: AppColors.secondaryText,
+                  ),
+                ),
+
+                const SizedBox(height: 12),
+
+                // Location
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.location_on,
+                      color: AppColors.primary,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: const Text(
+                        'New York, United States',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: AppColors.secondaryText,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ],
       ),
@@ -224,6 +234,7 @@ class _DriverProfileScreenState extends State<DriverProfileScreen>
         indicatorWeight: 3,
         labelColor: AppColors.primaryText,
         unselectedLabelColor: AppColors.secondaryText,
+        dividerColor: AppColors.divider,
         labelStyle: const TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w600,
@@ -373,24 +384,24 @@ class _DriverProfileScreenState extends State<DriverProfileScreen>
           const SizedBox(height: 24),
 
           // Reviews List
-          Expanded(
-            child: ListView(
-              children: [
-                _buildReviewItem(
-                  'Dale Thiel',
-                  '11 months ago',
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt',
-                  5.0,
-                ),
-                const SizedBox(height: 20),
-                _buildReviewItem(
-                  'Tiffany Nitzsche',
-                  '11 months ago',
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit,',
-                  4.5,
-                ),
-              ],
-            ),
+          ListView(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            children: [
+              _buildReviewItem(
+                'Dale Thiel',
+                '11 months ago',
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt',
+                5.0,
+              ),
+              const SizedBox(height: 20),
+              _buildReviewItem(
+                'Tiffany Nitzsche',
+                '11 months ago',
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit,',
+                4.5,
+              ),
+            ],
           ),
         ],
       ),

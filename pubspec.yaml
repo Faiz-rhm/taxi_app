@@ -69,6 +69,9 @@ dependencies:
   # Barcode generation
   barcode_widget: ^2.0.4
 
+  # Ticket widget for beautiful ticket-style UI
+  ticket_widget: ^1.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

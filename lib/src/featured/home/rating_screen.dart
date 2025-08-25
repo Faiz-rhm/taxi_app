@@ -21,37 +21,13 @@ class _RatingScreenState extends State<RatingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.arrow_back,
-              color: AppColors.primaryText,
-              size: 20,
-            ),
-          ),
-          onPressed: () => Navigator.pop(context),
-        ),
         title: const Text(
           'Rate Driver',
-          style: TextStyle(
-            color: AppColors.primaryText,
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
         ),
         centerTitle: true,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
@@ -73,7 +49,7 @@ class _RatingScreenState extends State<RatingScreen> {
             // Detailed Review
             _buildDetailedReview(),
 
-            const Spacer(),
+            const SizedBox(height: 32),
 
             // Submit Button
             _buildSubmitButton(),
@@ -169,6 +145,14 @@ class _RatingScreenState extends State<RatingScreen> {
   Widget _buildStarRating() {
     return Column(
       children: [
+        Divider(
+          color: AppColors.borderLight,
+          height: 1,
+          thickness: 1,
+        ),
+
+        const SizedBox(height: 16),
+
         Text(
           'Your overall rating',
           style: TextStyle(
@@ -204,6 +188,14 @@ class _RatingScreenState extends State<RatingScreen> {
             );
           }),
         ),
+
+        Divider(
+          color: AppColors.borderLight,
+          height: 1,
+          thickness: 1,
+        ),
+
+        const SizedBox(height: 16),
       ],
     );
   }
@@ -250,6 +242,7 @@ class _RatingScreenState extends State<RatingScreen> {
             ),
           ),
         ),
+
       ],
     );
   }

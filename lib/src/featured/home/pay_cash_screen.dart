@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ticket_widget/ticket_widget.dart';
 import '../../helper/constants/app_colors.dart';
 import 'tip_screen.dart';
 
@@ -13,33 +14,9 @@ class _PayCashScreenState extends State<PayCashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.arrow_back,
-              color: AppColors.primaryText,
-              size: 20,
-            ),
-          ),
-          onPressed: () => Navigator.pop(context),
-        ),
         title: const Text(
           'Pay Cash',
-          style: TextStyle(
-            color: AppColors.primaryText,
-            fontSize: 18,
-            fontWeight: FontWeight.w600,
-          ),
         ),
         centerTitle: true,
       ),
@@ -48,9 +25,9 @@ class _PayCashScreenState extends State<PayCashScreen> {
         child: Column(
           children: [
             // Main Content Card
-            Expanded(
-              child: _buildMainContentCard(),
-            ),
+            _buildMainContentCard(),
+
+            const Spacer(),
 
             // Cash Paid Button
             _buildCashPaidButton(),
@@ -61,19 +38,11 @@ class _PayCashScreenState extends State<PayCashScreen> {
   }
 
   Widget _buildMainContentCard() {
-    return Container(
+    return TicketWidget(
       width: double.infinity,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.shadowLight,
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
+      height: MediaQuery.of(context).size.height * 0.7,
+      isCornerRounded: true,
+      color: AppColors.divider.withOpacity(0.3),
       child: Column(
         children: [
           // Pay Cash Header
@@ -94,73 +63,60 @@ class _PayCashScreenState extends State<PayCashScreen> {
     );
   }
 
+
   Widget _buildPayCashHeader() {
-    return Padding(
-      padding: const EdgeInsets.all(24),
-      child: Column(
-        children: [
-          // Wallet Icon
-          Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              shape: BoxShape.circle,
-              border: Border.all(
-                color: AppColors.primary,
-                width: 2,
+    return Column(
+      children: [
+        // Ticket Header with decorative elements
+        Container(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              // Wallet Icon with enhanced styling
+              Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.account_balance_wallet,
+                  color: AppColors.primary,
+                  size: 40,
+                ),
               ),
-            ),
-            child: Icon(
-              Icons.account_balance_wallet,
-              color: AppColors.primary,
-              size: 40,
-            ),
-          ),
 
-          const SizedBox(height: 16),
+              const SizedBox(height: 16),
 
-          // Pay Cash Text
-          const Text(
-            'Pay Cash',
-            style: TextStyle(
-              color: AppColors.primaryText,
-              fontSize: 24,
-              fontWeight: FontWeight.w700,
-            ),
+              // Pay Cash Text with ticket styling
+              const Text(
+                'Pay Cash',
+                style: TextStyle(
+                  color: AppColors.primaryText,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
   Widget _buildAddressSection() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Pickup Location
           Row(
             children: [
               // Origin indicator (black circle with dot)
-              Container(
-                width: 16,
-                height: 16,
-                decoration: BoxDecoration(
-                  color: AppColors.primaryText,
-                  shape: BoxShape.circle,
-                ),
-                child: Center(
-                  child: Container(
-                    width: 6,
-                    height: 6,
-                    decoration: const BoxDecoration(
-                      color: AppColors.surface,
-                      shape: BoxShape.circle,
-                    ),
-                  ),
-                ),
-              ),
+              Icon(Icons.circle_outlined,),
               const SizedBox(width: 16),
               Expanded(
                 child: Text(
@@ -177,7 +133,7 @@ class _PayCashScreenState extends State<PayCashScreen> {
 
           // Vertical dashed line
           Container(
-            margin: const EdgeInsets.only(left: 7, top: 12, bottom: 12),
+            margin: const EdgeInsets.only(left: 12, top: 6, bottom: 6),
             width: 2,
             height: 24,
             child: CustomPaint(
@@ -192,7 +148,6 @@ class _PayCashScreenState extends State<PayCashScreen> {
               Icon(
                 Icons.place,
                 color: AppColors.primary,
-                size: 16,
               ),
               const SizedBox(width: 16),
               Expanded(
@@ -201,22 +156,6 @@ class _PayCashScreenState extends State<PayCashScreen> {
                   style: TextStyle(
                     color: AppColors.primaryText,
                     fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-              // Distance tag
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Text(
-                  '16 miles',
-                  style: TextStyle(
-                    color: AppColors.secondaryText,
-                    fontSize: 12,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -230,7 +169,7 @@ class _PayCashScreenState extends State<PayCashScreen> {
 
   Widget _buildOTPAndDriverSection() {
     return Padding(
-      padding: const EdgeInsets.all(24),
+      padding: const EdgeInsets.symmetric(horizontal: 50.0, vertical: 32.0),
       child: Column(
         children: [
           // OTP Divider
@@ -254,7 +193,7 @@ class _PayCashScreenState extends State<PayCashScreen> {
                 margin: const EdgeInsets.symmetric(horizontal: 16),
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                 decoration: BoxDecoration(
-                  color: Colors.grey[300],
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
@@ -283,7 +222,7 @@ class _PayCashScreenState extends State<PayCashScreen> {
             ],
           ),
 
-          const SizedBox(height: 24),
+          const SizedBox(height: 50),
 
           // Driver Profile
           Row(
@@ -342,7 +281,6 @@ class _PayCashScreenState extends State<PayCashScreen> {
 
   Widget _buildTotalAmountBar() {
     return Container(
-      margin: const EdgeInsets.all(24),
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       decoration: BoxDecoration(
         color: AppColors.primary,
