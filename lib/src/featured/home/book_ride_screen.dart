@@ -41,6 +41,11 @@ class _BookRideScreenState extends State<BookRideScreen> {
   // Driver information
   Map<String, dynamic>? _driverInfo;
 
+  // Custom marker icons
+  BitmapDescriptor? _pickupIcon;
+  BitmapDescriptor? _destinationIcon;
+  bool _isLoadingMarkers = true;
+
   // Sample ride options
   final List<Map<String, dynamic>> _rideOptions = [
     {
@@ -73,6 +78,131 @@ class _BookRideScreenState extends State<BookRideScreen> {
   void initState() {
     super.initState();
     _updateRideSelection();
+    _createCustomMarkers();
+  }
+
+  Future<void> _createCustomMarkers() async {
+    setState(() {
+      _isLoadingMarkers = true;
+    });
+
+    try {
+      _pickupIcon = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(size: Size(48, 48)),
+        'assets/images/pine.png',
+      );
+      _destinationIcon = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(size: Size(48, 48)),
+        'assets/images/pine1.png',
+      );
+    } catch (e) {
+      // Fallback to default markers if custom icons fail to load
+      _pickupIcon = BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen);
+      _destinationIcon = BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed);
+      print('Failed to load custom marker icons: $e');
+    }
+
+    setState(() {
+      _isLoadingMarkers = false;
+    });
+  }
+
+  // Method to refresh markers if needed
+  Future<void> _refreshMarkers() async {
+    if (_pickupIcon == null || _destinationIcon == null) {
+      await _createCustomMarkers();
+    }
+  }
+
+  // Handle marker tap events
+  void _onMarkerTapped(String markerId) {
+    switch (markerId) {
+      case 'start':
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Pickup Location'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+        break;
+      case 'end':
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Destination'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+        break;
+    }
+  }
+
+  // Method to get marker color based on type
+  Color _getMarkerColor(String markerId) {
+    switch (markerId) {
+      case 'start':
+        return Colors.green;
+      case 'end':
+        return Colors.red;
+      default:
+        return Colors.grey;
+    }
+  }
+
+  // Method to get marker icon based on type
+  IconData _getMarkerIcon(String markerId) {
+    switch (markerId) {
+      case 'start':
+        return Icons.location_on;
+      case 'end':
+        return Icons.flag;
+      default:
+        return Icons.location_on;
+    }
+  }
+
+  // Method to show detailed marker information
+  void _showMarkerDetails(String markerId) {
+    String title = '';
+    String description = '';
+    IconData icon = Icons.location_on;
+    Color color = Colors.blue;
+
+    switch (markerId) {
+      case 'start':
+        title = 'Pickup Location';
+        description = 'This is where your ride will start from. Make sure you\'re at this location when the driver arrives.';
+        icon = Icons.location_on;
+        color = Colors.green;
+        break;
+      case 'end':
+        title = 'Destination';
+        description = 'This is your final destination. The driver will take you here safely.';
+        icon = Icons.flag;
+        color = Colors.red;
+        break;
+    }
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Row(
+            children: [
+              Icon(icon, color: color, size: 24),
+              const SizedBox(width: 8),
+              Text(title),
+            ],
+          ),
+          content: Text(description),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Close'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void _onMapCreated(GoogleMapController controller) {
@@ -973,6 +1103,9 @@ class _BookRideScreenState extends State<BookRideScreen> {
           // Header with back button and title
           _buildHeader(),
 
+          // Map controls (zoom, refresh markers)
+          _buildMapControls(),
+
           // Content based on ride state
           if (_isSearchingRide)
             _buildSearchingRideOverlay()
@@ -995,18 +1128,7 @@ class _BookRideScreenState extends State<BookRideScreen> {
               child: _buildSearchingButton(),
             )
           else if (_isRideFound && !_isDriverAssigned)
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  _buildCancelButton(),
-                  _buildRequestRideButton(),
-                ],
-              ),
-            )
+            SizedBox()
           else if (_isDriverAssigned)
             Positioned(
               bottom: 0,
@@ -1094,19 +1216,29 @@ class _BookRideScreenState extends State<BookRideScreen> {
         zoom: 16.0, // Closer zoom to show local area
       ),
       markers: {
-        // Start marker (pickup location)
+        // Start marker (pickup location) with custom pine icon
         Marker(
           markerId: const MarkerId('start'),
           position: widget.pickupLocation,
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
-          infoWindow: const InfoWindow(title: 'Pickup Location'),
+          icon: _pickupIcon ?? BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
+          infoWindow: InfoWindow(
+            title: 'Pickup Location',
+            snippet: 'Tap for details',
+            onTap: () => _showMarkerDetails('start'),
+          ),
+          onTap: () => _onMarkerTapped('start'),
         ),
-        // End marker (destination)
+        // End marker (destination) with custom pine1 icon
         Marker(
           markerId: const MarkerId('end'),
           position: endPoint,
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
-          infoWindow: const InfoWindow(title: 'Destination'),
+          icon: _destinationIcon ?? BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+          infoWindow: InfoWindow(
+            title: 'Destination',
+            snippet: 'Tap for details',
+            onTap: () => _showMarkerDetails('end'),
+          ),
+          onTap: () => _onMarkerTapped('end'),
         ),
       },
       polylines: {
@@ -1132,6 +1264,175 @@ class _BookRideScreenState extends State<BookRideScreen> {
       buildingsEnabled: false,
       indoorViewEnabled: false,
       onMapCreated: _onMapCreated,
+    );
+  }
+
+  // Add a floating action button to refresh markers
+  Widget _buildMapControls() {
+    return Positioned(
+      right: 16,
+      bottom: 200, // Position above the bottom buttons
+      child: Column(
+        children: [
+          // Refresh markers button
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.1),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: IconButton(
+              onPressed: _isLoadingMarkers ? null : _refreshMarkers,
+              icon: _isLoadingMarkers
+                  ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                      ),
+                    )
+                  : const Icon(
+                      Icons.refresh,
+                      color: Colors.blue,
+                      size: 24,
+                    ),
+              tooltip: _isLoadingMarkers ? 'Loading Markers...' : 'Refresh Markers',
+            ),
+          ),
+          const SizedBox(height: 16),
+          // Zoom in button
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.1),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: IconButton(
+              onPressed: () {
+                _mapController?.animateCamera(
+                  CameraUpdate.zoomIn(),
+                );
+              },
+              icon: const Icon(
+                Icons.add,
+                color: Colors.blue,
+                size: 24,
+              ),
+              tooltip: 'Zoom In',
+            ),
+          ),
+          const SizedBox(height: 16),
+          // Zoom out button
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              shape: BoxShape.circle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.1),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: IconButton(
+              onPressed: () {
+                _mapController?.animateCamera(
+                  CameraUpdate.zoomOut(),
+                );
+              },
+              icon: const Icon(
+                Icons.remove,
+                color: Colors.blue,
+                size: 24,
+              ),
+              tooltip: 'Zoom Out',
+            ),
+          ),
+          const SizedBox(height: 16),
+          // Marker status indicator
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.1),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  _pickupIcon != null ? Icons.check_circle : Icons.pending,
+                  color: _pickupIcon != null ? Colors.green : Colors.orange,
+                  size: 16,
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  'Pine',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: _pickupIcon != null ? Colors.green : Colors.orange,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
+          Container(
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.1),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  _destinationIcon != null ? Icons.check_circle : Icons.pending,
+                  color: _destinationIcon != null ? Colors.green : Colors.orange,
+                  size: 16,
+                ),
+                const SizedBox(width: 4),
+                Text(
+                  'Pine1',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: _destinationIcon != null ? Colors.green : Colors.orange,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -1197,8 +1498,8 @@ class _BookRideScreenState extends State<BookRideScreen> {
       maxChildSize: 0.9,
       builder: (context, scrollController) {
         return Container(
-          decoration: const BoxDecoration(
-            color: Colors.white,
+          decoration: BoxDecoration(
+            color: Colors.grey[100],
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(20),
               topRight: Radius.circular(20),
@@ -1290,19 +1591,12 @@ class _BookRideScreenState extends State<BookRideScreen> {
         ],
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // Pickup Location
           Row(
             children: [
-              Container(
-                width: 12,
-                height: 12,
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white, width: 2),
-                ),
-              ),
+              Icon(Icons.circle_outlined),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
@@ -1318,7 +1612,7 @@ class _BookRideScreenState extends State<BookRideScreen> {
 
           // Connecting Line
           Container(
-            margin: const EdgeInsets.only(left: 5),
+            margin: const EdgeInsets.only(left: 12),
             width: 2,
             height: 20,
             decoration: BoxDecoration(
@@ -1330,14 +1624,7 @@ class _BookRideScreenState extends State<BookRideScreen> {
           // Destination Location
           Row(
             children: [
-              Container(
-                width: 12,
-                height: 12,
-                decoration: const BoxDecoration(
-                  color: AppColors.primary,
-                  shape: BoxShape.circle,
-                ),
-              ),
+              Icon(Icons.location_pin, color: AppColors.primary),
               const SizedBox(width: 12),
               Expanded(
                 child: Text(
@@ -2250,79 +2537,6 @@ class _BookRideScreenState extends State<BookRideScreen> {
             ),
             child: const Text(
               "Searching...",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCancelButton() {
-    return Container(
-      padding: const EdgeInsets.only(left: 16, right: 16, bottom: 8),
-      child: SafeArea(
-        child: SizedBox(
-          width: double.infinity,
-          height: 50,
-          child: ElevatedButton(
-            onPressed: () {
-              _handleCancelRide();
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.surface,
-              foregroundColor: AppColors.primaryText,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              elevation: 0,
-              side: BorderSide(color: AppColors.divider),
-            ),
-            child: const Text(
-              "Cancel Ride",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildRequestRideButton() {
-    return Container(
-      padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.1),
-            blurRadius: 8,
-            offset: const Offset(0, -2),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        child: SizedBox(
-          width: double.infinity,
-          height: 50,
-          child: ElevatedButton(
-            onPressed: _requestRide,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              foregroundColor: Colors.white,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              elevation: 0,
-            ),
-            child: const Text(
-              "Request Ride",
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
