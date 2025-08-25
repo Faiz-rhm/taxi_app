@@ -87,12 +87,12 @@ class _BookRideScreenState extends State<BookRideScreen> {
     });
 
     try {
-      _pickupIcon = await BitmapDescriptor.fromAssetImage(
+      _pickupIcon = await BitmapDescriptor.asset(
         const ImageConfiguration(size: Size(48, 48)),
         'assets/images/pine.png',
       );
-      _destinationIcon = await BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(size: Size(48, 48)),
+      _destinationIcon = await BitmapDescriptor.asset(
+        const ImageConfiguration(size: Size(30, 48)),
         'assets/images/pine1.png',
       );
     } catch (e) {

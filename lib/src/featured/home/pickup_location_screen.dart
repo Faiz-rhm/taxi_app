@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
@@ -181,8 +183,8 @@ class _PickupLocationScreenState extends State<PickupLocationScreen> {
     }
 
     try {
-      final icon = await BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(size: Size(48, 48)),
+      final icon = await BitmapDescriptor.asset(
+        const ImageConfiguration(size: Size(30, 48)),
         'assets/images/pine1.png'
       );
 
@@ -355,7 +357,7 @@ class _PickupLocationScreenState extends State<PickupLocationScreen> {
 
   Widget _buildCurrentLocationButton() {
     return Positioned(
-      bottom: 130,
+      bottom: Platform.isIOS ? 200 : 130,
       right: 16,
       child: Container(
         width: 48,

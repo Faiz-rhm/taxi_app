@@ -45,12 +45,12 @@ class _TrackDriverScreenState extends State<TrackDriverScreen> {
     });
 
     try {
-      _driverIcon = await BitmapDescriptor.fromAssetImage(
+      _driverIcon = await BitmapDescriptor.asset(
         const ImageConfiguration(size: Size(48, 48)),
         'assets/images/pine.png',
       );
-      _passengerIcon = await BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(size: Size(48, 48)),
+      _passengerIcon = await BitmapDescriptor.asset(
+        const ImageConfiguration(size: Size(30, 48)),
         'assets/images/pine1.png',
       );
     } catch (e) {
