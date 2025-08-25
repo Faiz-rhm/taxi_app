@@ -15,6 +15,11 @@ class TrackDriverScreen extends StatefulWidget {
 class _TrackDriverScreenState extends State<TrackDriverScreen> {
   GoogleMapController? _mapController;
 
+  // Custom marker icons
+  BitmapDescriptor? _driverIcon;
+  BitmapDescriptor? _passengerIcon;
+  bool _isLoadingMarkers = true;
+
   // Sample coordinates for demonstration
   final LatLng _driverLocation = const LatLng(40.7128, -74.0060); // Worth St area
   final LatLng _passengerLocation = const LatLng(40.7147, -74.0068); // Chambers/Warren St area
@@ -31,6 +36,62 @@ class _TrackDriverScreenState extends State<TrackDriverScreen> {
   void initState() {
     super.initState();
     _startStateTransition();
+    _createCustomMarkers();
+  }
+
+  Future<void> _createCustomMarkers() async {
+    setState(() {
+      _isLoadingMarkers = true;
+    });
+
+    try {
+      _driverIcon = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(size: Size(48, 48)),
+        'assets/images/pine.png',
+      );
+      _passengerIcon = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(size: Size(48, 48)),
+        'assets/images/pine1.png',
+      );
+    } catch (e) {
+      // Fallback to default markers if custom icons fail to load
+      _driverIcon = BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure);
+      _passengerIcon = BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange);
+      print('Failed to load custom marker icons: $e');
+    }
+
+    setState(() {
+      _isLoadingMarkers = false;
+    });
+  }
+
+  // Handle marker tap events
+  void _onMarkerTapped(String markerId) {
+    switch (markerId) {
+      case 'driver':
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Driver Location'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+        break;
+      case 'passenger':
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Your Pickup Location'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+        break;
+    }
+  }
+
+  // Method to refresh markers if needed
+  Future<void> _refreshMarkers() async {
+    if (_driverIcon == null || _passengerIcon == null) {
+      await _createCustomMarkers();
+    }
   }
 
   @override
@@ -119,6 +180,7 @@ class _TrackDriverScreenState extends State<TrackDriverScreen> {
               return _buildRideDetailsCard(scrollController);
             },
           ),
+
         ],
       ),
     );
@@ -585,19 +647,27 @@ class _TrackDriverScreenState extends State<TrackDriverScreen> {
 
   Set<Marker> _createMarkers() {
     return {
-      // Driver marker (car icon)
+      // Driver marker with custom pine icon
       Marker(
         markerId: const MarkerId('driver'),
         position: _driverLocation,
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
-        infoWindow: const InfoWindow(title: 'Driver Location'),
+        icon: _driverIcon ?? BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+        infoWindow: const InfoWindow(
+          title: 'Driver Location',
+          snippet: 'Your driver is here',
+        ),
+        onTap: () => _onMarkerTapped('driver'),
       ),
-      // Passenger marker (orange circle)
+      // Passenger marker with custom pine1 icon
       Marker(
         markerId: const MarkerId('passenger'),
         position: _passengerLocation,
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
-        infoWindow: const InfoWindow(title: 'Your Location'),
+        icon: _passengerIcon ?? BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
+        infoWindow: const InfoWindow(
+          title: 'Your Location',
+          snippet: 'Pickup point',
+        ),
+        onTap: () => _onMarkerTapped('passenger'),
       ),
     };
   }
