@@ -20,14 +20,23 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
 
   // Google Maps variables
   GoogleMapController? _mapController;
-  Set<Marker> _markers = {};
+  final Set<Marker> _markers = {};
   LatLng _currentLocation = const LatLng(40.7128, -74.0060); // Default to NYC
   LatLng _selectedLocation = const LatLng(40.7128, -74.0060);
+  BitmapDescriptor? _customMarkerIcon;
 
   @override
   void initState() {
     super.initState();
+    _loadCustomMarkerIcon();
     _getCurrentLocation();
+  }
+
+  Future<void> _loadCustomMarkerIcon() async {
+    _customMarkerIcon = await BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(size: Size(48, 48)),
+      'assets/images/pine1.png',
+    );
     _addMarker();
   }
 
@@ -43,20 +52,17 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF6F6F6),
-      body: SafeArea(
+      appBar: AppBar(
+        title: Text('Add Address'),
+      ),
+      body: SingleChildScrollView(
         child: Column(
           children: [
-            // Header
-            _buildHeader(),
-
             // Map Section
             _buildMapSection(),
 
             // Address Form
-            Expanded(
-              child: _buildAddressForm(),
-            ),
+            _buildAddressForm(),
 
             // Save Button
             _buildSaveButton(),
@@ -66,45 +72,6 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     );
   }
 
-  Widget _buildHeader() {
-    return Container(
-      color: Colors.white,
-      padding: const EdgeInsets.all(20),
-      child: Row(
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: const Color(0xFFF5F5F5),
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(
-                Icons.arrow_back_ios,
-                color: Color(0xFF242424),
-                size: 20,
-              ),
-            ),
-          ),
-          const Expanded(
-            child: Center(
-              child: Text(
-                'Add Address',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF242424),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 40), // Balance the layout
-        ],
-      ),
-    );
-  }
 
     Future<void> _getCurrentLocation() async {
     try {
@@ -139,6 +106,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
           CameraUpdate.newLatLngZoom(_currentLocation, 15.0),
         );
       }
+
+      _addMarker();
     } catch (e) {
       // Handle error - keep default location
     }
@@ -150,7 +119,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
       Marker(
         markerId: const MarkerId('selected_location'),
         position: _selectedLocation,
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
+        icon: _customMarkerIcon ?? BitmapDescriptor.defaultMarker, // Will be updated to custom icon
         draggable: true,
         onDragEnd: (LatLng newPosition) {
           setState(() {
@@ -187,18 +156,16 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   }
 
   Widget _buildMapSection() {
-    return Container(
-      height: 300,
-      margin: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16),
-      ),
+    return SizedBox(
+      height: 250,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: GoogleMap(
           onMapCreated: (GoogleMapController controller) {
             _mapController = controller;
-            _addMarker();
+            if (_customMarkerIcon != null) {
+              _addMarker();
+            }
           },
           initialCameraPosition: CameraPosition(
             target: _currentLocation,
@@ -213,15 +180,15 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             _getAddressFromCoordinates(position);
           },
           myLocationEnabled: true,
-          myLocationButtonEnabled: true,
+          myLocationButtonEnabled: false,
           zoomControlsEnabled: false,
           mapToolbarEnabled: false,
-          compassEnabled: true,
+          compassEnabled: false,
+          mapType: MapType.normal,
         ),
       ),
     );
   }
-
 
 
   Widget _buildAddressForm() {
@@ -235,14 +202,15 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
           // Address Type Selection
           _buildAddressTypeSection(),
 
-          const SizedBox(height: 24),
+          const SizedBox(height: 32),
 
           // Complete Address
           _buildFormField(
-            label: 'Complete address *',
+            label: 'Complete address',
             controller: _addressController,
             hintText: 'Enter address *',
             maxLines: 3,
+            isRequired: true,
           ),
 
           const SizedBox(height: 24),
@@ -252,6 +220,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             label: 'Floor',
             controller: _floorController,
             hintText: 'Enter Floor',
+            isRequired: false,
           ),
 
           const SizedBox(height: 24),
@@ -261,6 +230,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             label: 'Landmark',
             controller: _landmarkController,
             hintText: 'Enter Landmark',
+            isRequired: false,
           ),
         ],
       ),
@@ -280,38 +250,48 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
           ),
         ),
         const SizedBox(height: 12),
-        Wrap(
-          spacing: 12,
-          runSpacing: 12,
-          children: _addressTypes.map((type) {
-            bool isSelected = _selectedAddressType == type;
-            return GestureDetector(
-              onTap: () {
-                setState(() {
-                  _selectedAddressType = type;
-                });
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                decoration: BoxDecoration(
-                  color: isSelected
-                      ? const Color(0xFFF2994A) // Orange when selected
-                      : const Color(0xFFF5F5F5), // Light grey when not selected
-                  borderRadius: BorderRadius.circular(25),
-                ),
-                child: Text(
-                  type,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: isSelected
-                        ? Colors.white
-                        : const Color(0xFF9E9E9E),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: _addressTypes.map((type) {
+              bool isSelected = _selectedAddressType == type;
+              return Container(
+                margin: const EdgeInsets.only(right: 12),
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _selectedAddressType = type;
+                    });
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    decoration: BoxDecoration(
+                      color: isSelected
+                          ? const Color(0xFFF2994A) // Orange when selected
+                          : const Color(0xFFF5F5F5), // Light grey when not selected
+                      borderRadius: BorderRadius.circular(25),
+                      border: Border.all(
+                        color: isSelected
+                            ? const Color(0xFFF2994A)
+                            : const Color(0xFFE0E0E0),
+                        width: 1,
+                      ),
+                    ),
+                    child: Text(
+                      type,
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        color: isSelected
+                            ? Colors.white
+                            : const Color(0xFF9E9E9E),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            );
-          }).toList(),
+              );
+            }).toList(),
+          ),
         ),
       ],
     );
@@ -322,22 +302,23 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     required TextEditingController controller,
     required String hintText,
     int maxLines = 1,
+    bool isRequired = false,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF242424),
+            color: isRequired ? const Color(0xFF242424) : const Color(0xFF9E9E9E),
           ),
         ),
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: const Color(0xFFF8F8F8),
             borderRadius: BorderRadius.circular(12),
             border: Border.all(
               color: const Color(0xFFE0E0E0),
@@ -358,7 +339,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                 borderSide: BorderSide.none,
               ),
               filled: true,
-              fillColor: Colors.white,
+              fillColor: const Color(0xFFF8F8F8),
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 16,
                 vertical: 16,
@@ -389,15 +370,17 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
             backgroundColor: const Color(0xFFF2994A), // Orange color
             foregroundColor: Colors.white,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(16),
             ),
             elevation: 0,
+            shadowColor: Colors.transparent,
           ),
           child: const Text(
             'Save address',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
+              color: Colors.white,
             ),
           ),
         ),
