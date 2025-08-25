@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ticket_widget/ticket_widget.dart';
 import '../../helper/constants/app_colors.dart';
 
 class PromoScreen extends StatefulWidget {
@@ -100,22 +101,20 @@ class _PromoScreenState extends State<PromoScreen> {
   }
 
   Widget _buildCouponCard(Map<String, dynamic> coupon, int index) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16),
-      decoration: BoxDecoration(
-        color: AppColors.background,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.divider),
-      ),
-      child: Stack(
+    return TicketWidget(
+      width: double.infinity,
+      height: 230,
+      isCornerRounded: true,
+      margin: EdgeInsets.only(bottom: 16),
+      color: AppColors.divider.withOpacity(0.3),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Coupon content
+          // Coupon Code
           Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 24),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Coupon Code
                 Text(
                   coupon['code'],
                   style: const TextStyle(
@@ -171,83 +170,28 @@ class _PromoScreenState extends State<PromoScreen> {
                         ],
                       ),
                     ),
-
-                    // Copy Code Button
-                    GestureDetector(
-                      onTap: () => _copyCouponCode(coupon['code']),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                        decoration: BoxDecoration(
-                          color: AppColors.primary,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: const Text(
-                          'COPY CODE',
-                          style: TextStyle(
-                            color: AppColors.surface,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ),
                   ],
                 ),
               ],
             ),
           ),
 
-          // Perforated edges effect
-          Positioned(
-            left: -8,
-            top: 0,
-            bottom: 0,
-            child: Container(
-              width: 16,
-              decoration: BoxDecoration(
-                color: AppColors.surface,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  bottomLeft: Radius.circular(16),
-                ),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: List.generate(8, (index) => Container(
-                  width: 4,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: AppColors.background,
-                    shape: BoxShape.circle,
-                  ),
-                )),
-              ),
-            ),
-          ),
+          const SizedBox(height: 14),
 
-          Positioned(
-            right: -8,
-            top: 0,
-            bottom: 0,
-            child: Container(
-              width: 16,
-              decoration: BoxDecoration(
-                color: AppColors.surface,
-                borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(16),
-                  bottomRight: Radius.circular(16),
-                ),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: List.generate(8, (index) => Container(
-                  width: 4,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: AppColors.background,
-                    shape: BoxShape.circle,
-                  ),
-                )),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: AppColors.primary,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            alignment: Alignment.center,
+            child: const Text(
+              'COPY CODE',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
               ),
             ),
           ),
@@ -274,20 +218,12 @@ class _PromoScreenState extends State<PromoScreen> {
           Row(
             children: [
               Expanded(
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  decoration: BoxDecoration(
-                    color: AppColors.background,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: AppColors.divider),
-                  ),
-                  child: TextField(
-                    controller: _promoCodeController,
-                    decoration: const InputDecoration(
-                      hintText: 'Promo Code',
-                      hintStyle: TextStyle(color: AppColors.hintText),
-                      border: InputBorder.none,
-                    ),
+                child: TextField(
+                  controller: _promoCodeController,
+                  decoration: const InputDecoration(
+                    hintText: 'Promo Code',
+                    hintStyle: TextStyle(color: AppColors.hintText),
+                    border: InputBorder.none,
                   ),
                 ),
               ),
