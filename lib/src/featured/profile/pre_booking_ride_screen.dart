@@ -3,12 +3,7 @@ import 'package:flutter/material.dart';
 import '../../helper/constants/app_colors.dart';
 
 class PreBookingRideScreen extends StatefulWidget {
-  final Map<String, dynamic> bookingData;
-
-  const PreBookingRideScreen({
-    super.key,
-    required this.bookingData,
-  });
+  const PreBookingRideScreen({super.key});
 
   @override
   State<PreBookingRideScreen> createState() => _PreBookingRideScreenState();
@@ -25,6 +20,88 @@ class _PreBookingRideScreenState extends State<PreBookingRideScreen> {
     {'day': 'F', 'date': '20'},
     {'day': 'S', 'date': '21'},
     {'day': 'S', 'date': '22'},
+  ];
+
+  // Sample completed bookings data
+  final List<Map<String, dynamic>> _completedBookings = [
+    {
+      'userName': 'Byron Barlow',
+      'userImage': 'assets/images/user2.png',
+      'vehicleType': 'MPV (5 Seater)',
+      'rating': '5.0',
+      'distance': '4.5 Mile',
+      'duration': '4 mins',
+      'pricePerMile': '\$1.25 /mile',
+      'dateTime': 'Oct 18, 2023 | 08:00 AM',
+      'pickupAddress': '6391 Elgin St. Celina, Delawa...',
+      'destinationAddress': '1901 Thornridge Cir. Sh...',
+      'carNumber': 'GR 678-UVWX',
+      'seats': '05',
+    },
+    {
+      'userName': 'Robert Fox',
+      'userImage': 'assets/images/user3.png',
+      'vehicleType': 'MPV (5 Seater)',
+      'rating': '5.0',
+      'distance': '4.5 Mile',
+      'duration': '4 mins',
+      'pricePerMile': '\$1.25 /mile',
+      'dateTime': 'Oct 18, 2023 | 08:00 AM',
+      'pickupAddress': '6391 Elgin St. Celina, Delawa...',
+      'destinationAddress': '1901 Thornridge Cir. Sh...',
+      'carNumber': 'GR 678-UVWX',
+      'seats': '05',
+    },
+  ];
+
+  // Sample cancelled bookings data
+  final List<Map<String, dynamic>> _cancelledBookings = [
+    {
+      'userName': 'Cody Fisher',
+      'userImage': 'assets/images/user4.jpg',
+      'vehicleType': 'MPV (5 Seater)',
+      'rating': '5.0',
+      'distance': '4.5 Mile',
+      'duration': '4 mins',
+      'pricePerMile': '\$1.25 /mile',
+      'dateTime': 'Oct 18, 2023 | 08:00 AM',
+      'pickupAddress': '6391 Elgin St. Celina, Delawa...',
+      'destinationAddress': '1901 Thornridge Cir. Sh...',
+      'carNumber': 'GR 678-UVWX',
+      'cancelledBy': 'driver',
+    },
+    {
+      'userName': 'Ralph Edwards',
+      'userImage': 'assets/images/user5.jpg',
+      'vehicleType': 'MPV (5 Seater)',
+      'rating': '5.0',
+      'distance': '4.5 Mile',
+      'duration': '4 mins',
+      'pricePerMile': '\$1.25 /mile',
+      'dateTime': 'Oct 18, 2023 | 08:00 AM',
+      'pickupAddress': '6391 Elgin St. Celina, Delawa...',
+      'destinationAddress': '1901 Thornridge Cir. Sh...',
+      'carNumber': 'GR 678-UVWX',
+      'cancelledBy': 'user',
+    },
+  ];
+
+  // Sample active bookings data
+  final List<Map<String, dynamic>> _activeBookings = [
+    {
+      'userName': 'Jenny Wilson',
+      'userImage': 'assets/images/user6.jpg',
+      'vehicleType': 'Sedan (4 Seater)',
+      'rating': '5.0',
+      'distance': '4.5 Mile',
+      'duration': '4 mins',
+      'pricePerMile': '\$1.25 /mile',
+      'dateTime': 'Oct 18, 2023 | 08:00 AM',
+      'pickupAddress': '6391 Elgin St. Celina, Delawa...',
+      'destinationAddress': '1901 Thornridge Cir. Sh...',
+      'carNumber': 'GR 678-UVWX',
+      'seats': '04',
+    },
   ];
 
   @override
@@ -99,22 +176,20 @@ class _PreBookingRideScreenState extends State<PreBookingRideScreen> {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
-          _buildPreBookingCard(widget.bookingData),
-          const SizedBox(height: 16),
-          _buildPreBookingCard({
-            'userName': 'Robert Fox',
-            'userImage': 'assets/images/user3.png',
-            'vehicleType': 'MPV (5 Seater)',
-            'rating': '5.0',
-            'distance': '4.5 mile',
-            'duration': '4 mins',
-            'pricePerMile': '\$1.25 /mile',
-            'dateTime': 'Oct 18, 2023 | 08:00 AM',
-            'pickupAddress': '6391 Elgin St. Celina, Delawa...',
-            'destinationAddress': '1901 Thornridge Cir. Sh...',
-            'carNumber': 'GR 678-UVWX',
-            'seats': '05',
-          }),
+          // Active Bookings
+          ..._activeBookings.map((booking) => _buildPreBookingCard(booking)),
+          if (_activeBookings.isNotEmpty) ...[
+            const SizedBox(height: 16),
+          ],
+
+          // Completed Bookings
+          ..._completedBookings.map((booking) => _buildPreBookingCard(booking)),
+          if (_completedBookings.isNotEmpty) ...[
+            const SizedBox(height: 16),
+          ],
+
+          // Cancelled Bookings
+          ..._cancelledBookings.map((booking) => _buildPreBookingCard(booking)),
         ],
       ),
     );

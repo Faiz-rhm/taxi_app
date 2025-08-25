@@ -170,7 +170,7 @@ class _BookingsScreenState extends State<BookingsScreen> with TickerProviderStat
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => PreBookingRideScreen(bookingData: booking),
+            builder: (context) => const PreBookingRideScreen(),
           ),
         );
       },
@@ -467,7 +467,7 @@ class _BookingsScreenState extends State<BookingsScreen> with TickerProviderStat
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => PreBookingRideScreen(bookingData: booking),
+            builder: (context) => const PreBookingRideScreen(),
           ),
         );
       },
@@ -892,7 +892,7 @@ class _BookingsScreenState extends State<BookingsScreen> with TickerProviderStat
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => PreBookingRideScreen(bookingData: booking),
+            builder: (context) => const PreBookingRideScreen(),
           ),
         );
       },

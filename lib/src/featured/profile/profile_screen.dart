@@ -157,20 +157,7 @@ class ProfileScreen extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => PreBookingRideScreen(
-                bookingData: {
-                  'userName': 'Esther Howard',
-                  'vehicleType': 'Sedan (4 Seater)',
-                  'rating': '5.0',
-                  'distance': '4.5 Mile',
-                  'duration': '4 mins',
-                  'pricePerMile': '\$1.25 /mile',
-                  'pickupAddress': '6391 Elgin St. Celina, Delawa...',
-                  'destinationAddress': '1901 Thornridge Cir. Sh...',
-                  'carNumber': 'GR 678-UVWX',
-                  'seats': '04',
-                },
-              ),
+              builder: (context) => PreBookingRideScreen(),
             ),
           );
         },
