@@ -48,11 +48,11 @@ dependencies:
   google_maps_flutter: ^2.6.0
 
   # Location and Permissions
-  permission_handler: ^11.3.1
-  geolocator: ^13.0.1
+  permission_handler: ^12.0.1
+  geolocator: ^14.0.2
 
   # Geocoding for address lookup
-  geocoding: ^2.2.0
+  geocoding: ^4.0.0
 
   # HTTP requests for API calls
   http: ^1.2.0
@@ -84,7 +84,29 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
+
+  # App icon generation
+  icons_launcher: ^3.0.2
+
+# Icons Launcher Configuration
+icons_launcher:
+  image_path: "assets/images/icon.png"
+  platforms:
+    android:
+      enable: true
+      adaptive_background_color: "#eb8e01"
+      adaptive_foreground_image: "assets/images/icon.png"
+    ios:
+      enable: true
+    web:
+      enable: true
+    macos:
+      enable: false
+    windows:
+      enable: false
+    linux:
+      enable: false
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

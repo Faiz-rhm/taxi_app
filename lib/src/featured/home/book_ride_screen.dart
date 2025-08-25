@@ -20,7 +20,7 @@ class BookRideScreen extends StatefulWidget {
   State<BookRideScreen> createState() => _BookRideScreenState();
 }
 
-class _BookRideScreenState extends State<BookRideScreen> {
+class _BookRideScreenState extends State<BookRideScreen> with TickerProviderStateMixin {
   String _selectedRideType = 'Mini';
   String _selectedPaymentMethod = 'Cash';
   String _selectedBookingType = 'Book for self';
@@ -32,11 +32,12 @@ class _BookRideScreenState extends State<BookRideScreen> {
   TimeOfDay? _scheduledTime;
   bool _isScheduled = false;
 
-  // Ride booking states
+  // Ride booking states with better state management
   bool _isSearchingRide = false;
   bool _isRideFound = false;
   bool _isDriverAssigned = false;
   bool _isRideNotFound = false;
+  bool _isRequestingRide = false;
 
   // Driver information
   Map<String, dynamic>? _driverInfo;
@@ -45,6 +46,12 @@ class _BookRideScreenState extends State<BookRideScreen> {
   BitmapDescriptor? _pickupIcon;
   BitmapDescriptor? _destinationIcon;
   bool _isLoadingMarkers = true;
+
+  // Animation controllers for smooth state transitions
+  late AnimationController _searchingAnimationController;
+  late AnimationController _rideFoundAnimationController;
+  late AnimationController _driverAssignedAnimationController;
+  late AnimationController _errorAnimationController;
 
   // Sample ride options
   final List<Map<String, dynamic>> _rideOptions = [
@@ -77,8 +84,60 @@ class _BookRideScreenState extends State<BookRideScreen> {
   @override
   void initState() {
     super.initState();
+    _initializeAnimationControllers();
     _updateRideSelection();
     _createCustomMarkers();
+  }
+
+  void _initializeAnimationControllers() {
+    _searchingAnimationController = AnimationController(
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    );
+    _rideFoundAnimationController = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    );
+    _driverAssignedAnimationController = AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    );
+    _errorAnimationController = AnimationController(
+      duration: const Duration(milliseconds: 600),
+      vsync: this,
+    );
+  }
+
+  @override
+  void dispose() {
+    // Dispose of map controller
+    _mapController?.dispose();
+
+    // Dispose of animation controllers
+    _searchingAnimationController.dispose();
+    _rideFoundAnimationController.dispose();
+    _driverAssignedAnimationController.dispose();
+    _errorAnimationController.dispose();
+
+    super.dispose();
+  }
+
+  // Method to handle cleanup when navigating away
+  void _handleScreenDisposal() {
+    // Stop all animations
+    _searchingAnimationController.stop();
+    _rideFoundAnimationController.stop();
+    _driverAssignedAnimationController.stop();
+    _errorAnimationController.stop();
+
+    // Reset all states
+    setState(() {
+      _isSearchingRide = false;
+      _isRideFound = false;
+      _isDriverAssigned = false;
+      _isRideNotFound = false;
+      _isRequestingRide = false;
+    });
   }
 
   Future<void> _createCustomMarkers() async {
@@ -588,18 +647,25 @@ class _BookRideScreenState extends State<BookRideScreen> {
   }
 
   void _bookRide() {
-    // Start searching for ride
+    // Start searching for ride with animation
     setState(() {
       _isSearchingRide = true;
       _isRideFound = false;
       _isDriverAssigned = false;
       _isRideNotFound = false;
+      _isRequestingRide = false;
       _driverInfo = null;
     });
+
+    // Start searching animation
+    _searchingAnimationController.repeat();
 
     // Simulate searching for ride (3 seconds)
     Future.delayed(const Duration(seconds: 3), () {
       if (mounted) {
+        // Stop searching animation
+        _searchingAnimationController.stop();
+
         // Simulate 70% chance of finding a ride
         final random = Random();
         final rideFound = random.nextDouble() > 0.3;
@@ -610,9 +676,12 @@ class _BookRideScreenState extends State<BookRideScreen> {
             _isRideFound = true;
           });
 
+          // Start ride found animation
+          _rideFoundAnimationController.forward();
+
           // Simulate driver assignment (2 seconds)
-    Future.delayed(const Duration(seconds: 2), () {
-      if (mounted) {
+          Future.delayed(const Duration(seconds: 2), () {
+            if (mounted) {
               setState(() {
                 _isDriverAssigned = true;
                 _driverInfo = {
@@ -625,6 +694,9 @@ class _BookRideScreenState extends State<BookRideScreen> {
                   'avatar': 'assets/images/user6.jpg',
                 };
               });
+
+              // Start driver assigned animation
+              _driverAssignedAnimationController.forward();
             }
           });
         } else {
@@ -633,6 +705,9 @@ class _BookRideScreenState extends State<BookRideScreen> {
             _isSearchingRide = false;
             _isRideNotFound = true;
           });
+
+          // Start error animation
+          _errorAnimationController.forward();
         }
       }
     });
@@ -1072,28 +1147,48 @@ class _BookRideScreenState extends State<BookRideScreen> {
   }
 
   void _requestRide() {
-    // Simulate ride request being sent
+    // Set requesting state
     setState(() {
-      _isDriverAssigned = false;
+      _isRequestingRide = true;
     });
 
-    // Simulate driver accepting the ride (3 seconds)
-    Future.delayed(const Duration(seconds: 3), () {
+    // Simulate ride request being sent
+    Future.delayed(const Duration(seconds: 2), () {
       if (mounted) {
-        // Navigate to the ride accepted screen
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => RideAcceptedScreen(
-              driverInfo: _driverInfo ?? {},
-            ),
-          ),
-        );
+        setState(() {
+          _isRequestingRide = false;
+        });
+
+        // Simulate driver accepting the ride (3 seconds)
+        Future.delayed(const Duration(seconds: 3), () {
+          if (mounted) {
+            // Navigate to the ride accepted screen
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => RideAcceptedScreen(
+                  driverInfo: _driverInfo ?? {},
+                ),
+              ),
+            );
+          }
+        });
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    // Add listener for route changes to handle disposal
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        // Check if we're about to be disposed
+        final route = ModalRoute.of(context);
+        if (route?.isCurrent == false) {
+          _handleScreenDisposal();
+        }
+      }
+    });
+
     return Scaffold(
       body: Stack(
         children: [
@@ -1102,7 +1197,6 @@ class _BookRideScreenState extends State<BookRideScreen> {
 
           // Header with back button and title
           _buildHeader(),
-
 
           // Content based on ride state
           if (_isSearchingRide)
@@ -1126,7 +1220,7 @@ class _BookRideScreenState extends State<BookRideScreen> {
               child: _buildSearchingButton(),
             )
           else if (_isRideFound && !_isDriverAssigned)
-            SizedBox()
+            const SizedBox()
           else if (_isDriverAssigned)
             Positioned(
               bottom: 0,
@@ -1771,17 +1865,32 @@ class _BookRideScreenState extends State<BookRideScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
+              // Animated searching indicator
+              RotationTransition(
+                turns: _searchingAnimationController,
+                child: const Icon(
+                  Icons.search,
+                  color: AppColors.primary,
+                  size: 60,
+                ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 24),
               const Text(
                 "Searching for a ride...",
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 18,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                "Please wait while we find the best driver for you",
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 16,
+                ),
+                textAlign: TextAlign.center,
               ),
             ],
           ),
@@ -1802,12 +1911,16 @@ class _BookRideScreenState extends State<BookRideScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(
-                Icons.check_circle,
-                color: AppColors.success,
-                size: 80,
+              // Animated ride found indicator
+              ScaleTransition(
+                scale: _rideFoundAnimationController,
+                child: const Icon(
+                  Icons.check_circle,
+                  color: AppColors.success,
+                  size: 80,
+                ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 24),
               const Text(
                 "Ride Found!",
                 style: TextStyle(
@@ -1818,10 +1931,20 @@ class _BookRideScreenState extends State<BookRideScreen> {
               ),
               const SizedBox(height: 8),
               const Text(
-                "Your ride is on its way. Sit back and relax.",
+                "Driver is found, please request ride",
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 16,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                "Assigning driver...",
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 14,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -1868,8 +1991,15 @@ class _BookRideScreenState extends State<BookRideScreen> {
                     children: [
                       const SizedBox(height: 40),
 
-                      // add not found icon
-                      Icon(Icons.add_road, color: AppColors.primary, size: 80),
+                      // Animated error icon
+                      ScaleTransition(
+                        scale: _errorAnimationController,
+                        child: Icon(
+                          Icons.add_road,
+                          color: AppColors.primary,
+                          size: 80,
+                        ),
+                      ),
 
                       const SizedBox(height: 40),
 
@@ -1909,12 +2039,19 @@ class _BookRideScreenState extends State<BookRideScreen> {
                   height: 56,
                   child: ElevatedButton(
                     onPressed: () {
+                      // Reset animations
+                      _searchingAnimationController.reset();
+                      _rideFoundAnimationController.reset();
+                      _driverAssignedAnimationController.reset();
+                      _errorAnimationController.reset();
+
                       // Reset to initial state and try again
                       setState(() {
                         _isRideNotFound = false;
                         _isSearchingRide = false;
                         _isRideFound = false;
                         _isDriverAssigned = false;
+                        _isRequestingRide = false;
                       });
                     },
                     style: ElevatedButton.styleFrom(
@@ -1975,30 +2112,48 @@ class _BookRideScreenState extends State<BookRideScreen> {
               // Header with Ride Founded and ETA
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-                child: Row(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Ride Founded",
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.primaryText,
-                      ),
-                    ),
-                    const Spacer(),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: const Text(
-                        "5 min Away",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
+                    Row(
+                      children: [
+                        // Animated ride founded text
+                        ScaleTransition(
+                          scale: _driverAssignedAnimationController,
+                          child: const Text(
+                            "Driver Assigned!",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primaryText,
+                            ),
+                          ),
                         ),
+                        const Spacer(),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: const Text(
+                            "5 min Away",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      "Please request your ride to confirm",
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey[600],
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ],
@@ -2019,17 +2174,17 @@ class _BookRideScreenState extends State<BookRideScreen> {
                             onTap: () {
                               Navigator.pushNamed(context, '/driver-profile');
                             },
-                            child:                           Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: const DecorationImage(
-                                image: AssetImage('assets/images/user6.jpg'),
-                                fit: BoxFit.cover,
+                            child: Container(
+                              width: 60,
+                              height: 60,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: const DecorationImage(
+                                  image: AssetImage('assets/images/user6.jpg'),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
-                          ),
                           ),
 
                           const SizedBox(width: 16),
@@ -2132,27 +2287,49 @@ class _BookRideScreenState extends State<BookRideScreen> {
 
                       const Spacer(),
 
-                      // Request Ride Button
+                      // Request Ride Button with loading state
                       SizedBox(
                         width: double.infinity,
                         height: 56,
                         child: ElevatedButton(
-                          onPressed: _requestRide,
+                          onPressed: _isRequestingRide ? null : _requestRide,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
+                            backgroundColor: _isRequestingRide ? Colors.grey[400] : AppColors.primary,
                             foregroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12),
                             ),
                             elevation: 0,
                           ),
-                          child: const Text(
-                            "Request Ride",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                          child: _isRequestingRide
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const SizedBox(
+                                      width: 20,
+                                      height: 20,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    const Text(
+                                      "Requesting...",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : const Text(
+                                  "Request Ride",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                         ),
                       ),
 
@@ -2249,12 +2426,20 @@ class _BookRideScreenState extends State<BookRideScreen> {
   }
 
   void _handleCancelRide() {
+    // Stop all animations
+    _searchingAnimationController.stop();
+    _rideFoundAnimationController.reset();
+    _driverAssignedAnimationController.reset();
+    _errorAnimationController.reset();
+
     // Reset to initial state
     setState(() {
       _isRideFound = false;
       _isSearchingRide = false;
       _isDriverAssigned = false;
       _isRideNotFound = false;
+      _isRequestingRide = false;
+      _driverInfo = null;
     });
 
     // Show success bottom sheet

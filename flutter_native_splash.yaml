@@ -28,7 +28,7 @@ flutter_native_splash:
   # Android 12+ specific configuration
   android_12:
     # Splash screen icon image
-    image: assets/images/splash.png
+    image: assets/images/android_12.png
 
     # Splash screen background color
     color: "#F2994A"
@@ -37,7 +37,7 @@ flutter_native_splash:
     icon_background_color: "#F2994A"
 
     # Dark mode for Android 12+
-    image_dark: assets/images/splash.png
+    image_dark: assets/images/android_12.png
     color_dark: "#E67E22"
     icon_background_color_dark: "#E67E22"
 

@@ -189,13 +189,14 @@ class _RatingScreenState extends State<RatingScreen> {
           }),
         ),
 
+        const SizedBox(height: 16),
+
         Divider(
           color: AppColors.borderLight,
           height: 1,
           thickness: 1,
         ),
 
-        const SizedBox(height: 16),
       ],
     );
   }
